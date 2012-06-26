@@ -1,0 +1,16 @@
+{
+    "name": "ehough/epilog",
+    "description": "A simple PHP logger that echos messages for human consumption",
+    "homepage": "https://github.com/ehough/epilog",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Eric Hough",
+            "email": "eric@ehough.com",
+            "homepage": "http://ehough.com"
+        }
+    ],
+    "require": {
+
+    }
+}
