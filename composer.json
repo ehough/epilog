@@ -1,8 +1,12 @@
 {
     "name": "ehough/epilog",
-    "description": "A simple PHP logger that echos messages for human consumption",
+
+    "description": "Yet another PHP logger",
+
     "homepage": "https://github.com/ehough/epilog",
+
     "license": "GPL-3.0+",
+
     "authors": [
         {
             "name": "Eric Hough",
@@ -10,7 +14,9 @@
             "homepage": "http://ehough.com"
         }
     ],
-    "require": {
 
+    "require-dev": {
+        
+	    "ehough/pulsar": "1.0.2"
     }
 }
