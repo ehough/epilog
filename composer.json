@@ -1,7 +1,7 @@
 {
     "name": "ehough/epilog",
 
-    "description": "Yet another PHP logger",
+    "description": "Logger based heavily on Monolog, but works with PHP 5.1 and above.",
 
     "homepage": "https://github.com/ehough/epilog",
 
