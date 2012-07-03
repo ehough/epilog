@@ -43,53 +43,58 @@
  * THE SOFTWARE.
  */
 
-abstract class ehough_epilog_impl_handler_AbstractProcessingHandler extends ehough_epilog_impl_handler_AbstractHandler
+require_once __DIR__ . '/../../../../../resources/fixtures/TestCase.php';
+
+class ehough_epilog_impl_processor_WebProcessorTest extends ehough_epilog_impl_TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    public final function handle(array $record)
+    public function testProcessor()
     {
-        if ($record['level'] < $this->getLevel()) {
+        $server = array(
+            'REQUEST_URI'    => 'A',
+            'REMOTE_ADDR'    => 'B',
+            'REQUEST_METHOD' => 'C',
+            'HTTP_REFERER'   => 'D',
+            'SERVER_NAME'    => 'F',
+        );
 
-            return false;
-        }
+        $processor = new ehough_epilog_impl_processor_WebProcessor($server);
+        $record = $processor->process($this->getRecord());
+        $this->assertEquals($server['REQUEST_URI'], $record['extra']['url']);
+        $this->assertEquals($server['REMOTE_ADDR'], $record['extra']['ip']);
+        $this->assertEquals($server['REQUEST_METHOD'], $record['extra']['http_method']);
+        $this->assertEquals($server['HTTP_REFERER'], $record['extra']['referrer']);
+        $this->assertEquals($server['SERVER_NAME'], $record['extra']['server']);
+    }
 
-        $record = $this->_processRecord($record);
+    public function testProcessorDoNothingIfNoRequestUri()
+    {
+        $server = array(
+            'REMOTE_ADDR'    => 'B',
+            'REQUEST_METHOD' => 'C',
+        );
+        $processor = new ehough_epilog_impl_processor_WebProcessor($server);
+        $record = $processor->process($this->getRecord());
+        $this->assertEmpty($record['extra']);
+    }
 
-        $record['formatted'] = $this->getFormatter()->format($record);
-
-        $this->write($record);
-
-        return $this->getBubble() === false;
+    public function testProcessorReturnNullIfNoHttpReferer()
+    {
+        $server = array(
+            'REQUEST_URI'    => 'A',
+            'REMOTE_ADDR'    => 'B',
+            'REQUEST_METHOD' => 'C',
+            'SERVER_NAME'    => 'F',
+        );
+        $processor = new ehough_epilog_impl_processor_WebProcessor($server);
+        $record = $processor->process($this->getRecord());
+        $this->assertNull($record['extra']['referrer']);
     }
 
     /**
-     * Writes the record down to the log of the implementing handler
-     *
-     * @param  array $record
-     * @return void
+     * @expectedException UnexpectedValueException
      */
-    abstract protected function write(array $record);
-
-    /**
-     * Processes a record.
-     *
-     * @param  array $record
-     * @return array
-     */
-    private function _processRecord(array $record)
+    public function testInvalidData()
     {
-        $processors = $this->getProcessors();
-
-        if ($processors) {
-
-            foreach ($processors as $processor) {
-
-                $record = $processor->process($record);
-            }
-        }
-
-        return $record;
+        new ehough_epilog_impl_processor_WebProcessor(new \stdClass);
     }
 }

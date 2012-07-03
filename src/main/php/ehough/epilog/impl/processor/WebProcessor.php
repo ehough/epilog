@@ -82,14 +82,14 @@ class ehough_epilog_impl_processor_WebProcessor implements ehough_epilog_api_IPr
     {
         // skip processing if for some reason request data
         // is not present (CLI or wonky SAPIs)
-        if (!isset($this->serverData['REQUEST_URI'])) {
+        if (!isset($this->_serverData['REQUEST_URI'])) {
 
             return $record;
         }
 
-        if (!isset($this->serverData['HTTP_REFERER'])) {
+        if (!isset($this->_serverData['HTTP_REFERER'])) {
 
-            $this->serverData['HTTP_REFERER'] = null;
+            $this->_serverData['HTTP_REFERER'] = null;
         }
 
         $record['extra'] = array_merge(
@@ -98,11 +98,11 @@ class ehough_epilog_impl_processor_WebProcessor implements ehough_epilog_api_IPr
 
             array(
 
-                'url'         => $this->serverData['REQUEST_URI'],
-                'ip'          => $this->serverData['REMOTE_ADDR'],
-                'http_method' => $this->serverData['REQUEST_METHOD'],
-                'server'      => $this->serverData['SERVER_NAME'],
-                'referrer'    => $this->serverData['HTTP_REFERER'],
+                'url'         => $this->_serverData['REQUEST_URI'],
+                'ip'          => $this->_serverData['REMOTE_ADDR'],
+                'http_method' => $this->_serverData['REQUEST_METHOD'],
+                'server'      => $this->_serverData['SERVER_NAME'],
+                'referrer'    => $this->_serverData['HTTP_REFERER'],
             )
         );
 

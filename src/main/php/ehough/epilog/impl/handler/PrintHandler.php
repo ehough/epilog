@@ -43,53 +43,18 @@
  * THE SOFTWARE.
  */
 
-abstract class ehough_epilog_impl_handler_AbstractProcessingHandler extends ehough_epilog_impl_handler_AbstractHandler
+/**
+ * Spits out log statements to HTML.
+ *
+ * @author Eric Hough <eric@ehough.com>
+ */
+final class ehough_epilog_impl_handler_PrintHandler extends ehough_epilog_impl_handler_AbstractProcessingHandler
 {
     /**
      * {@inheritdoc}
      */
-    public final function handle(array $record)
+    protected function write(array $record)
     {
-        if ($record['level'] < $this->getLevel()) {
-
-            return false;
-        }
-
-        $record = $this->_processRecord($record);
-
-        $record['formatted'] = $this->getFormatter()->format($record);
-
-        $this->write($record);
-
-        return $this->getBubble() === false;
-    }
-
-    /**
-     * Writes the record down to the log of the implementing handler
-     *
-     * @param  array $record
-     * @return void
-     */
-    abstract protected function write(array $record);
-
-    /**
-     * Processes a record.
-     *
-     * @param  array $record
-     * @return array
-     */
-    private function _processRecord(array $record)
-    {
-        $processors = $this->getProcessors();
-
-        if ($processors) {
-
-            foreach ($processors as $processor) {
-
-                $record = $processor->process($record);
-            }
-        }
-
-        return $record;
+        print $record['formatted'];
     }
 }
