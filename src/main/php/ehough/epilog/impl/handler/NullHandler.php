@@ -44,67 +44,33 @@
  */
 
 /**
- * Interface that all Monolog Handlers must implement
+ * Blackhole
+ *
+ * Any record it can handle will be thrown away. This can be used
+ * to put on top of an existing stack to override it temporarily.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-interface ehough_epilog_api_IHandler
+class ehough_epilog_impl_handler_NullHandler extends ehough_epilog_impl_handler_AbstractHandler
 {
     /**
-     * Checks whether the given record will be handled by this handler.
-     *
-     * This is mostly done for performance reasons, to avoid calling processors for nothing.
-     *
-     * @param array Records to check for.
-     *
-     * @return Boolean
+     * @param integer $level The minimum logging level at which this handler will be triggered
      */
-    function isHandling(array $record);
+    public final function __construct($level = ehough_epilog_api_ILogger::DEBUG)
+    {
+        parent::__construct($level, false);
+    }
 
     /**
-     * Handles a record.
-     *
-     * The return value of this function controls the bubbling process of the handler stack.
-     *
-     * @param  array   $record The record to handle
-     *
-     * @return Boolean True means that this handler handled the record, and that bubbling is not permitted.
-     *                 False means the record was either not processed or that this handler allows bubbling.
+     * {@inheritdoc}
      */
-    function handle(array $record);
+    public function handle(array $record)
+    {
+        if ($record['level'] < $this->getLevel()) {
 
-    /**
-     * Handles a set of records at once.
-     *
-     * @param array $records The records to handle (an array of record arrays)
-     */
-    function handleBatch(array $records);
+            return false;
+        }
 
-    /**
-     * Adds a processor in the stack.
-     *
-     * @param ehough_epilog_api_IProcessor $callback
-     */
-    function pushProcessor(ehough_epilog_api_IProcessor $callback);
-
-    /**
-     * Removes the processor on top of the stack and returns it.
-     *
-     * @return ehough_epilog_api_IProcessor
-     */
-    function popProcessor();
-
-    /**
-     * Sets the formatter.
-     *
-     * @param ehough_epilog_api_IFormatter $formatter
-     */
-    function setFormatter(ehough_epilog_api_IFormatter $formatter);
-
-    /**
-     * Gets the formatter.
-     *
-     * @return ehough_epilog_api_IFormatter
-     */
-    function getFormatter();
+        return true;
+    }
 }

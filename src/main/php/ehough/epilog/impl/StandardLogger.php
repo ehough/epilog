@@ -85,7 +85,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     function isDebugEnabled()
     {
-        return $this->isHandling(ehough_epilog_api_ILogger::DEBUG);
+        return $this->_isHandling(ehough_epilog_api_ILogger::DEBUG);
     }
 
     /**
@@ -95,7 +95,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     function isInfoEnabled()
     {
-        return $this->isHandling(ehough_epilog_api_ILogger::INFO);
+        return $this->_isHandling(ehough_epilog_api_ILogger::INFO);
     }
 
     /**
@@ -105,7 +105,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     function isWarnEnabled()
     {
-        return $this->isHandling(ehough_epilog_api_ILogger::WARN);
+        return $this->_isHandling(ehough_epilog_api_ILogger::WARN);
     }
 
     /**
@@ -115,7 +115,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     function isErrorEnabled()
     {
-        return $this->isHandling(ehough_epilog_api_ILogger::ERROR);
+        return $this->_isHandling(ehough_epilog_api_ILogger::ERROR);
     }
 
     /**
@@ -125,7 +125,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     function isCriticalEnabled()
     {
-        return $this->isHandling(ehough_epilog_api_ILogger::CRITICAL);
+        return $this->_isHandling(ehough_epilog_api_ILogger::CRITICAL);
     }
 
     /**
@@ -235,24 +235,19 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     /**
      * Adds a processor on to the stack.
      *
-     * @param callable $callback
+     * @param ehough_epilog_api_IProcessor $callback
      *
      * @throws InvalidArgumentException
      */
-    public function pushProcessor($callback)
+    public function pushProcessor(ehough_epilog_api_IProcessor $callback)
     {
-        if (! is_callable($callback)) {
-
-            throw new InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
-        }
-
         array_unshift($this->_processors, $callback);
     }
 
     /**
      * Removes the processor on top of the stack and returns it.
      *
-     * @return callable
+     * @return ehough_epilog_api_IProcessor
      *
      * @throws LogicException
      */
@@ -346,7 +341,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
         // found at least one, process message and dispatch it
         foreach ($this->_processors as $processor) {
 
-            $record = call_user_func($processor, $record);
+            $record = $processor->process($record);
         }
 
         while (isset($this->_handlers[$handlerKey]) && false === $this->_handlers[$handlerKey]->handle($record)) {

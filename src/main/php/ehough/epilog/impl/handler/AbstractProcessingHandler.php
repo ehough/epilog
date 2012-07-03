@@ -43,68 +43,53 @@
  * THE SOFTWARE.
  */
 
-/**
- * Interface that all Monolog Handlers must implement
- *
- * @author Jordi Boggiano <j.boggiano@seld.be>
- */
-interface ehough_epilog_api_IHandler
+abstract class ehough_epilog_impl_handler_AbstractProcessingHandler extends ehough_epilog_impl_handler_AbstractHandler
 {
     /**
-     * Checks whether the given record will be handled by this handler.
-     *
-     * This is mostly done for performance reasons, to avoid calling processors for nothing.
-     *
-     * @param array Records to check for.
-     *
-     * @return Boolean
+     * {@inheritdoc}
      */
-    function isHandling(array $record);
+    public final function handle(array $record)
+    {
+        if ($record['level'] < $this->getLevel()) {
+
+            return false;
+        }
+
+        $record = $this->processRecord($record);
+
+        $record['formatted'] = $this->getFormatter()->format($record);
+
+        $this->write($record);
+
+        return $this->getBubble() === false;
+    }
 
     /**
-     * Handles a record.
+     * Writes the record down to the log of the implementing handler
      *
-     * The return value of this function controls the bubbling process of the handler stack.
-     *
-     * @param  array   $record The record to handle
-     *
-     * @return Boolean True means that this handler handled the record, and that bubbling is not permitted.
-     *                 False means the record was either not processed or that this handler allows bubbling.
+     * @param  array $record
+     * @return void
      */
-    function handle(array $record);
+    abstract protected function write(array $record);
 
     /**
-     * Handles a set of records at once.
+     * Processes a record.
      *
-     * @param array $records The records to handle (an array of record arrays)
+     * @param  array $record
+     * @return array
      */
-    function handleBatch(array $records);
+    protected final function processRecord(array $record)
+    {
+        $processors = $this->getProcessors();
 
-    /**
-     * Adds a processor in the stack.
-     *
-     * @param ehough_epilog_api_IProcessor $callback
-     */
-    function pushProcessor(ehough_epilog_api_IProcessor $callback);
+        if ($processors) {
 
-    /**
-     * Removes the processor on top of the stack and returns it.
-     *
-     * @return ehough_epilog_api_IProcessor
-     */
-    function popProcessor();
+            foreach ($processors as $processor) {
 
-    /**
-     * Sets the formatter.
-     *
-     * @param ehough_epilog_api_IFormatter $formatter
-     */
-    function setFormatter(ehough_epilog_api_IFormatter $formatter);
+                $record = call_user_func($processor, $record);
+            }
+        }
 
-    /**
-     * Gets the formatter.
-     *
-     * @return ehough_epilog_api_IFormatter
-     */
-    function getFormatter();
+        return $record;
+    }
 }

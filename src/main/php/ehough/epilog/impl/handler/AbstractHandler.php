@@ -71,7 +71,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     /**
      * {@inheritdoc}
      */
-    public function isHandling(array $record)
+    public final function isHandling(array $record)
     {
         return $record['level'] >= $this->level;
     }
@@ -79,7 +79,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     /**
      * {@inheritdoc}
      */
-    public function handleBatch(array $records)
+    public final function handleBatch(array $records)
     {
         foreach ($records as $record) {
 
@@ -90,7 +90,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     /**
      * {@inheritdoc}
      */
-    public function pushProcessor($callback)
+    public final function pushProcessor(ehough_epilog_api_IProcessor $callback)
     {
         if (! is_callable($callback)) {
 
@@ -102,7 +102,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     /**
      * {@inheritdoc}
      */
-    public function popProcessor()
+    public final function popProcessor()
     {
         if (! $this->processors) {
 
@@ -115,7 +115,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     /**
      * {@inheritdoc}
      */
-    public function setFormatter(ehough_epilog_api_IFormatter $formatter)
+    public final function setFormatter(ehough_epilog_api_IFormatter $formatter)
     {
         $this->formatter = $formatter;
     }
@@ -123,7 +123,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     /**
      * {@inheritdoc}
      */
-    public function getFormatter()
+    public final function getFormatter()
     {
         if (!$this->formatter) {
             $this->formatter = $this->getDefaultFormatter();
@@ -138,7 +138,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
      *
      * @param integer $level
      */
-    public function setLevel($level)
+    public final function setLevel($level)
     {
         $this->level = $level;
     }
@@ -148,7 +148,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
      *
      * @return integer
      */
-    public function getLevel()
+    public final function getLevel()
     {
         return $this->level;
     }
@@ -159,7 +159,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
      * @param Boolean $bubble True means that bubbling is not permitted.
      *                        False means that this handler allows bubbling.
      */
-    public function setBubble($bubble)
+    public final function setBubble($bubble)
     {
         $this->bubble = $bubble;
     }
@@ -170,12 +170,12 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
      * @return Boolean True means that bubbling is not permitted.
      *                 False means that this handler allows bubbling.
      */
-    public function getBubble()
+    public final function getBubble()
     {
         return $this->bubble;
     }
 
-    public function __destruct()
+    public final function __destruct()
     {
         try {
 
@@ -188,16 +188,6 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     }
 
     /**
-     * Gets the default formatter.
-     *
-     * @return ehough_epilog_api_IFormatter
-     */
-    protected function getDefaultFormatter()
-    {
-        return new LineFormatter();
-    }
-
-    /**
      * Closes the handler.
      *
      * This will be called automatically when the object is destroyed
@@ -207,4 +197,18 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
         //override point
     }
 
+    /**
+     * Gets the default formatter.
+     *
+     * @return ehough_epilog_api_IFormatter
+     */
+    protected final function getDefaultFormatter()
+    {
+        return new ehough_epilog_impl_formatter_LineFormatter();
+    }
+
+    protected final function getProcessors()
+    {
+        return $this->processors;
+    }
 }

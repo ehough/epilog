@@ -44,67 +44,23 @@
  */
 
 /**
- * Interface that all Monolog Handlers must implement
+ * Used for testing purposes.
+ *
+ * It records all records and gives you access to them for verification.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-interface ehough_epilog_api_IHandler
+class ehough_epilog_impl_processor_TestFailProcessor implements ehough_epilog_api_IProcessor
 {
-    /**
-     * Checks whether the given record will be handled by this handler.
-     *
-     * This is mostly done for performance reasons, to avoid calling processors for nothing.
-     *
-     * @param array Records to check for.
-     *
-     * @return Boolean
-     */
-    function isHandling(array $record);
+    private $_test;
 
-    /**
-     * Handles a record.
-     *
-     * The return value of this function controls the bubbling process of the handler stack.
-     *
-     * @param  array   $record The record to handle
-     *
-     * @return Boolean True means that this handler handled the record, and that bubbling is not permitted.
-     *                 False means the record was either not processed or that this handler allows bubbling.
-     */
-    function handle(array $record);
+    public function __construct(PHPUnit_Framework_TestCase $test)
+    {
+        $this->_test = $test;
+    }
 
-    /**
-     * Handles a set of records at once.
-     *
-     * @param array $records The records to handle (an array of record arrays)
-     */
-    function handleBatch(array $records);
-
-    /**
-     * Adds a processor in the stack.
-     *
-     * @param ehough_epilog_api_IProcessor $callback
-     */
-    function pushProcessor(ehough_epilog_api_IProcessor $callback);
-
-    /**
-     * Removes the processor on top of the stack and returns it.
-     *
-     * @return ehough_epilog_api_IProcessor
-     */
-    function popProcessor();
-
-    /**
-     * Sets the formatter.
-     *
-     * @param ehough_epilog_api_IFormatter $formatter
-     */
-    function setFormatter(ehough_epilog_api_IFormatter $formatter);
-
-    /**
-     * Gets the formatter.
-     *
-     * @return ehough_epilog_api_IFormatter
-     */
-    function getFormatter();
+    function process(array $record)
+    {
+         $this->_test->fail('The processor should not be called');
+    }
 }

@@ -44,67 +44,68 @@
  */
 
 /**
- * Interface that all Monolog Handlers must implement
+ * Injects url/method and remote IP of the current web request in all records
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-interface ehough_epilog_api_IHandler
+class ehough_epilog_impl_processor_WebProcessor implements ehough_epilog_api_IProcessor
 {
-    /**
-     * Checks whether the given record will be handled by this handler.
-     *
-     * This is mostly done for performance reasons, to avoid calling processors for nothing.
-     *
-     * @param array Records to check for.
-     *
-     * @return Boolean
-     */
-    function isHandling(array $record);
+    private $_serverData;
 
     /**
-     * Handles a record.
+     * @param mixed $serverData array or object w/ ArrayAccess that provides access to the $_SERVER data
      *
-     * The return value of this function controls the bubbling process of the handler stack.
-     *
-     * @param  array   $record The record to handle
-     *
-     * @return Boolean True means that this handler handled the record, and that bubbling is not permitted.
-     *                 False means the record was either not processed or that this handler allows bubbling.
+     * @throws UnexpectedValueException
      */
-    function handle(array $record);
+    public function __construct($serverData = null)
+    {
+        if (null === $serverData) {
+
+            $this->_serverData =& $_SERVER;
+
+        } elseif (is_array($serverData) || $serverData instanceof \ArrayAccess) {
+
+            $this->_serverData = $serverData;
+
+        } else {
+
+            throw new UnexpectedValueException('$serverData must be an array or object implementing ArrayAccess.');
+        }
+    }
 
     /**
-     * Handles a set of records at once.
+     * @param  array $record
      *
-     * @param array $records The records to handle (an array of record arrays)
+     * @return array
      */
-    function handleBatch(array $records);
+    public function process(array $record)
+    {
+        // skip processing if for some reason request data
+        // is not present (CLI or wonky SAPIs)
+        if (!isset($this->serverData['REQUEST_URI'])) {
 
-    /**
-     * Adds a processor in the stack.
-     *
-     * @param ehough_epilog_api_IProcessor $callback
-     */
-    function pushProcessor(ehough_epilog_api_IProcessor $callback);
+            return $record;
+        }
 
-    /**
-     * Removes the processor on top of the stack and returns it.
-     *
-     * @return ehough_epilog_api_IProcessor
-     */
-    function popProcessor();
+        if (!isset($this->serverData['HTTP_REFERER'])) {
 
-    /**
-     * Sets the formatter.
-     *
-     * @param ehough_epilog_api_IFormatter $formatter
-     */
-    function setFormatter(ehough_epilog_api_IFormatter $formatter);
+            $this->serverData['HTTP_REFERER'] = null;
+        }
 
-    /**
-     * Gets the formatter.
-     *
-     * @return ehough_epilog_api_IFormatter
-     */
-    function getFormatter();
+        $record['extra'] = array_merge(
+
+            $record['extra'],
+
+            array(
+
+                'url'         => $this->serverData['REQUEST_URI'],
+                'ip'          => $this->serverData['REMOTE_ADDR'],
+                'http_method' => $this->serverData['REQUEST_METHOD'],
+                'server'      => $this->serverData['SERVER_NAME'],
+                'referrer'    => $this->serverData['HTTP_REFERER'],
+            )
+        );
+
+        return $record;
+    }
 }
