@@ -19,31 +19,17 @@
  *
  */
 
-class ehough_epilog_impl_SimpleEnableableTest extends PHPUnit_Framework_TestCase {
+require_once __DIR__ . '/../../../../../resources/fixtures/TestCase.php';
 
-    private $_sut;
+class ehough_epilog_impl_handler_PrintHandlerTest extends ehough_epilog_impl_TestCase
+{
 
-    public $_onEnableCalled;
-    public $_onDisableCalled;
-
-    public function setup()
+    public function testHandle()
     {
-        $this->_sut = new ehough_epilog_impl_SimpleEnableable();
+        $this->expectOutputRegex('/\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\] test.WARNING: test array \(\) array \(\)/');
 
-        $this->_onEnableCalled = false;
-        $this->_onDisableCalled = false;
-    }
+        $handler = new ehough_epilog_impl_handler_PrintHandler();
 
-    public function testToggle()
-    {
-        $this->assertFalse($this->_sut->isEnabled());
-
-        $this->_sut->setEnabled(true);
-
-        $this->assertTrue($this->_sut->isEnabled());
-
-        $this->_sut->setEnabled(false);
-
-        $this->assertFalse($this->_sut->isEnabled());
+        $this->assertFalse($handler->handle($this->getRecord()));
     }
 }
