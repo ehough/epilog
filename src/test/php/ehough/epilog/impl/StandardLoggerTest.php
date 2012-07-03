@@ -55,9 +55,6 @@ class ehough_epilog_impl_LoggerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $logger->getName());
     }
 
-    /**
-     * @covers Monolog\Logger::__construct
-     */
     public function testChannel()
     {
         $logger = new ehough_epilog_impl_StandardLogger('foo');
@@ -321,5 +318,16 @@ class ehough_epilog_impl_LoggerTest extends PHPUnit_Framework_TestCase
             array('error',    ehough_epilog_api_ILogger::ERROR),
             array('critical',   ehough_epilog_api_ILogger::CRITICAL),
         );
+    }
+
+    public function testDefaultLevels()
+    {
+        $logger = new ehough_epilog_impl_StandardLogger('foo');
+
+        $this->assertFalse($logger->isCriticalEnabled());
+        $this->assertFalse($logger->isErrorEnabled());
+        $this->assertFalse($logger->isWarnEnabled());
+        $this->assertFalse($logger->isInfoEnabled());
+        $this->assertFalse($logger->isDebugEnabled());
     }
 }

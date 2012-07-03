@@ -105,7 +105,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     function isWarnEnabled()
     {
-        return $this->_isHandling(ehough_epilog_api_ILogger::WARN);
+        return $this->_isHandling(ehough_epilog_api_ILogger::WARNING);
     }
 
     /**
