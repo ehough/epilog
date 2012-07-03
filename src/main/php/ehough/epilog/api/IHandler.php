@@ -44,7 +44,7 @@
  */
 
 /**
- * Interface that all Monolog Handlers must implement
+ * Interface that all epilog Handlers must implement
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
@@ -55,7 +55,7 @@ interface ehough_epilog_api_IHandler
      *
      * This is mostly done for performance reasons, to avoid calling processors for nothing.
      *
-     * @param array Records to check for.
+     * @param array $record Records to check for.
      *
      * @return Boolean
      */

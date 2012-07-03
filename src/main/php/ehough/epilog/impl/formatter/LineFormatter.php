@@ -51,7 +51,7 @@
  * @author Jordi Boggiano <j.boggiano@seld.be>
  * @author Christophe Coevoet <stof@notk.org>
  */
-class ehough_epilog_impl_formatter_LineFormatter extends ehough_epilog_impl_formatter_AbstractNormalizingFormatter
+final class ehough_epilog_impl_formatter_LineFormatter extends ehough_epilog_impl_formatter_AbstractNormalizingFormatter
 {
     private $_format;
 

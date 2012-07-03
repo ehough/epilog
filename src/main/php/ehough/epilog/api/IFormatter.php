@@ -57,7 +57,7 @@ interface ehough_epilog_api_IFormatter
      *
      * @return mixed The formatted record
      */
-    public function format(array $record);
+    function format(array $record);
 
     /**
      * Formats a set of log records.
@@ -66,5 +66,5 @@ interface ehough_epilog_api_IFormatter
      *
      * @return mixed The formatted set of records
      */
-    public function formatBatch(array $records);
+    function formatBatch(array $records);
 }

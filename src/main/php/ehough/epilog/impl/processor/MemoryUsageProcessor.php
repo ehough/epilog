@@ -46,7 +46,6 @@
 /**
  * Injects memory_get_usage in all records
  *
- * @see Monolog\Processor\MemoryProcessor::__construct() for options
  * @author Rob Jensen
  */
 class ehough_epilog_impl_processor_MemoryUsageProcessor extends ehough_epilog_impl_processor_AbstractMemoryProcessor

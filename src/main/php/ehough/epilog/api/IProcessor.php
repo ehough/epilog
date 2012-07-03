@@ -44,7 +44,7 @@
  */
 
 /**
- * Interface that all Monolog Processors must implement
+ * Interface that all epilog Processors must implement
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */

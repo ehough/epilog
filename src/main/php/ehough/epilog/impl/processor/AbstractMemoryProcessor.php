@@ -50,7 +50,7 @@
  */
 abstract class ehough_epilog_impl_processor_AbstractMemoryProcessor implements ehough_epilog_api_IProcessor
 {
-    protected $_realUsage;
+    private $_realUsage;
 
     /**
      * @param boolean $realUsage
