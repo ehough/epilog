@@ -28,11 +28,11 @@
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is furnished
- * to do so, subject to the following conditions:
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -83,7 +83,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * @return Boolean
      */
-    function isDebugEnabled()
+    public function isDebugEnabled()
     {
         return $this->_isHandling(ehough_epilog_api_ILogger::DEBUG);
     }
@@ -93,7 +93,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * @return Boolean
      */
-    function isInfoEnabled()
+    public function isInfoEnabled()
     {
         return $this->_isHandling(ehough_epilog_api_ILogger::INFO);
     }
@@ -103,7 +103,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * @return Boolean
      */
-    function isWarnEnabled()
+    public function isWarnEnabled()
     {
         return $this->_isHandling(ehough_epilog_api_ILogger::WARNING);
     }
@@ -113,7 +113,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * @return Boolean
      */
-    function isErrorEnabled()
+    public function isErrorEnabled()
     {
         return $this->_isHandling(ehough_epilog_api_ILogger::ERROR);
     }
@@ -123,7 +123,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * @return Boolean
      */
-    function isCriticalEnabled()
+    public function isCriticalEnabled()
     {
         return $this->_isHandling(ehough_epilog_api_ILogger::CRITICAL);
     }
@@ -183,7 +183,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * @return Boolean Whether the record has been processed
      */
-    function error($message, array $context = array())
+    public function error($message, array $context = array())
     {
         $this->_addRecord(ehough_epilog_api_ILogger::ERROR, $message, $context);
     }
@@ -361,6 +361,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     private function _getLevelName($level)
     {
-        return isset(self::$levels[$level]) ? self::$levels[$level] : 'undefined';
+        return isset(self::$levels[$level]) ?
+            self::$levels[$level] : 'undefined';
     }
 }

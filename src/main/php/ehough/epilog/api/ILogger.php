@@ -28,11 +28,11 @@
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is furnished
- * to do so, subject to the following conditions:
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -88,42 +88,42 @@ interface ehough_epilog_api_ILogger
     /**
      * @return string
      */
-    function getName();
+    public function getName();
 
     /**
      * Is debug enabled?
      *
      * @return Boolean
      */
-    function isDebugEnabled();
+    public function isDebugEnabled();
 
     /**
      * Is info enabled?
      *
      * @return Boolean
      */
-    function isInfoEnabled();
+    public function isInfoEnabled();
 
     /**
      * Is warn enabled?
      *
      * @return Boolean
      */
-    function isWarnEnabled();
+    public function isWarnEnabled();
 
     /**
      * Is error enabled?
      *
      * @return Boolean
      */
-    function isErrorEnabled();
+    public function isErrorEnabled();
 
     /**
      * Is critical enabled?
      *
      * @return Boolean
      */
-    function isCriticalEnabled();
+    public function isCriticalEnabled();
 
     /**
      * Adds a log record at the DEBUG level.
@@ -134,7 +134,7 @@ interface ehough_epilog_api_ILogger
      * @param  array   $context The log context
      * @return Boolean Whether the record has been processed
      */
-    function debug($message, array $context = array());
+    public function debug($message, array $context = array());
 
     /**
      * Adds a log record at the INFO level.
@@ -145,7 +145,7 @@ interface ehough_epilog_api_ILogger
      * @param  array   $context The log context
      * @return Boolean Whether the record has been processed
      */
-    function info($message, array $context = array());
+    public function info($message, array $context = array());
 
     /**
      * Adds a log record at the WARNING level.
@@ -156,7 +156,7 @@ interface ehough_epilog_api_ILogger
      * @param  array   $context The log context
      * @return Boolean Whether the record has been processed
      */
-    function warn($message, array $context = array());
+    public function warn($message, array $context = array());
 
     /**
      * Adds a log record at the ERROR level.
@@ -167,7 +167,7 @@ interface ehough_epilog_api_ILogger
      * @param  array   $context The log context
      * @return Boolean Whether the record has been processed
      */
-    function error($message, array $context = array());
+    public function error($message, array $context = array());
 
     /**
      * Adds a log record at the CRITICAL level.
@@ -178,5 +178,5 @@ interface ehough_epilog_api_ILogger
      * @param  array   $context The log context
      * @return Boolean Whether the record has been processed
      */
-    function critical($message, array $context = array());
+    public function critical($message, array $context = array());
 }
