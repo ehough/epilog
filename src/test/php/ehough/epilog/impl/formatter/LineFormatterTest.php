@@ -116,7 +116,7 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
             'message' => 'foobar',
         ));
         if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
-            $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foobar array () array (  \'foo\' => \'[object] (TestFoo: {\"foo\":\"foo\',)","bar\' => \'[object] (Monolog\Formatter\TestBar: {})","baz":array (),"res\' => \'[resource]\',)'."\n", $message);
+            $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foobar array () array ( \'foo\' => \'[object] (TestFoo: TestFoo::__set_state(array( \'foo\' => \'foo\',)))\', \'bar\' => \'[object] (TestBar: TestBar::__set_state(array()))\', \'baz\' => array ( ), \'res\' => \'[resource]\',)'."\n", $message);
         } else {
             $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foobar array () array (  \'foo\' => \'[object] (TestFoo: TestFoo::__set_state(array(   \'foo\' => \'foo\',)))\',  \'bar\' => \'[object] (TestBar: TestBar::__set_state(array()))\',  \'baz\' =>   array (  ),  \'res\' => \'[resource]\',)'."\n", $message);
         }
