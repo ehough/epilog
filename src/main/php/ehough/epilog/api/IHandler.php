@@ -57,7 +57,7 @@ interface ehough_epilog_api_IHandler
      *
      * @param array $record Records to check for.
      *
-     * @return Boolean
+     * @return bool True if this handler is handling this record, false otherwise.
      */
     function isHandling(array $record);
 
@@ -66,9 +66,9 @@ interface ehough_epilog_api_IHandler
      *
      * The return value of this function controls the bubbling process of the handler stack.
      *
-     * @param  array   $record The record to handle
+     * @param array $record The record to handle.
      *
-     * @return Boolean True means that this handler handled the record, and that bubbling is not permitted.
+     * @return bool True means that this handler handled the record, and that bubbling is not permitted.
      *                 False means the record was either not processed or that this handler allows bubbling.
      */
     function handle(array $record);
@@ -76,14 +76,18 @@ interface ehough_epilog_api_IHandler
     /**
      * Handles a set of records at once.
      *
-     * @param array $records The records to handle (an array of record arrays)
+     * @param array $records The records to handle (an array of record arrays).
+     *
+     * @return void
      */
     function handleBatch(array $records);
 
     /**
      * Adds a processor in the stack.
      *
-     * @param ehough_epilog_api_IProcessor $callback
+     * @param ehough_epilog_api_IProcessor $callback The processor to push.
+     *
+     * @return void
      */
     function pushProcessor(ehough_epilog_api_IProcessor $callback);
 
@@ -97,7 +101,9 @@ interface ehough_epilog_api_IHandler
     /**
      * Sets the formatter.
      *
-     * @param ehough_epilog_api_IFormatter $formatter
+     * @param ehough_epilog_api_IFormatter $formatter The new formatter.
+     *
+     * @return void
      */
     function setFormatter(ehough_epilog_api_IFormatter $formatter);
 

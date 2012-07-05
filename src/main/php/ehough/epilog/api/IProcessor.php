@@ -50,5 +50,12 @@
  */
 interface ehough_epilog_api_IProcessor
 {
-    public function process(array $record);
+    /**
+     * Process a single record.
+     *
+     * @param array $record The log record to process.
+     *
+     * @return array The processed record.
+     */
+    function process(array $record);
 }

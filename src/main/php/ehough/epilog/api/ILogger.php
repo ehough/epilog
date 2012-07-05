@@ -86,97 +86,104 @@ interface ehough_epilog_api_ILogger
     const CRITICAL = 500;
 
     /**
-     * @return string
+     * Get the name of this logger instance.
+     *
+     * @return string The name of this logger instance.
      */
-    public function getName();
+    function getName();
 
     /**
-     * Is debug enabled?
+     * Determines if level debug and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if debug and above is enabled, false otherwise.
      */
-    public function isDebugEnabled();
+    function isDebugEnabled();
 
     /**
-     * Is info enabled?
+     * Determines if level info and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if info and above is enabled, false otherwise.
      */
-    public function isInfoEnabled();
+    function isInfoEnabled();
 
     /**
-     * Is warn enabled?
+     * Determines if level warn and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if warn and above is enabled, false otherwise.
      */
-    public function isWarnEnabled();
+    function isWarnEnabled();
 
     /**
-     * Is error enabled?
+     * Determines if level error and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if error and above is enabled, false otherwise.
      */
-    public function isErrorEnabled();
+    function isErrorEnabled();
 
     /**
-     * Is critical enabled?
+     * Determines if level critical and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if critical and above is enabled, false otherwise.
      */
-    public function isCriticalEnabled();
+    function isCriticalEnabled();
 
     /**
      * Adds a log record at the DEBUG level.
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
-     * @return Boolean Whether the record has been processed
+     * @param string $message The log message.
+     * @param array  $context The log context.
+     *
+     * @return boolean Whether the record has been processed
      */
-    public function debug($message, array $context = array());
+    function debug($message, array $context = array());
 
     /**
      * Adds a log record at the INFO level.
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
-     * @return Boolean Whether the record has been processed
+     * @param string $message The log message.
+     * @param array  $context The log context.
+     *
+     * @return boolean Whether the record has been processed
      */
-    public function info($message, array $context = array());
+    function info($message, array $context = array());
 
     /**
      * Adds a log record at the WARNING level.
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
-     * @return Boolean Whether the record has been processed
+     * @param string $message The log message.
+     * @param array  $context The log context.
+     *
+     * @return boolean Whether the record has been processed
      */
-    public function warn($message, array $context = array());
+    function warn($message, array $context = array());
 
     /**
      * Adds a log record at the ERROR level.
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
-     * @return Boolean Whether the record has been processed
+     * @param string $message The log message.
+     * @param array  $context The log context.
+     *
+     * @return boolean Whether the record has been processed
      */
-    public function error($message, array $context = array());
+    function error($message, array $context = array());
 
     /**
      * Adds a log record at the CRITICAL level.
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
-     * @return Boolean Whether the record has been processed
+     * @param string $message The log message.
+     * @param array  $context The log context.
+     *
+     * @return boolean Whether the record has been processed
      */
-    public function critical($message, array $context = array());
+    function critical($message, array $context = array());
 }

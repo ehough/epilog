@@ -235,9 +235,9 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     /**
      * Adds a processor on to the stack.
      *
-     * @param ehough_epilog_api_IProcessor $callback
+     * @param ehough_epilog_api_IProcessor $callback The processor to push.
      *
-     * @throws InvalidArgumentException
+     * @return void
      */
     public function pushProcessor(ehough_epilog_api_IProcessor $callback)
     {
@@ -249,11 +249,11 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * @return ehough_epilog_api_IProcessor
      *
-     * @throws LogicException
+     * @throws LogicException If the stack of processors is currently empty.
      */
     public function popProcessor()
     {
-        if (! $this->_processors) {
+        if (!$this->_processors) {
 
             throw new LogicException('You tried to pop from an empty processor stack.');
         }
@@ -262,7 +262,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     }
 
     /**
-     * Checks whether the Logger has a handler that listens on the given level
+     * Checks whether the Logger has a handler that listens on the given level.
      *
      * @param  integer $level
      *
@@ -281,9 +281,10 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
             'extra'      => array(),
         );
 
-        /** @noinspection PhpUnusedLocalVariableInspection */
+        /* @noinspection PhpUnusedLocalVariableInspection */
         foreach ($this->_handlers as $key => $handler) {
 
+            /** @noinspection PhpUndefinedMethodInspection */
             if ($handler->isHandling($record)) {
 
                 return true;

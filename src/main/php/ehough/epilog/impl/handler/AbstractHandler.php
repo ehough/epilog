@@ -96,6 +96,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
 
             throw new InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
         }
+
         array_unshift($this->processors, $callback);
     }
 
