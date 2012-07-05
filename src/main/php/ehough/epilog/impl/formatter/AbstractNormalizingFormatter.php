@@ -44,16 +44,19 @@
  */
 
 /**
- * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets
+ * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
 abstract class ehough_epilog_impl_formatter_AbstractNormalizingFormatter implements ehough_epilog_api_IFormatter
 {
+    /** Date format. */
     private $_dateFormat;
 
     /**
-     * @param string $dateFormat The format of the timestamp: one supported by DateTime::format
+     * Constructor.
+     *
+     * @param string $dateFormat The format of the timestamp: one supported by date().
      */
     public function __construct($dateFormat = null)
     {
@@ -61,25 +64,63 @@ abstract class ehough_epilog_impl_formatter_AbstractNormalizingFormatter impleme
     }
 
     /**
-     * {@inheritdoc}
+     * Formats a log record.
+     *
+     * @param array $record A record to format.
+     *
+     * @return mixed The formatted record
      */
     public final function format(array $record)
     {
         $returnValue = $this->_normalize($record);
 
+        /* to allow subclasses to override. */
         return $this->_onAfterFormat($record, $returnValue);
     }
 
-    protected final function _normalize($data)
+    /**
+     * Converts arbitrary data to string.
+     *
+     * @param mixed $data The data to convert.
+     *
+     * @return string The string representation of the data.
+     */
+    protected final function _convertToString($data)
     {
-        if (is_float($data)) {
+        if ($data === null || is_scalar($data)) {
 
-            $val = date($this->_dateFormat, intval($data));
-
-            return $val;
+            return "$data";
         }
 
-        if (null === $data || is_scalar($data)) {
+        if ($data instanceof ehough_epilog_impl_TimeStamp) {
+
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $data->format($this->_dateFormat);
+        }
+
+        if (is_object($data)) {
+
+            return sprintf('[object] (%s)', get_class($data));
+        }
+
+        if (is_resource($data)) {
+
+            return '[resource]';
+        }
+
+        return '[unknown (' . gettype($data) . ')]';
+    }
+
+    /**
+     * Normalizes the log record.
+     *
+     * @param mixed $data The data to format.
+     *
+     * @return string|array The normalized log record(s).
+     */
+    protected final function _normalize($data)
+    {
+        if ($data === null || is_scalar($data)) {
 
             return $data;
         }
@@ -96,22 +137,21 @@ abstract class ehough_epilog_impl_formatter_AbstractNormalizingFormatter impleme
             return $normalized;
         }
 
-        if (is_object($data)) {
-
-            return sprintf("[object] (%s: %s)", get_class($data), var_export($data, true));
-        }
-
-        if (is_resource($data)) {
-
-            return '[resource]';
-        }
-
-        return '[unknown(' . gettype($data) . ')]';
+        return $this->_convertToString($data);
     }
 
-    protected function _onAfterFormat(/** @noinspection PhpUnusedParameterInspection */ array $record, $returnValue)
+    /**
+     * Override point for normalization.
+     *
+     * @param array        $data        The original data.
+     * @param array|string $returnValue The normalized data.
+     *
+     * @return mixed The (possibly modified) $returnValue.
+     */
+    protected function _onAfterFormat(array $data, $returnValue)
     {
         //override point
         return $returnValue;
     }
+
 }

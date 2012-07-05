@@ -56,8 +56,10 @@ final class ehough_epilog_impl_formatter_LineFormatter extends ehough_epilog_imp
     private $_format;
 
     /**
-     * @param string $format     The format of the message
-     * @param string $dateFormat The format of the timestamp: one supported by DateTime::format
+     * Constructor.
+     *
+     * @param string $format     The format of the message.
+     * @param string $dateFormat The format of the timestamp: one supported by date().
      */
     public function __construct($format = null, $dateFormat = null)
     {
@@ -66,6 +68,13 @@ final class ehough_epilog_impl_formatter_LineFormatter extends ehough_epilog_imp
         parent::__construct($dateFormat);
     }
 
+    /**
+     * Formats a set of log records.
+     *
+     * @param array $records A set of records to format.
+     *
+     * @return mixed The formatted set of records
+     */
     public function formatBatch(array $records)
     {
         $message = '';
@@ -79,54 +88,42 @@ final class ehough_epilog_impl_formatter_LineFormatter extends ehough_epilog_imp
     }
 
     /**
-     * {@inheritdoc}
+     * Override point for normalization.
+     *
+     * @param array        $data        The original data.
+     * @param array|string $returnValue The normalized data.
+     *
+     * @return mixed The (possibly modified) $returnValue.
      */
-    protected function _onAfterFormat(array $record, $returnValue)
+    protected function _onAfterFormat(array $data, $returnValue)
     {
         $output = $this->_format;
 
-        foreach ($record['extra'] as $var => $val) {
+        foreach ($returnValue['extra'] as $var => $val) {
 
-            if (false !== strpos($output, '%extra.' . $var . '%')) {
+            if (strpos($output, '%extra.' . $var . '%') === false) {
 
-                $output = str_replace('%extra.' . $var . '%', $this->_convertToString($val), $output);
-
-                unset($record['extra'][$var]);
+                continue;
             }
+
+            $output = str_replace('%extra.' . $var . '%', $this->_doConvertToString($val), $output);
+
+            unset($data['extra'][$var]);
+
         }
 
-        foreach ($record as $var => $val) {
+        foreach ($data as $var => $val) {
 
-            $output = str_replace('%'.$var.'%', $this->_convertToString($val), $output);
+            $output = str_replace('%' . $var . '%', $this->_doConvertToString($val), $output);
         }
 
         return $output;
     }
 
-    private function _convertToString($data)
+    private function _doConvertToString($data)
     {
-        if (is_float($data)) {
+        $normalized = parent::_normalize($data);
 
-            return $this->_doNormalize($data);
-        }
-
-        if (null === $data || is_scalar($data)) {
-
-            return (string) $data;
-        }
-
-        $normalized = $this->_doNormalize($data);
-
-        return stripslashes(str_replace("\n", '', var_export($normalized, true)));
-    }
-
-    private function _doNormalize($data)
-    {
-        if (is_bool($data) || is_null($data)) {
-
-            return str_replace("\n", '', var_export($data, true));
-        }
-
-        return parent::_normalize($data);
+        return stripslashes(parent::_convertToString($normalized));
     }
 }

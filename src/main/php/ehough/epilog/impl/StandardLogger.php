@@ -45,14 +45,14 @@
 
 class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
 {
-    private static $levels = array(
+    private static $_levels = array(
 
-        100 => 'DEBUG',
-        200 => 'INFO',
-        300 => 'WARNING',
-        400 => 'ERROR',
-        500 => 'CRITICAL',
-    );
+                               100 => 'DEBUG',
+                               200 => 'INFO',
+                               300 => 'WARNING',
+                               400 => 'ERROR',
+                               500 => 'CRITICAL',
+                              );
 
     private $_name;
 
@@ -61,17 +61,21 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     private $_processors = array();
 
     /**
-     * @param string $name The logging channel
+     * Constructor.
+     *
+     * @param string $name The logging channel.
      */
     public function __construct($name)
     {
-        @date_default_timezone_set(@date_default_timezone_get());
+        date_default_timezone_set(date_default_timezone_get());
 
         $this->_name = $name;
     }
 
     /**
-     * @return string
+     * Get the name of this logger instance.
+     *
+     * @return string The name of this logger instance.
      */
     public function getName()
     {
@@ -79,9 +83,9 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     }
 
     /**
-     * Is debug enabled?
+     * Determines if level debug and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if debug and above is enabled, false otherwise.
      */
     public function isDebugEnabled()
     {
@@ -89,9 +93,9 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     }
 
     /**
-     * Is info enabled?
+     * Determines if level info and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if info and above is enabled, false otherwise.
      */
     public function isInfoEnabled()
     {
@@ -99,9 +103,9 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     }
 
     /**
-     * Is warn enabled?
+     * Determines if level warn and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if warn and above is enabled, false otherwise.
      */
     public function isWarnEnabled()
     {
@@ -109,9 +113,9 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     }
 
     /**
-     * Is error enabled?
+     * Determines if level error and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if error and above is enabled, false otherwise.
      */
     public function isErrorEnabled()
     {
@@ -119,9 +123,9 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     }
 
     /**
-     * Is critical enabled?
+     * Determines if level critical and above is enabled.
      *
-     * @return Boolean
+     * @return boolean True if critical and above is enabled, false otherwise.
      */
     public function isCriticalEnabled()
     {
@@ -133,10 +137,10 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
+     * @param string $message The log message.
+     * @param array  $context The log context.
      *
-     * @return Boolean Whether the record has been processed
+     * @return boolean Whether the record has been processed
      */
     public function debug($message, array $context = array())
     {
@@ -148,10 +152,10 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
+     * @param string $message The log message.
+     * @param array  $context The log context.
      *
-     * @return Boolean Whether the record has been processed
+     * @return boolean Whether the record has been processed
      */
     public function info($message, array $context = array())
     {
@@ -163,10 +167,10 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
+     * @param string $message The log message.
+     * @param array  $context The log context.
      *
-     * @return Boolean Whether the record has been processed
+     * @return boolean Whether the record has been processed
      */
     public function warn($message, array $context = array())
     {
@@ -178,14 +182,14 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
+     * @param string $message The log message.
+     * @param array  $context The log context.
      *
-     * @return Boolean Whether the record has been processed
+     * @return boolean Whether the record has been processed.
      */
     public function error($message, array $context = array())
     {
-        $this->_addRecord(ehough_epilog_api_ILogger::ERROR, $message, $context);
+        return $this->_addRecord(ehough_epilog_api_ILogger::ERROR, $message, $context);
     }
 
     /**
@@ -193,10 +197,10 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      *
      * This method allows for compatibility with common interfaces.
      *
-     * @param  string  $message The log message
-     * @param  array   $context The log context
+     * @param string $message The log message.
+     * @param array  $context The log context.
      *
-     * @return Boolean Whether the record has been processed
+     * @return boolean Whether the record has been processed
      */
     public function critical($message, array $context = array())
     {
@@ -206,7 +210,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     /**
      * Pushes a handler on to the stack.
      *
-     * @param ehough_epilog_api_IHandler $handler
+     * @param ehough_epilog_api_IHandler $handler The handler to push.
      *
      * @return void
      */
@@ -216,11 +220,11 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     }
 
     /**
-     * Pops a handler from the stack
+     * Pops a handler from the stack.
      *
-     * @return ehough_epilog_api_IHandler
+     * @return ehough_epilog_api_IHandler The top handler on the stack.
      *
-     * @throws LogicException
+     * @throws LogicException If the handler stack is empty.
      */
     public function popHandler()
     {
@@ -264,22 +268,22 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     /**
      * Checks whether the Logger has a handler that listens on the given level.
      *
-     * @param  integer $level
+     * @param integer $level The integral logging level to check.
      *
-     * @return Boolean
+     * @return boolean True if this logger is handling this level, false otherwise.
      */
     private function _isHandling($level)
     {
         $record = array(
 
-            'message'    => '',
-            'context'    => array(),
-            'level'      => $level,
-            'level_name' => $this->_getLevelName($level),
-            'channel'    => $this->_name,
-            'time'       => microtime(true),
-            'extra'      => array(),
-        );
+                   'message'    => '',
+                   'context'    => array(),
+                   'level'      => $level,
+                   'level_name' => $this->_getLevelName($level),
+                   'channel'    => $this->_name,
+                   'time'       => new ehough_epilog_impl_TimeStamp(),
+                   'extra'      => array(),
+                  );
 
         /* @noinspection PhpUnusedLocalVariableInspection */
         foreach ($this->_handlers as $key => $handler) {
@@ -297,34 +301,38 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     /**
      * Adds a log record.
      *
-     * @param  integer $level   The logging level
-     * @param  string  $message The log message
-     * @param  array   $context The log context
-     * @return Boolean Whether the record has been processed
+     * @param integer $level   The logging level.
+     * @param string  $message The log message.
+     * @param array   $context The log context.
+     *
+     * @return Boolean Whether the record has been processed.
      */
     private function _addRecord($level, $message, array $context = array())
     {
         if (! $this->_handlers) {
 
-            $this->pushHandler(new StreamHandler('php://stderr', ehough_epilog_api_ILogger::DEBUG));
+            $handler = new ehough_epilog_impl_handler_StreamHandler('php://stderr', ehough_epilog_api_ILogger::DEBUG);
+
+            $this->pushHandler($handler);
         }
 
         $record = array(
 
-            'message'    => (string) $message,
-            'context'    => $context,
-            'level'      => $level,
-            'level_name' => $this->_getLevelName($level),
-            'channel'    => $this->_name,
-            'time'       => microtime(true),
-            'extra'      => array(),
-        );
+                   'message'    => (string) $message,
+                   'context'    => $context,
+                   'level'      => $level,
+                   'level_name' => $this->_getLevelName($level),
+                   'channel'    => $this->_name,
+                   'time'       => new ehough_epilog_impl_TimeStamp(),
+                   'extra'      => array(),
+                  );
 
         // check if any message will handle this message
         $handlerKey = null;
 
         foreach ($this->_handlers as $key => $handler) {
 
+            /** @noinspection PhpUndefinedMethodInspection */
             if ($handler->isHandling($record)) {
 
                 $handlerKey = $key;
@@ -342,6 +350,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
         // found at least one, process message and dispatch it
         foreach ($this->_processors as $processor) {
 
+            /** @noinspection PhpUndefinedMethodInspection */
             $record = $processor->process($record);
         }
 
@@ -356,13 +365,12 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
     /**
      * Gets the name of the logging level.
      *
-     * @param  integer $level
+     * @param integer $level The integral logging level.
      *
-     * @return string
+     * @return string The string representation of the logging level, or "undefined".
      */
     private function _getLevelName($level)
     {
-        return isset(self::$levels[$level]) ?
-            self::$levels[$level] : 'undefined';
+        return isset(self::$_levels[$level]) ? self::$_levels[$level] : 'undefined';
     }
 }
