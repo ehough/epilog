@@ -44,15 +44,18 @@
  */
 
 /**
- * Injects memory_get_usage in all records
+ * Injects memory_get_usage in all records.
  *
  * @author Rob Jensen
  */
 class ehough_epilog_impl_processor_MemoryUsageProcessor extends ehough_epilog_impl_processor_AbstractMemoryProcessor
 {
     /**
-     * @param  array $record
-     * @return array
+     * Process a single record.
+     *
+     * @param array $record The log record to process.
+     *
+     * @return array The processed record.
      */
     public function process(array $record)
     {
@@ -60,13 +63,8 @@ class ehough_epilog_impl_processor_MemoryUsageProcessor extends ehough_epilog_im
         $formatted = $this->_formatBytes($bytes);
 
         $record['extra'] = array_merge(
-
             $record['extra'],
-
-            array(
-
-                'memory_usage' => $formatted,
-            )
+            array('memory_usage' => $formatted)
         );
 
         return $record;

@@ -53,7 +53,9 @@ abstract class ehough_epilog_impl_processor_AbstractMemoryProcessor implements e
     private $_realUsage;
 
     /**
-     * @param boolean $realUsage
+     * Constructor.
+     *
+     * @param boolean $realUsage Whether to use real memory usage or not.
      */
     public function __construct($realUsage = true)
     {
@@ -61,29 +63,35 @@ abstract class ehough_epilog_impl_processor_AbstractMemoryProcessor implements e
     }
 
     /**
-     * Formats bytes into a human readable string
+     * Formats byte count into a human readable string.
      *
-     * @param  int    $bytes
-     * @return string
+     * @param integer $bytes The number of bytes.
+     *
+     * @return string The string representation of the byte count.
      */
     protected final function _formatBytes($bytes)
     {
         $bytes = (int) $bytes;
 
-        if ($bytes > 1024 * 1024) {
+        if ($bytes > (1024 * 1024)) {
 
-            return round($bytes / 1024 / 1024, 2).' MB';
+            return round((($bytes / 1024) / 1024), 2) .' MB';
 
         }
 
         if ($bytes > 1024) {
 
-            return round($bytes / 1024, 2).' KB';
+            return round(($bytes / 1024), 2) .' KB';
         }
 
         return $bytes . ' B';
     }
 
+    /**
+     * Determines if we're processing real memory usage.
+     *
+     * @return bool True if this is processing real memory usage, false otherwise.
+     */
     protected final function _isProcessingRealUsage()
     {
         return $this->_realUsage;

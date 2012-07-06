@@ -44,7 +44,7 @@
  */
 
 /**
- * Injects url/method and remote IP of the current web request in all records
+ * Injects url/method and remote IP of the current web request in all records.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
@@ -53,9 +53,11 @@ class ehough_epilog_impl_processor_WebProcessor implements ehough_epilog_api_IPr
     private $_serverData;
 
     /**
-     * @param mixed $serverData array or object w/ ArrayAccess that provides access to the $_SERVER data
+     * Constructor.
      *
-     * @throws UnexpectedValueException
+     * @param mixed $serverData Array or object with ArrayAccess that provides access to the $_SERVER data.
+     *
+     * @throws UnexpectedValueException If ServerData is not accessible.
      */
     public function __construct($serverData = null)
     {
@@ -63,7 +65,7 @@ class ehough_epilog_impl_processor_WebProcessor implements ehough_epilog_api_IPr
 
             $this->_serverData =& $_SERVER;
 
-        } elseif (is_array($serverData) || $serverData instanceof \ArrayAccess) {
+        } else if (is_array($serverData) || $serverData instanceof ArrayAccess) {
 
             $this->_serverData = $serverData;
 
@@ -74,9 +76,11 @@ class ehough_epilog_impl_processor_WebProcessor implements ehough_epilog_api_IPr
     }
 
     /**
-     * @param  array $record
+     * Process a single record.
      *
-     * @return array
+     * @param array $record The log record to process.
+     *
+     * @return array The processed record.
      */
     public function process(array $record)
     {
@@ -93,16 +97,13 @@ class ehough_epilog_impl_processor_WebProcessor implements ehough_epilog_api_IPr
         }
 
         $record['extra'] = array_merge(
-
             $record['extra'],
-
             array(
-
-                'url'         => $this->_serverData['REQUEST_URI'],
-                'ip'          => $this->_serverData['REMOTE_ADDR'],
-                'http_method' => $this->_serverData['REQUEST_METHOD'],
-                'server'      => $this->_serverData['SERVER_NAME'],
-                'referrer'    => $this->_serverData['HTTP_REFERER'],
+             'url'         => $this->_serverData['REQUEST_URI'],
+             'ip'          => $this->_serverData['REMOTE_ADDR'],
+             'http_method' => $this->_serverData['REQUEST_METHOD'],
+             'server'      => $this->_serverData['SERVER_NAME'],
+             'referrer'    => $this->_serverData['HTTP_REFERER'],
             )
         );
 
