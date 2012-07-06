@@ -57,9 +57,11 @@ final class ehough_epilog_impl_handler_StreamHandler extends ehough_epilog_impl_
     private $_url;
 
     /**
-     * @param string    $stream  The stream.
-     * @param bool|int $level The minimum logging level at which this handler will be triggered
-     * @param bool     $bubble Whether the messages that are handled can bubble up the stack or not
+     * Constructor.
+     *
+     * @param string          $stream The stream.
+     * @param boolean|integer $level  The minimum logging level at which this handler will be triggered.
+     * @param boolean         $bubble Whether the messages that are handled can bubble up the stack or not.
      */
     public function __construct($stream, $level = ehough_epilog_api_ILogger::DEBUG, $bubble = true)
     {
@@ -76,7 +78,11 @@ final class ehough_epilog_impl_handler_StreamHandler extends ehough_epilog_impl_
     }
 
     /**
-     * {@inheritdoc}
+     * Closes the handler.
+     *
+     * This will be called automatically when the object is destroyed
+     *
+     * @return void
      */
     public function close()
     {
@@ -89,15 +95,24 @@ final class ehough_epilog_impl_handler_StreamHandler extends ehough_epilog_impl_
     }
 
     /**
-     * {@inheritdoc}
+     * Write the record down to the log of the implementing handler.
+     *
+     * @param array $record The log record to write.
+     *
+     * @return void
+     *
+     * @throws LogicException If the stream cannot be closed.
+     * @throws UnexpectedValueException If the stream is invalid.
      */
     protected function write(array $record)
     {
-        if (null === $this->_stream) {
+        if ($this->_stream === null) {
 
             if (!$this->_url) {
 
-                throw new LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
+                throw new LogicException(
+                    'Missing stream url, the stream can not be opened. This may be caused by a premature call to close().'
+                );
             }
 
             $this->_stream = @fopen($this->_url, 'a');

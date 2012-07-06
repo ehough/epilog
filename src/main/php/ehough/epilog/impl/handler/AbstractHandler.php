@@ -44,40 +44,52 @@
  */
 
 /**
- * Base Handler class providing the Handler structure
+ * Base Handler class providing the Handler structure.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
 abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epilog_api_IHandler
 {
-    private $level = ehough_epilog_api_ILogger::DEBUG;
+    private $_level = ehough_epilog_api_ILogger::DEBUG;
 
-    private $bubble = false;
+    private $_bubble = false;
 
-    private $formatter;
+    private $_formatter = null;
 
-    private $processors = array();
+    private $_processors = array();
 
     /**
-     * @param integer $level  The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
+     * Constructor.
+     *
+     * @param integer $level        The minimum logging level at which this handler will be triggered.
+     * @param boolean $shouldBubble Whether the messages that are handled can bubble up the stack or not.
      */
-    public function __construct($level = ehough_epilog_api_ILogger::DEBUG, $bubble = true)
+    public function __construct($level = ehough_epilog_api_ILogger::DEBUG, $shouldBubble = true)
     {
-        $this->level = $level;
-        $this->bubble = $bubble;
+        $this->_level  = $level;
+        $this->_bubble = $shouldBubble;
     }
 
     /**
-     * {@inheritdoc}
+     * Checks whether the given record will be handled by this handler.
+     *
+     * This is mostly done for performance reasons, to avoid calling processors for nothing.
+     *
+     * @param array $record Records to check for.
+     *
+     * @return bool True if this handler is handling this record, false otherwise.
      */
     public final function isHandling(array $record)
     {
-        return $record['level'] >= $this->level;
+        return $record['level'] >= $this->_level;
     }
 
     /**
-     * {@inheritdoc}
+     * Handles a set of records at once.
+     *
+     * @param array $records The records to handle (an array of record arrays).
+     *
+     * @return void
      */
     public final function handleBatch(array $records)
     {
@@ -88,94 +100,110 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
     }
 
     /**
-     * {@inheritdoc}
+     * Adds a processor in the stack.
+     *
+     * @param ehough_epilog_api_IProcessor $callback The processor to push.
+     *
+     * @return void
      */
     public final function pushProcessor(ehough_epilog_api_IProcessor $callback)
     {
-        if (! is_callable($callback)) {
-
-            throw new InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
-        }
-
-        array_unshift($this->processors, $callback);
+        array_unshift($this->_processors, $callback);
     }
 
     /**
-     * {@inheritdoc}
+     * Removes the processor on top of the stack and returns it.
+     *
+     * @return ehough_epilog_api_IProcessor
+     *
+     * @throws LogicException If the processor stack is currently empty.
      */
     public final function popProcessor()
     {
-        if (! $this->processors) {
+        if (count($this->_processors) === 0) {
 
             throw new LogicException('You tried to pop from an empty processor stack.');
         }
 
-        return array_shift($this->processors);
+        return array_shift($this->_processors);
     }
 
     /**
-     * {@inheritdoc}
+     * Sets the formatter.
+     *
+     * @param ehough_epilog_api_IFormatter $formatter The new formatter.
+     *
+     * @return void
      */
     public final function setFormatter(ehough_epilog_api_IFormatter $formatter)
     {
-        $this->formatter = $formatter;
+        $this->_formatter = $formatter;
     }
 
     /**
-     * {@inheritdoc}
+     * Gets the formatter.
+     *
+     * @return ehough_epilog_api_IFormatter
      */
     public final function getFormatter()
     {
-        if (!$this->formatter) {
-            $this->formatter = $this->getDefaultFormatter();
+        if ($this->_formatter === null) {
+
+            $this->_formatter = $this->getDefaultFormatter();
         }
 
-        return $this->formatter;
+        return $this->_formatter;
     }
-
 
     /**
      * Sets minimum logging level at which this handler will be triggered.
      *
-     * @param integer $level
+     * @param integer $level The minimum logging level at which this handler will be triggered.
+     *
+     * @return void
      */
     public final function setLevel($level)
     {
-        $this->level = $level;
+        $this->_level = $level;
     }
 
     /**
      * Gets minimum logging level at which this handler will be triggered.
      *
-     * @return integer
+     * @return integer The minimum logging level at which this handler will be triggered.
      */
     public final function getLevel()
     {
-        return $this->level;
+        return $this->_level;
     }
 
     /**
      * Sets the bubbling behavior.
      *
-     * @param Boolean $bubble True means that bubbling is not permitted.
+     * @param boolean $shouldBubble True means that bubbling is not permitted.
      *                        False means that this handler allows bubbling.
+     *
+     * @return void
      */
-    public final function setBubble($bubble)
+    public final function setShouldBubble($shouldBubble)
     {
-        $this->bubble = $bubble;
+        $this->_bubble = (boolean) $shouldBubble;
     }
 
     /**
      * Gets the bubbling behavior.
      *
-     * @return Boolean True means that bubbling is not permitted.
+     * @return boolean True means that bubbling is not permitted.
      *                 False means that this handler allows bubbling.
      */
-    public final function getBubble()
+    public final function getShouldBubble()
     {
-        return $this->bubble;
+        return $this->_bubble;
     }
 
+    /**
+     * Destructor.
+     */
     public final function __destruct()
     {
         try {
@@ -184,7 +212,7 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
 
         } catch (Exception $e) {
 
-            // do nothing
+            return;
         }
     }
 
@@ -192,6 +220,8 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
      * Closes the handler.
      *
      * This will be called automatically when the object is destroyed
+     *
+     * @return void
      */
     public function close()
     {
@@ -208,8 +238,13 @@ abstract class ehough_epilog_impl_handler_AbstractHandler implements ehough_epil
         return new ehough_epilog_impl_formatter_LineFormatter();
     }
 
+    /**
+     * Get the stack of processors for this handler (may be empty).
+     *
+     * @return mixed The stack of processors for this handler (may be empty).
+     */
     protected final function getProcessors()
     {
-        return $this->processors;
+        return $this->_processors;
     }
 }

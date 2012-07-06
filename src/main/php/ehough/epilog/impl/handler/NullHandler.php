@@ -54,7 +54,9 @@
 class ehough_epilog_impl_handler_NullHandler extends ehough_epilog_impl_handler_AbstractHandler
 {
     /**
-     * @param integer $level The minimum logging level at which this handler will be triggered
+     * Constructor.
+     *
+     * @param integer $level The minimum logging level at which this handler will be triggered.
      */
     public final function __construct($level = ehough_epilog_api_ILogger::DEBUG)
     {
@@ -62,7 +64,14 @@ class ehough_epilog_impl_handler_NullHandler extends ehough_epilog_impl_handler_
     }
 
     /**
-     * {@inheritdoc}
+     * Handles a record.
+     *
+     * The return value of this function controls the bubbling process of the handler stack.
+     *
+     * @param array $record The record to handle.
+     *
+     * @return bool True means that this handler handled the record, and that bubbling is not permitted.
+     *                 False means the record was either not processed or that this handler allows bubbling.
      */
     public function handle(array $record)
     {

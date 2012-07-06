@@ -46,7 +46,14 @@
 abstract class ehough_epilog_impl_handler_AbstractProcessingHandler extends ehough_epilog_impl_handler_AbstractHandler
 {
     /**
-     * {@inheritdoc}
+     * Handles a record.
+     *
+     * The return value of this function controls the bubbling process of the handler stack.
+     *
+     * @param array $record The record to handle.
+     *
+     * @return bool True means that this handler handled the record, and that bubbling is not permitted.
+     *                 False means the record was either not processed or that this handler allows bubbling.
      */
     public final function handle(array $record)
     {
@@ -61,13 +68,14 @@ abstract class ehough_epilog_impl_handler_AbstractProcessingHandler extends ehou
 
         $this->write($record);
 
-        return $this->getBubble() === false;
+        return $this->getShouldBubble() === false;
     }
 
     /**
-     * Writes the record down to the log of the implementing handler
+     * Write the record down to the log of the implementing handler.
      *
-     * @param  array $record
+     * @param array $record The log record to write.
+     *
      * @return void
      */
     abstract protected function write(array $record);
@@ -75,8 +83,9 @@ abstract class ehough_epilog_impl_handler_AbstractProcessingHandler extends ehou
     /**
      * Processes a record.
      *
-     * @param  array $record
-     * @return array
+     * @param array $record The record to process.
+     *
+     * @return array The processed record.
      */
     private function _processRecord(array $record)
     {
@@ -86,6 +95,7 @@ abstract class ehough_epilog_impl_handler_AbstractProcessingHandler extends ehou
 
             foreach ($processors as $processor) {
 
+                /** @noinspection PhpUndefinedMethodInspection */
                 $record = $processor->process($record);
             }
         }

@@ -51,10 +51,14 @@
 final class ehough_epilog_impl_handler_PrintHandler extends ehough_epilog_impl_handler_AbstractProcessingHandler
 {
     /**
-     * {@inheritdoc}
+     * Write the record down to the log of the implementing handler.
+     *
+     * @param array $record The log record to write.
+     *
+     * @return void
      */
     protected function write(array $record)
     {
-        print $record['formatted'];
+        echo $record['formatted'];
     }
 }
