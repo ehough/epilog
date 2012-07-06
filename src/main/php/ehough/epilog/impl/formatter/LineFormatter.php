@@ -90,40 +90,53 @@ final class ehough_epilog_impl_formatter_LineFormatter extends ehough_epilog_imp
     /**
      * Override point for normalization.
      *
-     * @param array        $data        The original data.
-     * @param array|string $returnValue The normalized data.
+     * @param array $nonNormalizedRecord The original data.
+     * @param array $normalizedRecord    The normalized data.
      *
      * @return mixed The (possibly modified) $returnValue.
      */
-    protected function _onAfterFormat(array $data, $returnValue)
+    protected function _onAfterFormatRecord(array $nonNormalizedRecord, array $normalizedRecord)
     {
-        $output = $this->_format;
+        $toReturn = $this->_format;
 
-        foreach ($returnValue['extra'] as $var => $val) {
+        foreach ($normalizedRecord['extra'] as $var => $val) {
 
-            if (strpos($output, '%extra.' . $var . '%') === false) {
+            if (strpos($toReturn, '%extra.' . $var . '%') === false) {
 
                 continue;
             }
 
-            $output = str_replace('%extra.' . $var . '%', $this->_doConvertToString($val), $output);
+            $toReturn = str_replace('%extra.' . $var . '%', $this->_doConvertToString($val), $toReturn);
 
-            unset($data['extra'][$var]);
+            unset($normalizedRecord['extra'][$var]);
 
         }
 
-        foreach ($data as $var => $val) {
+        foreach ($normalizedRecord as $var => $val) {
 
-            $output = str_replace('%' . $var . '%', $this->_doConvertToString($val), $output);
+            $toReturn = str_replace('%' . $var . '%', $this->_doConvertToString($val), $toReturn);
         }
 
-        return $output;
+        return $toReturn;
     }
 
+    /**
+     * Converts anything to a string.
+     *
+     * @param mixed $data The data to convert.
+     *
+     * @return string The converted data.
+     */
     private function _doConvertToString($data)
     {
-        $normalized = parent::_normalize($data);
+        if ($data === null || is_scalar($data)) {
 
-        return stripslashes(parent::_convertToString($normalized));
+            return "$data";
+        }
+
+        $normalized = parent::_deepNormalize($data);
+        $asString   = parent::_convertToString($normalized);
+
+        return stripslashes($asString);
     }
 }

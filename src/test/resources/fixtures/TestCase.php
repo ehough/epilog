@@ -61,7 +61,7 @@ class ehough_epilog_impl_TestCase extends PHPUnit_Framework_TestCase
             'level' => $level,
             'level_name' => $this->_getLevelName($level),
             'channel' => 'test',
-            'time' => microtime(true),
+            'time' => new ehough_epilog_impl_TimeStamp(),
             'extra' => array(),
         );
     }

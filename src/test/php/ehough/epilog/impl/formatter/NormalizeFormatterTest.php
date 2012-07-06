@@ -52,7 +52,7 @@ class ehough_epilog_impl_formatter_NormalizeFormatterTest extends PHPUnit_Framew
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'message' => 'foo',
-            'time' => microtime(true),
+            'time' => new ehough_epilog_impl_TimeStamp(),
             'extra' => array('foo' => new TestFooNorm, 'bar' => new TestBarNorm, 'baz' => array(), 'res' => fopen('php://memory', 'rb')),
             'context' => array(
                 'foo' => 'bar',
@@ -66,11 +66,8 @@ class ehough_epilog_impl_formatter_NormalizeFormatterTest extends PHPUnit_Framew
             'message' => 'foo',
             'time' => date('Y-m-d'),
             'extra' => array(
-                'foo' => '[object] (TestFooNorm: TestFooNorm::__set_state(array(
-   \'foo\' => \'foo\',
-)))',
-                'bar' => '[object] (TestBarNorm: TestBarNorm::__set_state(array(
-)))',
+                'foo' => '[instance of TestFooNorm]',
+                'bar' => '[instance of TestBarNorm]',
                 'baz' => array(),
                 'res' => '[resource]',
             ),
@@ -90,7 +87,7 @@ class ehough_epilog_impl_formatter_NormalizeFormatterTest extends PHPUnit_Framew
                 'channel' => 'test',
                 'message' => 'bar',
                 'context' => array(),
-                'time' => microtime(true),
+                'time' => new ehough_epilog_impl_TimeStamp(),
                 'extra' => array(),
             ),
             array(
@@ -98,7 +95,7 @@ class ehough_epilog_impl_formatter_NormalizeFormatterTest extends PHPUnit_Framew
                 'channel' => 'log',
                 'message' => 'foo',
                 'context' => array(),
-                'time' => microtime(true),
+                'time' => new ehough_epilog_impl_TimeStamp(),
                 'extra' => array(),
             ),
         ));

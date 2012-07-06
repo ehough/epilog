@@ -228,7 +228,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     public function popHandler()
     {
-        if (! $this->_handlers) {
+        if (count($this->_handlers) === 0) {
 
             throw new LogicException('You tried to pop from an empty handler stack.');
         }
@@ -257,7 +257,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     public function popProcessor()
     {
-        if (!$this->_processors) {
+        if (count($this->_processors) === 0) {
 
             throw new LogicException('You tried to pop from an empty processor stack.');
         }
@@ -309,7 +309,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
      */
     private function _addRecord($level, $message, array $context = array())
     {
-        if (! $this->_handlers) {
+        if (count($this->_handlers) === 0) {
 
             $handler = new ehough_epilog_impl_handler_StreamHandler('php://stderr', ehough_epilog_api_ILogger::DEBUG);
 
@@ -342,7 +342,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
         }
 
         // none found
-        if (null === $handlerKey) {
+        if ($handlerKey === null) {
 
             return false;
         }
@@ -354,7 +354,7 @@ class ehough_epilog_impl_StandardLogger implements ehough_epilog_api_ILogger
             $record = $processor->process($record);
         }
 
-        while (isset($this->_handlers[$handlerKey]) && false === $this->_handlers[$handlerKey]->handle($record)) {
+        while (isset($this->_handlers[$handlerKey]) && $this->_handlers[$handlerKey]->handle($record) === false) {
 
             $handlerKey++;
         }

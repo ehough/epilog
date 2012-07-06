@@ -53,11 +53,11 @@ interface ehough_epilog_api_IFormatter
     /**
      * Formats a log record.
      *
-     * @param array $record A record to format.
+     * @param array $nonNormalizedRecord A record to format.
      *
      * @return mixed The formatted record
      */
-    function format(array $record);
+    function format(array $nonNormalizedRecord);
 
     /**
      * Formats a set of log records.

@@ -51,7 +51,11 @@
 class ehough_epilog_impl_formatter_NormalizeFormatter extends ehough_epilog_impl_formatter_AbstractNormalizingFormatter
 {
     /**
-     * {@inheritdoc}
+     * Formats a set of log records.
+     *
+     * @param array $records A set of records to format.
+     *
+     * @return mixed The formatted set of records
      */
     public final function formatBatch(array $records)
     {

@@ -66,16 +66,54 @@ abstract class ehough_epilog_impl_formatter_AbstractNormalizingFormatter impleme
     /**
      * Formats a log record.
      *
-     * @param array $record A record to format.
+     * @param array $nonNormalizedRecord A record to format.
      *
      * @return mixed The formatted record
      */
-    public final function format(array $record)
+    public final function format(array $nonNormalizedRecord)
     {
-        $returnValue = $this->_normalize($record);
+        $normalizedRecord = $this->_deepNormalize($nonNormalizedRecord);
 
         /* to allow subclasses to override. */
-        return $this->_onAfterFormat($record, $returnValue);
+        return $this->_onAfterFormatRecord($nonNormalizedRecord, $normalizedRecord);
+    }
+
+    /**
+     * Normalizes the log record.
+     *
+     * @param mixed $data The data to normalize.
+     *
+     * @return array The normalized data.
+     */
+    protected final function _deepNormalize($data)
+    {
+        /**
+         * Scalar and null data doesn't need any conversion.
+         */
+        if ($data === null || is_scalar($data)) {
+
+            return $data;
+        }
+
+        /**
+         * Collection of something? Recurse through it.
+         */
+        if (is_array($data) || $data instanceof Traversable) {
+
+            $normalized = array();
+
+            foreach ($data as $key => $value) {
+
+                $normalized[$key] = $this->_deepNormalize($value);
+            }
+
+            return $normalized;
+        }
+
+        /**
+         * This must be an object or resource...
+         */
+        return $this->_convertToString($data);
     }
 
     /**
@@ -98,9 +136,14 @@ abstract class ehough_epilog_impl_formatter_AbstractNormalizingFormatter impleme
             return $data->format($this->_dateFormat);
         }
 
+        if (is_array($data)) {
+
+            return $this->_deepToStringArray($data);
+        }
+
         if (is_object($data)) {
 
-            return sprintf('[object] (%s)', get_class($data));
+            return sprintf('[instance of %s]', get_class($data));
         }
 
         if (is_resource($data)) {
@@ -108,50 +151,52 @@ abstract class ehough_epilog_impl_formatter_AbstractNormalizingFormatter impleme
             return '[resource]';
         }
 
-        return '[unknown (' . gettype($data) . ')]';
-    }
-
-    /**
-     * Normalizes the log record.
-     *
-     * @param mixed $data The data to format.
-     *
-     * @return string|array The normalized log record(s).
-     */
-    protected final function _normalize($data)
-    {
-        if ($data === null || is_scalar($data)) {
-
-            return $data;
-        }
-
-        if (is_array($data) || $data instanceof Traversable) {
-
-            $normalized = array();
-
-            foreach ($data as $key => $value) {
-
-                $normalized[$key] = $this->_normalize($value);
-            }
-
-            return $normalized;
-        }
-
-        return $this->_convertToString($data);
+        return '[unknown] (' . gettype($data) . ')';
     }
 
     /**
      * Override point for normalization.
      *
-     * @param array        $data        The original data.
-     * @param array|string $returnValue The normalized data.
+     * @param array $nonNormalizedRecord The original data.
+     * @param array $normalizedRecord    The normalized data.
      *
      * @return mixed The (possibly modified) $returnValue.
      */
-    protected function _onAfterFormat(array $data, $returnValue)
+    protected function _onAfterFormatRecord(array $nonNormalizedRecord, array $normalizedRecord)
     {
         //override point
-        return $returnValue;
+        return $normalizedRecord;
+    }
+
+    private function _deepToStringArray(array $arr)
+    {
+        $buffer   = '';
+        $arrCount = 0;
+
+        foreach ($arr as $key => $value) {
+
+            $buffer .= " '$key' => '";
+
+            if (is_array($value)) {
+
+                $buffer .= $this->_deepToStringArray($value);
+
+            } else {
+
+                $buffer .= $this->_convertToString($value);
+            }
+
+            if (++$arrCount < count($arr)) {
+
+                $buffer .= '\',';
+
+            } else {
+
+                $buffer .= '\'';
+            }
+        }
+
+        return "[array$buffer]";
     }
 
 }

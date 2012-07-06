@@ -26,7 +26,7 @@ class ehough_epilog_impl_handler_PrintHandlerTest extends ehough_epilog_impl_Tes
 
     public function testHandle()
     {
-        $this->expectOutputRegex('/\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\] test.WARNING: test array \(\) array \(\)/');
+        $this->expectOutputRegex('/\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\] test.WARNING: test \[array\] \[array\]/');
 
         $handler = new ehough_epilog_impl_handler_PrintHandler();
 

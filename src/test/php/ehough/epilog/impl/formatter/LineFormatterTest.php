@@ -53,10 +53,10 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
             'channel' => 'log',
             'context' => array(),
             'message' => 'foo',
-            'time' => microtime(true),
+            'time' => new ehough_epilog_impl_TimeStamp(),
             'extra' => array(),
         ));
-        $this->assertEquals('['.date('Y-m-d').'] log.WARNING: foo array () array ()'."\n", $message);
+        $this->assertEquals('['.date('Y-m-d').'] log.WARNING: foo [array] [array]'."\n", $message);
     }
 
     public function testDefFormatWithArrayContext()
@@ -66,14 +66,14 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'message' => 'foo',
-            'time' => microtime(true),
+            'time' => new ehough_epilog_impl_TimeStamp(),
             'extra' => array(),
             'context' => array(
                 'foo' => 'bar',
                 'baz' => 'qux',
             )
         ));
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foo array (  \'foo\' => \'bar\',  \'baz\' => \'qux\',) array ()'."\n", $message);
+        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foo [array \'foo\' => \'bar\', \'baz\' => \'qux\'] [array]'."\n", $message);
     }
 
     public function testDefFormatExtras()
@@ -83,11 +83,11 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'time' => microtime(true),
+            'time' => new ehough_epilog_impl_TimeStamp(),
             'extra' => array('ip' => '127.0.0.1'),
             'message' => 'log',
         ));
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: log array () array (  \'ip\' => \'127.0.0.1\',)'."\n", $message);
+        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: log [array] [array \'ip\' => \'127.0.0.1\']'."\n", $message);
     }
 
     public function testFormatExtras()
@@ -97,11 +97,11 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'time' => microtime(true),
+            'time' => new ehough_epilog_impl_TimeStamp(),
             'extra' => array('ip' => '127.0.0.1', 'file' => 'test'),
             'message' => 'log',
         ));
-        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: log array () test array (  \'ip\' => \'127.0.0.1\',)'."\n", $message);
+        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: log [array] test [array \'ip\' => \'127.0.0.1\']'."\n", $message);
     }
 
     public function testDefFormatWithObject()
@@ -111,15 +111,12 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'time' => microtime(true),
+            'time' => new ehough_epilog_impl_TimeStamp(),
             'extra' => array('foo' => new TestFoo, 'bar' => new TestBar, 'baz' => array(), 'res' => fopen('php://memory', 'rb')),
             'message' => 'foobar',
         ));
-        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
-            $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foobar array () array ( \'foo\' => \'[object] (TestFoo: TestFoo::__set_state(array( \'foo\' => \'foo\',)))\', \'bar\' => \'[object] (TestBar: TestBar::__set_state(array()))\', \'baz\' => array ( ), \'res\' => \'[resource]\',)'."\n", $message);
-        } else {
-            $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foobar array () array ( \'foo\' => \'[object] (TestFoo: TestFoo::__set_state(array( \'foo\' => \'foo\',)))\', \'bar\' => \'[object] (TestBar: TestBar::__set_state(array()))\', \'baz\' => array ( ), \'res\' => \'[resource]\',)'."\n", $message);
-        }
+
+        $this->assertEquals('['.date('Y-m-d').'] meh.ERROR: foobar [array] [array \'foo\' => \'[instance of TestFoo]\', \'bar\' => \'[instance of TestBar]\', \'baz\' => \'[array]\', \'res\' => \'[resource]\']'."\n", $message);
     }
 
     public function testBatchFormat()
@@ -131,7 +128,7 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
                 'channel' => 'test',
                 'message' => 'bar',
                 'context' => array(),
-                'time' => microtime(true),
+                'time' => new ehough_epilog_impl_TimeStamp(),
                 'extra' => array(),
             ),
             array(
@@ -139,11 +136,11 @@ class ehough_epilog_impl_formatter_LineFormatterTest extends PHPUnit_Framework_T
                 'channel' => 'log',
                 'message' => 'foo',
                 'context' => array(),
-                'time' => microtime(true),
+                'time' => new ehough_epilog_impl_TimeStamp(),
                 'extra' => array(),
             ),
         ));
-        $this->assertEquals('['.date('Y-m-d').'] test.CRITICAL: bar array () array ()'."\n".'['.date('Y-m-d').'] log.WARNING: foo array () array ()'."\n", $message);
+        $this->assertEquals('['.date('Y-m-d').'] test.CRITICAL: bar [array] [array]'."\n".'['.date('Y-m-d').'] log.WARNING: foo [array] [array]'."\n", $message);
     }
 }
 
