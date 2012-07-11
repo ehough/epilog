@@ -17,6 +17,14 @@
 
     "require-dev": {
         
-	    "ehough/pulsar": "1.0.2"
+	    "ehough/pulsar": "1.*"
+    },
+
+    "autoload": {
+
+        "psr-0": {
+
+            "ehough_epilog": "src/main/php"
+        }
     }
 }
