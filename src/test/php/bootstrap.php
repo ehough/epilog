@@ -22,5 +22,5 @@
 require_once __DIR__ . '/../../../vendor/ehough/pulsar/src/main/php/ehough/pulsar/ComposerClassLoader.php';
 
 $loader = new ehough_pulsar_ComposerClassLoader(__DIR__ . '/../../../vendor/');
-$loader->registerPrefix('ehough_epilog', __DIR__ . '/../../main/php/');
+$loader->registerDirectory('ehough_epilog', __DIR__ . '/../../main/php/');
 $loader->register();
