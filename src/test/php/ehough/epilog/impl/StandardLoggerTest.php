@@ -19,9 +19,9 @@
  *
  */
 
-require_once __DIR__ . '/../../../../resources/fixtures/handler/TestHandler.php';
-require_once __DIR__ . '/../../../../resources/fixtures/processor/TestSuccessProcessor.php';
-require_once __DIR__ . '/../../../../resources/fixtures/processor/TestFailProcessor.php';
+require_once dirname(__FILE__) . '/../../../../resources/fixtures/handler/TestHandler.php';
+require_once dirname(__FILE__) . '/../../../../resources/fixtures/processor/TestSuccessProcessor.php';
+require_once dirname(__FILE__) . '/../../../../resources/fixtures/processor/TestFailProcessor.php';
 
 /**
  * Original author...
@@ -148,10 +148,12 @@ class ehough_epilog_impl_LoggerTest extends PHPUnit_Framework_TestCase
         ;
         $logger->pushHandler($handler);
 
-        $processor = $this->getMockBuilder('ehough_epilog_impl_processor_WebProcessor')
-            ->disableOriginalConstructor()
-            ->setMethods(array('process'))
-            ->getMock()
+        $processor = $this->getMock('ehough_epilog_impl_processor_WebProcessor');
+
+//        $processor = $this->getMockBuilder('ehough_epilog_impl_processor_WebProcessor')
+//            ->disableOriginalConstructor()
+//            ->setMethods(array('process'))
+//            ->getMock()
         ;
         $processor->expects($this->once())
             ->method('process')

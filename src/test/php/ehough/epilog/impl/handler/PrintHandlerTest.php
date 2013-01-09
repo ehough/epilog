@@ -19,7 +19,7 @@
  *
  */
 
-require_once __DIR__ . '/../../../../../resources/fixtures/TestCase.php';
+require_once dirname(__FILE__) . '/../../../../../resources/fixtures/TestCase.php';
 
 class ehough_epilog_impl_handler_PrintHandlerTest extends ehough_epilog_impl_TestCase
 {

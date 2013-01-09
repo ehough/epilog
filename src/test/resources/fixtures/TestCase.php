@@ -88,7 +88,7 @@ class ehough_epilog_impl_TestCase extends PHPUnit_Framework_TestCase
         $formatter = $this->getMock('ehough_epilog_api_IFormatter');
         $formatter->expects($this->any())
             ->method('format')
-            ->will($this->returnCallback(function($record) { return $record['message']; }));
+            ->will($this->returnCallback(array($this, '_callback')));
 
         return $formatter;
     }
@@ -96,5 +96,10 @@ class ehough_epilog_impl_TestCase extends PHPUnit_Framework_TestCase
     private function _getLevelName($level)
     {
         return self::$levels[$level];
+    }
+
+    public function _callback($record)
+    {
+        return $record['message'];
     }
 }

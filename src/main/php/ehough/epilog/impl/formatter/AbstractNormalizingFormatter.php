@@ -60,7 +60,7 @@ abstract class ehough_epilog_impl_formatter_AbstractNormalizingFormatter impleme
      */
     public function __construct($dateFormat = null)
     {
-        $this->_dateFormat = $dateFormat ? : 'Y-m-d H:i:s';
+        $this->_dateFormat = $dateFormat ? $dateFormat : 'Y-m-d H:i:s';
     }
 
     /**

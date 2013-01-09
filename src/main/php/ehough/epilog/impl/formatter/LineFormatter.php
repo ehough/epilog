@@ -63,7 +63,7 @@ final class ehough_epilog_impl_formatter_LineFormatter extends ehough_epilog_imp
      */
     public function __construct($format = null, $dateFormat = null)
     {
-        $this->_format = $format ? : "[%time%] %channel%.%level_name%: %message% %context% %extra%\n";
+        $this->_format = $format ? $format : "[%time%] %channel%.%level_name%: %message% %context% %extra%\n";
 
         parent::__construct($dateFormat);
     }

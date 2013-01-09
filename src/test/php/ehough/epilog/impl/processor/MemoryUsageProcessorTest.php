@@ -43,7 +43,7 @@
  * THE SOFTWARE.
  */
 
-require_once __DIR__ . '/../../../../../resources/fixtures/TestCase.php';
+require_once dirname(__FILE__) . '/../../../../../resources/fixtures/TestCase.php';
 
 class ehough_epilog_impl_processor_MemoryUsageProcessorTest extends ehough_epilog_impl_TestCase
 {

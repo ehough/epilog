@@ -43,7 +43,7 @@
  * THE SOFTWARE.
  */
 
-require_once __DIR__ . '/../../../../../resources/fixtures/TestCase.php';
+require_once dirname(__FILE__) . '/../../../../../resources/fixtures/TestCase.php';
 
 class ehough_epilog_impl_processor_WebProcessorTest extends ehough_epilog_impl_TestCase
 {
@@ -74,7 +74,7 @@ class ehough_epilog_impl_processor_WebProcessorTest extends ehough_epilog_impl_T
         );
         $processor = new ehough_epilog_impl_processor_WebProcessor($server);
         $record = $processor->process($this->getRecord());
-        $this->assertEmpty($record['extra']);
+        $this->assertTrue(empty($record['extra']));
     }
 
     public function testProcessorReturnNullIfNoHttpReferer()
@@ -95,6 +95,6 @@ class ehough_epilog_impl_processor_WebProcessorTest extends ehough_epilog_impl_T
      */
     public function testInvalidData()
     {
-        new ehough_epilog_impl_processor_WebProcessor(new \stdClass);
+        new ehough_epilog_impl_processor_WebProcessor(new stdClass);
     }
 }

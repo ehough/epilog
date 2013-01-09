@@ -19,8 +19,8 @@
  *
  */
 
-require_once __DIR__ . '/../../../vendor/ehough/pulsar/src/main/php/ehough/pulsar/ComposerClassLoader.php';
+require_once dirname(__FILE__) . '/../../../vendor/ehough/pulsar/src/main/php/ehough/pulsar/ComposerClassLoader.php';
 
-$loader = new ehough_pulsar_ComposerClassLoader(__DIR__ . '/../../../vendor/');
-$loader->registerDirectory('ehough_epilog', __DIR__ . '/../../main/php/');
+$loader = new ehough_pulsar_ComposerClassLoader(dirname(__FILE__) . '/../../../vendor/');
+$loader->registerDirectory('ehough_epilog', dirname(__FILE__) . '/../../main/php/');
 $loader->register();
