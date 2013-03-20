@@ -133,9 +133,9 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     /**
      * Pushes a handler on to the stack.
      *
-     * @param HandlerInterface $handler
+     * @param ehough_epilog_handler_HandlerInterface $handler
      */
-    public function pushHandler(HandlerInterface $handler)
+    public function pushHandler(ehough_epilog_handler_HandlerInterface $handler)
     {
         array_unshift($this->handlers, $handler);
     }
@@ -143,12 +143,12 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     /**
      * Pops a handler from the stack
      *
-     * @return HandlerInterface
+     * @return ehough_epilog_handler_HandlerInterface
      */
     public function popHandler()
     {
         if (!$this->handlers) {
-            throw new \LogicException('You tried to pop from an empty handler stack.');
+            throw new LogicException('You tried to pop from an empty handler stack.');
         }
 
         return array_shift($this->handlers);
@@ -161,8 +161,8 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function pushProcessor($callback)
     {
-        if (!is_callable($callback)) {
-            throw new \InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
+        if (!is_callable($callback) && !is_callable(array($callback, '__invoke'))) {
+            throw new InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
         }
         array_unshift($this->processors, $callback);
     }
@@ -175,7 +175,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     public function popProcessor()
     {
         if (!$this->processors) {
-            throw new \LogicException('You tried to pop from an empty processor stack.');
+            throw new LogicException('You tried to pop from an empty processor stack.');
         }
 
         return array_shift($this->processors);
@@ -192,11 +192,11 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     public function addRecord($level, $message, array $context = array())
     {
         if (!$this->handlers) {
-            $this->pushHandler(new StreamHandler('php://stderr', static::DEBUG));
+            $this->pushHandler(new ehough_epilog_handler_StreamHandler('php://stderr', static::DEBUG));
         }
 
         if (!static::$timezone) {
-            static::$timezone = new \DateTimeZone(date_default_timezone_get() ?: 'UTC');
+            static::$timezone = new DateTimeZone(date_default_timezone_get() ?: 'UTC');
         }
 
         $record = array(
@@ -205,7 +205,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
             'level' => $level,
             'level_name' => static::getLevelName($level),
             'channel' => $this->name,
-            'datetime' => \DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true)), static::$timezone)->setTimezone(static::$timezone),
+            'datetime' => DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true)), static::$timezone)->setTimezone(static::$timezone),
             'extra' => array(),
         );
         // check if any handler will handle this message
@@ -223,7 +223,17 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
 
         // found at least one, process message and dispatch it
         foreach ($this->processors as $processor) {
-            $record = call_user_func($processor, $record);
+
+            if (is_callable($processor)) {
+
+                $callback = $processor;
+
+            } else {
+
+                $callback = array($processor, '__invoke');
+            }
+
+            $record = call_user_func($callback, $record);
         }
         while (isset($this->handlers[$handlerKey]) &&
             false === $this->handlers[$handlerKey]->handle($record)) {
