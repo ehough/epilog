@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Processor;
+//namespace Monolog\Processor;
 
 /**
  * Injects line/file:class/function where the log message came from
@@ -22,7 +22,7 @@ namespace Monolog\Processor;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class IntrospectionProcessor
+class ehough_epilog_processor_IntrospectionProcessor
 {
     /**
      * @param  array $record

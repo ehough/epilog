@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Processor;
+//namespace Monolog\Processor;
 
 /**
  * Adds a unique identifier into records
  *
  * @author Simon Mönch <sm@webfactory.de>
  */
-class UidProcessor
+class ehough_epilog_processor_UidProcessor
 {
     private $uid;
 

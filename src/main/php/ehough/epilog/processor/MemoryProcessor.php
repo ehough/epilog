@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Processor;
+//namespace Monolog\Processor;
 
 /**
  * Some methods that are common for all memory processors
  *
  * @author Rob Jensen
  */
-abstract class MemoryProcessor
+abstract class ehough_epilog_processor_MemoryProcessor
 {
     protected $realUsage;
 

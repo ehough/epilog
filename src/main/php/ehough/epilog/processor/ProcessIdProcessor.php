@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Processor;
+//namespace Monolog\Processor;
 
 /**
  * Adds value of getmypid into records
  *
  * @author Andreas Hörnicke
  */
-class ProcessIdProcessor
+class ehough_epilog_processor_ProcessIdProcessor
 {
     private static $pid;
 

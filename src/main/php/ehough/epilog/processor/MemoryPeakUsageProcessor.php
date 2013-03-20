@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Processor;
+//namespace Monolog\Processor;
 
 /**
  * Injects memory_get_peak_usage in all records
@@ -17,7 +17,7 @@ namespace Monolog\Processor;
  * @see Monolog\Processor\MemoryProcessor::__construct() for options
  * @author Rob Jensen
  */
-class MemoryPeakUsageProcessor extends MemoryProcessor
+class ehough_epilog_processor_MemoryPeakUsageProcessor extends ehough_epilog_processor_MemoryProcessor
 {
     /**
      * @param  array $record

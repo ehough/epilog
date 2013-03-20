@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Processor;
+//namespace Monolog\Processor;
 
 /**
  * Processes a record's message according to PSR-3 rules
@@ -18,7 +18,7 @@ namespace Monolog\Processor;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class PsrLogMessageProcessor
+class ehough_epilog_processor_PsrLogMessageProcessor
 {
     /**
      * @param  array $record
