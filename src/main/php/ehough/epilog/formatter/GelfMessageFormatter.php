@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
-use Monolog\Logger;
-use Gelf\Message;
+//use Monolog\Logger;
+//use Gelf\Message;
 
 /**
  * Serializes a log message to GELF
@@ -20,7 +20,7 @@ use Gelf\Message;
  *
  * @author Matt Lehner <mlehner@gmail.com>
  */
-class GelfMessageFormatter extends NormalizerFormatter
+class ehough_epilog_formatter_GelfMessageFormatter extends ehough_epilog_formatter_NormalizerFormatter
 {
     /**
      * @var string the name of the system for the Gelf log message
@@ -41,18 +41,23 @@ class GelfMessageFormatter extends NormalizerFormatter
      * Translates Monolog log levels to Graylog2 log priorities.
      */
     private $logLevels = array(
-        Logger::DEBUG     => 7,
-        Logger::INFO      => 6,
-        Logger::NOTICE    => 5,
-        Logger::WARNING   => 4,
-        Logger::ERROR     => 3,
-        Logger::CRITICAL  => 2,
-        Logger::ALERT     => 1,
-        Logger::EMERGENCY => 0,
+        ehough_epilog_Logger::DEBUG     => 7,
+        ehough_epilog_Logger::INFO      => 6,
+        ehough_epilog_Logger::NOTICE    => 5,
+        ehough_epilog_Logger::WARNING   => 4,
+        ehough_epilog_Logger::ERROR     => 3,
+        ehough_epilog_Logger::CRITICAL  => 2,
+        ehough_epilog_Logger::ALERT     => 1,
+        ehough_epilog_Logger::EMERGENCY => 0,
     );
 
     public function __construct($systemName = null, $extraPrefix = null, $contextPrefix = 'ctxt_')
     {
+        if (version_compare(PHP_VERSION, '5.3.0') < 0) {
+
+            throw new RuntimeException('The Gelf formatter requires at least PHP 5.3.0');
+        }
+
         parent::__construct('U.u');
 
         $this->systemName = $systemName ?: gethostname();
@@ -67,7 +72,7 @@ class GelfMessageFormatter extends NormalizerFormatter
     public function format(array $record)
     {
         $record = parent::format($record);
-        $message = new Message();
+        $message = new \Gelf\Message();
         $message
             ->setTimestamp($record['datetime'])
             ->setShortMessage((string) $record['message'])

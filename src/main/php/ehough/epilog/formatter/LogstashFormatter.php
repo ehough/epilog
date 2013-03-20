@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
 /**
  * Serializes a log message to Logstash Event Format
@@ -19,7 +19,7 @@ namespace Monolog\Formatter;
  *
  * @author Tim Mower <timothy.mower@gmail.com>
  */
-class LogstashFormatter extends NormalizerFormatter
+class ehough_epilog_formatter_LogstashFormatter extends ehough_epilog_formatter_NormalizerFormatter
 {
     /**
      * @var string the name of the system for the Logstash log message, used to fill the @source field
@@ -52,7 +52,7 @@ class LogstashFormatter extends NormalizerFormatter
         //log stash requires a ISO 8601 format date
         parent::__construct('c');
 
-        $this->systemName = $systemName ?: gethostname();
+        $this->systemName = $systemName ?: function_exists('gethostname') ? gethostname() : php_uname('n');
         $this->applicationName = $applicationName;
 
         $this->extraPrefix = $extraPrefix;

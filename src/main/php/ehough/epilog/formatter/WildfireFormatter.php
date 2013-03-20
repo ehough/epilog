@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Serializes a log message according to Wildfire's header requirements
@@ -20,20 +20,20 @@ use Monolog\Logger;
  * @author Christophe Coevoet <stof@notk.org>
  * @author Kirill chEbba Chebunin <iam@chebba.org>
  */
-class WildfireFormatter extends NormalizerFormatter
+class ehough_epilog_formatter_WildfireFormatter extends ehough_epilog_formatter_NormalizerFormatter
 {
     /**
      * Translates Monolog log levels to Wildfire levels.
      */
     private $logLevels = array(
-        Logger::DEBUG     => 'LOG',
-        Logger::INFO      => 'INFO',
-        Logger::NOTICE    => 'INFO',
-        Logger::WARNING   => 'WARN',
-        Logger::ERROR     => 'ERROR',
-        Logger::CRITICAL  => 'ERROR',
-        Logger::ALERT     => 'ERROR',
-        Logger::EMERGENCY => 'ERROR',
+        ehough_epilog_Logger::DEBUG     => 'LOG',
+        ehough_epilog_Logger::INFO      => 'INFO',
+        ehough_epilog_Logger::NOTICE    => 'INFO',
+        ehough_epilog_Logger::WARNING   => 'WARN',
+        ehough_epilog_Logger::ERROR     => 'ERROR',
+        ehough_epilog_Logger::CRITICAL  => 'ERROR',
+        ehough_epilog_Logger::ALERT     => 'ERROR',
+        ehough_epilog_Logger::EMERGENCY => 'ERROR',
     );
 
     /**
@@ -88,12 +88,12 @@ class WildfireFormatter extends NormalizerFormatter
 
     public function formatBatch(array $records)
     {
-        throw new \BadMethodCallException('Batch formatting does not make sense for the WildfireFormatter');
+        throw new BadMethodCallException('Batch formatting does not make sense for the WildfireFormatter');
     }
 
     protected function normalize($data)
     {
-        if (is_object($data) && !$data instanceof \DateTime) {
+        if (is_object($data) && !$data instanceof DateTime) {
             return $data;
         }
 

@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
 /**
  * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class NormalizerFormatter implements FormatterInterface
+class ehough_epilog_formatter_NormalizerFormatter implements ehough_epilog_formatter_FormatterInterface
 {
     const SIMPLE_DATE = "Y-m-d H:i:s";
 
@@ -56,7 +56,7 @@ class NormalizerFormatter implements FormatterInterface
             return $data;
         }
 
-        if (is_array($data) || $data instanceof \Traversable) {
+        if (is_array($data) || $data instanceof Traversable) {
             $normalized = array();
 
             foreach ($data as $key => $value) {
@@ -66,7 +66,7 @@ class NormalizerFormatter implements FormatterInterface
             return $normalized;
         }
 
-        if ($data instanceof \DateTime) {
+        if ($data instanceof DateTime) {
             return $data->format($this->dateFormat);
         }
 

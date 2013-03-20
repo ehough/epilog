@@ -9,29 +9,29 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Formats a log message according to the ChromePHP array format
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
-class ChromePHPFormatter implements FormatterInterface
+class ehough_epilog_formatter_ChromePHPFormatter implements ehough_epilog_formatter_FormatterInterface
 {
     /**
      * Translates Monolog log levels to Wildfire levels.
      */
     private $logLevels = array(
-        Logger::DEBUG     => 'log',
-        Logger::INFO      => 'info',
-        Logger::NOTICE    => 'info',
-        Logger::WARNING   => 'warn',
-        Logger::ERROR     => 'error',
-        Logger::CRITICAL  => 'error',
-        Logger::ALERT     => 'error',
-        Logger::EMERGENCY => 'error',
+        ehough_epilog_Logger::DEBUG     => 'log',
+        ehough_epilog_Logger::INFO      => 'info',
+        ehough_epilog_Logger::NOTICE    => 'info',
+        ehough_epilog_Logger::WARNING   => 'warn',
+        ehough_epilog_Logger::ERROR     => 'error',
+        ehough_epilog_Logger::CRITICAL  => 'error',
+        ehough_epilog_Logger::ALERT     => 'error',
+        ehough_epilog_Logger::EMERGENCY => 'error',
     );
 
     /**

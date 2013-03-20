@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
 /**
  * Formats incoming records into a one-line string
@@ -19,7 +19,7 @@ namespace Monolog\Formatter;
  * @author Jordi Boggiano <j.boggiano@seld.be>
  * @author Christophe Coevoet <stof@notk.org>
  */
-class LineFormatter extends NormalizerFormatter
+class ehough_epilog_formatter_LineFormatter extends ehough_epilog_formatter_NormalizerFormatter
 {
     const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
 
@@ -72,7 +72,7 @@ class LineFormatter extends NormalizerFormatter
             return var_export($data, true);
         }
 
-        if ($data instanceof \Exception) {
+        if ($data instanceof Exception) {
             return '[object] ('.get_class($data).': '.$data->getMessage().' at '.$data->getFile().':'.$data->getLine().')';
         }
 

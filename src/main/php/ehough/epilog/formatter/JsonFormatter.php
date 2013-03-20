@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
 /**
  * Encodes whatever record data is passed to it as json
@@ -18,7 +18,7 @@ namespace Monolog\Formatter;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class JsonFormatter implements FormatterInterface
+class ehough_epilog_formatter_JsonFormatter implements ehough_epilog_formatter_FormatterInterface
 {
     /**
      * {@inheritdoc}
