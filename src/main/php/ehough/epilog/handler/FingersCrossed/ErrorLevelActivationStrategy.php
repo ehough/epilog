@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler\FingersCrossed;
+//namespace Monolog\Handler\FingersCrossed;
 
 /**
  * Error level based activation strategy.
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class ErrorLevelActivationStrategy implements ActivationStrategyInterface
+class ehough_epilog_handler_ErrorLevelActivationStrategy implements ActivationStrategyInterface
 {
     private $actionLevel;
 

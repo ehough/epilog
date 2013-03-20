@@ -9,25 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
-use Monolog\Formatter\JsonFormatter;
+//use Monolog\Logger;
+//use Monolog\Formatter\JsonFormatter;
 
-class AmqpHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_AmqpHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**
-     * @var \AMQPExchange $exchange
+     * @var AMQPExchange $exchange
      */
     protected $exchange;
 
     /**
-     * @param \AMQPExchange $exchange     AMQP exchange, ready for use
+     * @param AMQPExchange $exchange     AMQP exchange, ready for use
      * @param string        $exchangeName
      * @param int           $level
      * @param bool          $bubble       Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct(\AMQPExchange $exchange, $exchangeName = 'log', $level = Logger::DEBUG, $bubble = true)
+    public function __construct(AMQPExchange $exchange, $exchangeName = 'log', $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         $this->exchange = $exchange;
         $this->exchange->setName($exchangeName);
@@ -64,6 +64,6 @@ class AmqpHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter()
     {
-        return new JsonFormatter();
+        return new ehough_epilog_formatter_JsonFormatter();
     }
 }

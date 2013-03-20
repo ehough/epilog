@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * NativeMailerHandler uses the mail() function to send the emails
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
-class NativeMailerHandler extends MailHandler
+class ehough_epilog_handler_NativeMailerHandler extends ehough_epilog_handler_MailHandler
 {
     protected $to;
     protected $subject;
@@ -33,7 +33,7 @@ class NativeMailerHandler extends MailHandler
      * @param integer      $level   The minimum logging level at which this handler will be triggered
      * @param boolean      $bubble  Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct($to, $subject, $from, $level = Logger::ERROR, $bubble = true)
+    public function __construct($to, $subject, $from, $level = ehough_epilog_Logger::ERROR, $bubble = true)
     {
         parent::__construct($level, $bubble);
         $this->to = is_array($to) ? $to : array($to);
@@ -48,7 +48,7 @@ class NativeMailerHandler extends MailHandler
     {
         foreach ((array) $headers as $header) {
             if (strpos($header, "\n") !== false || strpos($header, "\r") !== false) {
-                throw new \InvalidArgumentException('Headers can not contain newline characters for security reasons');
+                throw new InvalidArgumentException('Headers can not contain newline characters for security reasons');
             }
             $this->headers[] = $header;
         }

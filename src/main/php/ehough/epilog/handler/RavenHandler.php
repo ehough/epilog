@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
-use Monolog\Handler\AbstractProcessingHandler;
-use Raven_Client;
+//use Monolog\Logger;
+//use Monolog\Handler\AbstractProcessingHandler;
+//use Raven_Client;
 
 /**
  * Handler to send messages to a Sentry (https://github.com/dcramer/sentry) server
@@ -21,20 +21,20 @@ use Raven_Client;
  *
  * @author Marc Abramowitz <marc@marc-abramowitz.com>
  */
-class RavenHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_RavenHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**
      * Translates Monolog log levels to Raven log levels.
      */
     private $logLevels = array(
-        Logger::DEBUG     => Raven_Client::DEBUG,
-        Logger::INFO      => Raven_Client::INFO,
-        Logger::NOTICE    => Raven_Client::INFO,
-        Logger::WARNING   => Raven_Client::WARNING,
-        Logger::ERROR     => Raven_Client::ERROR,
-        Logger::CRITICAL  => Raven_Client::FATAL,
-        Logger::ALERT     => Raven_Client::FATAL,
-        Logger::EMERGENCY => Raven_Client::FATAL,
+        ehough_epilog_Logger::DEBUG     => Raven_Client::DEBUG,
+        ehough_epilog_Logger::INFO      => Raven_Client::INFO,
+        ehough_epilog_Logger::NOTICE    => Raven_Client::INFO,
+        ehough_epilog_Logger::WARNING   => Raven_Client::WARNING,
+        ehough_epilog_Logger::ERROR     => Raven_Client::ERROR,
+        ehough_epilog_Logger::CRITICAL  => Raven_Client::FATAL,
+        ehough_epilog_Logger::ALERT     => Raven_Client::FATAL,
+        ehough_epilog_Logger::EMERGENCY => Raven_Client::FATAL,
     );
 
     /**
@@ -47,7 +47,7 @@ class RavenHandler extends AbstractProcessingHandler
      * @param integer $level The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct(Raven_Client $ravenClient, $level = Logger::DEBUG, $bubble = true)
+    public function __construct(Raven_Client $ravenClient, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         parent::__construct($level, $bubble);
 
@@ -65,7 +65,7 @@ class RavenHandler extends AbstractProcessingHandler
             $this->logLevels[$record['level']],   // $level
             false                                 // $stack
         );
-        if ($record['level'] >= Logger::ERROR && isset($record['context']['exception'])) {
+        if ($record['level'] >= ehough_epilog_Logger::ERROR && isset($record['context']['exception'])) {
             $this->ravenClient->captureException($record['context']['exception']);
         }
     }

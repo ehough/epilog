@@ -9,24 +9,24 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Formatter\LineFormatter;
+//use Monolog\Logger;
+//use Monolog\Formatter\FormatterInterface;
+//use Monolog\Formatter\LineFormatter;
 
 /**
  * Base Handler class providing the Handler structure
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-abstract class AbstractHandler implements HandlerInterface
+abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_handler_HandlerInterface
 {
-    protected $level = Logger::DEBUG;
+    protected $level = ehough_epilog_Logger::DEBUG;
     protected $bubble = false;
 
     /**
-     * @var FormatterInterface
+     * @var ehough_epilog_formatter_FormatterInterface
      */
     protected $formatter;
     protected $processors = array();
@@ -35,7 +35,7 @@ abstract class AbstractHandler implements HandlerInterface
      * @param integer $level  The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct($level = Logger::DEBUG, $bubble = true)
+    public function __construct($level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         $this->level = $level;
         $this->bubble = $bubble;
@@ -73,8 +73,8 @@ abstract class AbstractHandler implements HandlerInterface
      */
     public function pushProcessor($callback)
     {
-        if (!is_callable($callback)) {
-            throw new \InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
+        if (!is_callable($callback) && !is_callable(array($callback, '__invoke'))) {
+            throw new InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
         }
         array_unshift($this->processors, $callback);
     }
@@ -85,7 +85,7 @@ abstract class AbstractHandler implements HandlerInterface
     public function popProcessor()
     {
         if (!$this->processors) {
-            throw new \LogicException('You tried to pop from an empty processor stack.');
+            throw new LogicException('You tried to pop from an empty processor stack.');
         }
 
         return array_shift($this->processors);
@@ -94,7 +94,7 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function setFormatter(FormatterInterface $formatter)
+    public function setFormatter(ehough_epilog_formatter_FormatterInterface $formatter)
     {
         $this->formatter = $formatter;
     }
@@ -157,7 +157,7 @@ abstract class AbstractHandler implements HandlerInterface
     {
         try {
             $this->close();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // do nothing
         }
     }
@@ -165,10 +165,10 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * Gets the default formatter.
      *
-     * @return FormatterInterface
+     * @return ehough_epilog_formatter_FormatterInterface
      */
     protected function getDefaultFormatter()
     {
-        return new LineFormatter();
+        return new ehough_epilog_formatter_LineFormatter();
     }
 }

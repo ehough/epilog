@@ -9,21 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Formatter\JsonFormatter;
-use Monolog\Logger;
+//use Monolog\Formatter\JsonFormatter;
+//use Monolog\Logger;
 
 /**
  * CouchDB handler
  *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class CouchDBHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_CouchDBHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     private $options;
 
-    public function __construct(array $options = array(), $level = Logger::DEBUG, $bubble = true)
+    public function __construct(array $options = array(), $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         $this->options = array_merge(array(
             'host'     => 'localhost',
@@ -58,7 +58,7 @@ class CouchDBHandler extends AbstractProcessingHandler
         ));
 
         if (false === @file_get_contents($url, null, $context)) {
-            throw new \RuntimeException(sprintf('Could not connect to %s', $url));
+            throw new RuntimeException(sprintf('Could not connect to %s', $url));
         }
     }
 
@@ -67,6 +67,6 @@ class CouchDBHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter()
     {
-        return new JsonFormatter();
+        return new ehough_epilog_formatter_JsonFormatter();
     }
 }

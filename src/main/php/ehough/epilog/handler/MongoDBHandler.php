@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
-use Monolog\Formatter\NormalizerFormatter;
+//use Monolog\Logger;
+//use Monolog\Formatter\NormalizerFormatter;
 
 /**
  * Logs to a MongoDB database.
@@ -25,14 +25,14 @@ use Monolog\Formatter\NormalizerFormatter;
  *
  * @author Thomas Tourlourat <thomas@tourlourat.com>
  */
-class MongoDBHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_MongoDBHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     private $mongoCollection;
 
-    public function __construct($mongo, $database, $collection, $level = Logger::DEBUG, $bubble = true)
+    public function __construct($mongo, $database, $collection, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
-        if (!($mongo instanceof \MongoClient || $mongo instanceof \Mongo)) {
-            throw new \InvalidArgumentException('MongoClient or Mongo instance required');
+        if (!($mongo instanceof MongoClient || $mongo instanceof Mongo)) {
+            throw new InvalidArgumentException('MongoClient or Mongo instance required');
         }
 
         $this->mongoCollection = $mongo->selectCollection($database, $collection);
@@ -50,6 +50,6 @@ class MongoDBHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter()
     {
-        return new NormalizerFormatter();
+        return new ehough_epilog_formatter_NormalizerFormatter();
     }
 }

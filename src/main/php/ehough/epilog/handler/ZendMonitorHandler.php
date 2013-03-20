@@ -8,17 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Formatter\NormalizerFormatter;
-use Monolog\Logger;
+//use Monolog\Formatter\NormalizerFormatter;
+//use Monolog\Logger;
 
 /**
  * Handler sending logs to Zend Monitor
  *
  * @author  Christian Bergau <cbergau86@gmail.com>
  */
-class ZendMonitorHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_ZendMonitorHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**
      * Monolog level / ZendMonitor Custom Event priority map
@@ -26,14 +26,14 @@ class ZendMonitorHandler extends AbstractProcessingHandler
      * @var array
      */
     protected $levelMap = array(
-        Logger::DEBUG     => 1,
-        Logger::INFO      => 2,
-        Logger::NOTICE    => 3,
-        Logger::WARNING   => 4,
-        Logger::ERROR     => 5,
-        Logger::CRITICAL  => 6,
-        Logger::ALERT     => 7,
-        Logger::EMERGENCY => 0,
+        ehough_epilog_Logger::DEBUG     => 1,
+        ehough_epilog_Logger::INFO      => 2,
+        ehough_epilog_Logger::NOTICE    => 3,
+        ehough_epilog_Logger::WARNING   => 4,
+        ehough_epilog_Logger::ERROR     => 5,
+        ehough_epilog_Logger::CRITICAL  => 6,
+        ehough_epilog_Logger::ALERT     => 7,
+        ehough_epilog_Logger::EMERGENCY => 0,
     );
 
     /**
@@ -41,12 +41,12 @@ class ZendMonitorHandler extends AbstractProcessingHandler
      *
      * @param   int     $level
      * @param   bool    $bubble
-     * @throws  MissingExtensionException
+     * @throws  ehough_epilog_handler_MissingExtensionException
      */
-    public function __construct($level = Logger::DEBUG, $bubble = true)
+    public function __construct($level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         if (!function_exists('zend_monitor_custom_event')) {
-            throw new MissingExtensionException('You must have Zend Server installed in order to use this handler');
+            throw new ehough_epilog_handler_MissingExtensionException('You must have Zend Server installed in order to use this handler');
         }
         parent::__construct($level, $bubble);
     }
@@ -80,7 +80,7 @@ class ZendMonitorHandler extends AbstractProcessingHandler
      */
     public function getDefaultFormatter()
     {
-        return new NormalizerFormatter();
+        return new ehough_epilog_formatter_NormalizerFormatter();
     }
 
     /**

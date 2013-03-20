@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
-use Monolog\Formatter\LineFormatter;
+//use Monolog\Logger;
+//use Monolog\Formatter\LineFormatter;
 
 /**
  * Logs to a Redis key using rpush
@@ -25,16 +25,16 @@ use Monolog\Formatter\LineFormatter;
  *
  * @author Thomas Tourlourat <thomas@tourlourat.com>
  */
-class RedisHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_RedisHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     private $redisClient;
     private $redisKey;
 
     # redis instance, key to use
-    public function __construct($redis, $key, $level = Logger::DEBUG, $bubble = true)
+    public function __construct($redis, $key, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
-        if (!(($redis instanceof \Predis\Client) || ($redis instanceof \Redis))) {
-            throw new \InvalidArgumentException('Predis\Client or Redis instance required');
+        if (!(($redis instanceof \Predis\Client) || ($redis instanceof Redis))) {
+            throw new InvalidArgumentException('Predis\Client or Redis instance required');
         }
 
         $this->redisClient = $redis;
@@ -53,6 +53,6 @@ class RedisHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter()
     {
-        return new LineFormatter();
+        return new ehough_epilog_formatter_LineFormatter();
     }
 }

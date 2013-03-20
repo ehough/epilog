@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
 /**
  * Base Handler class providing the Handler structure
@@ -19,7 +19,7 @@ namespace Monolog\Handler;
  * @author Jordi Boggiano <j.boggiano@seld.be>
  * @author Christophe Coevoet <stof@notk.org>
  */
-abstract class AbstractProcessingHandler extends AbstractHandler
+abstract class ehough_epilog_handler_AbstractProcessingHandler extends ehough_epilog_handler_AbstractHandler
 {
     /**
      * {@inheritdoc}
@@ -57,7 +57,17 @@ abstract class AbstractProcessingHandler extends AbstractHandler
     {
         if ($this->processors) {
             foreach ($this->processors as $processor) {
-                $record = call_user_func($processor, $record);
+
+                if (is_callable($processor)) {
+
+                    $callback = $processor;
+
+                } else {
+
+                    $callback = array($processor, '__invoke');
+                }
+
+                $record = call_user_func($callback, $record);
             }
         }
 

@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
 /**
  * Base class for all mail handlers
  *
  * @author Gyula Sallai
  */
-abstract class MailHandler extends AbstractProcessingHandler
+abstract class ehough_epilog_handler_MailHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**
      * {@inheritdoc}

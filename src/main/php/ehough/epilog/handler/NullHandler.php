@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Blackhole
@@ -21,12 +21,12 @@ use Monolog\Logger;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class NullHandler extends AbstractHandler
+class ehough_epilog_handler_NullHandler extends ehough_epilog_handler_AbstractHandler
 {
     /**
      * @param integer $level The minimum logging level at which this handler will be triggered
      */
-    public function __construct($level = Logger::DEBUG)
+    public function __construct($level = ehough_epilog_Logger::DEBUG)
     {
         parent::__construct($level, false);
     }

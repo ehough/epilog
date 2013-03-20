@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Stores logs to files that are rotated every day and a limited number of files are kept.
@@ -22,7 +22,7 @@ use Monolog\Logger;
  * @author Christophe Coevoet <stof@notk.org>
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class RotatingFileHandler extends StreamHandler
+class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_StreamHandler
 {
     protected $filename;
     protected $maxFiles;
@@ -35,11 +35,11 @@ class RotatingFileHandler extends StreamHandler
      * @param integer $level    The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble   Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct($filename, $maxFiles = 0, $level = Logger::DEBUG, $bubble = true)
+    public function __construct($filename, $maxFiles = 0, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         $this->filename = $filename;
         $this->maxFiles = (int) $maxFiles;
-        $this->nextRotation = new \DateTime('tomorrow');
+        $this->nextRotation = new DateTime('tomorrow');
 
         parent::__construct($this->getTimedFilename(), $level, $bubble);
     }
@@ -81,7 +81,7 @@ class RotatingFileHandler extends StreamHandler
     {
         // update filename
         $this->url = $this->getTimedFilename();
-        $this->nextRotation = new \DateTime('tomorrow');
+        $this->nextRotation = new DateTime('tomorrow');
 
         // skip GC of old logs if files are unlimited
         if (0 === $this->maxFiles) {
@@ -93,7 +93,7 @@ class RotatingFileHandler extends StreamHandler
         if (!empty($fileInfo['extension'])) {
             $glob .= '.'.$fileInfo['extension'];
         }
-        $iterator = new \GlobIterator($glob);
+        $iterator = new GlobIterator($glob);
         $count = $iterator->count();
         if ($this->maxFiles >= $count) {
             // no files to remove

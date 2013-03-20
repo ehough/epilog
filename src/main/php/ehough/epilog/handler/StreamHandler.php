@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Stores to any stream resource
@@ -20,7 +20,7 @@ use Monolog\Logger;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class StreamHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_StreamHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     protected $stream;
     protected $url;
@@ -30,7 +30,7 @@ class StreamHandler extends AbstractProcessingHandler
      * @param integer $level  The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct($stream, $level = Logger::DEBUG, $bubble = true)
+    public function __construct($stream, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         parent::__construct($level, $bubble);
         if (is_resource($stream)) {
@@ -58,7 +58,7 @@ class StreamHandler extends AbstractProcessingHandler
     {
         if (null === $this->stream) {
             if (!$this->url) {
-                throw new \LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
+                throw new LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
             }
             $errorMessage = null;
             set_error_handler(function ($code, $msg) use (&$errorMessage) {
@@ -68,7 +68,7 @@ class StreamHandler extends AbstractProcessingHandler
             restore_error_handler();
             if (!is_resource($this->stream)) {
                 $this->stream = null;
-                throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: '.$errorMessage, $this->url));
+                throw new UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: '.$errorMessage, $this->url));
             }
         }
         fwrite($this->stream, (string) $record['formatted']);

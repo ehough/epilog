@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Formatter\WildfireFormatter;
+//use Monolog\Formatter\WildfireFormatter;
 
 /**
  * Simple FirePHP Handler (http://www.firephp.org/), which uses the Wildfire protocol.
  *
  * @author Eric Clemmons (@ericclemmons) <eric@uxdriven.com>
  */
-class FirePHPHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_FirePHPHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**
      * WildFire JSON header message format
@@ -89,7 +89,7 @@ class FirePHPHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter()
     {
-        return new WildfireFormatter();
+        return new ehough_epilog_formatter_WildfireFormatter();
     }
 
     /**
@@ -164,7 +164,7 @@ class FirePHPHandler extends AbstractProcessingHandler
     public function __get($property)
     {
         if ('sendHeaders' !== $property) {
-            throw new \InvalidArgumentException('Undefined property '.$property);
+            throw new InvalidArgumentException('Undefined property '.$property);
         }
 
         return static::$sendHeaders;
@@ -176,7 +176,7 @@ class FirePHPHandler extends AbstractProcessingHandler
     public function __set($property, $value)
     {
         if ('sendHeaders' !== $property) {
-            throw new \InvalidArgumentException('Undefined property '.$property);
+            throw new InvalidArgumentException('Undefined property '.$property);
         }
 
         static::$sendHeaders = $value;

@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
 /**
  * Forwards records to multiple handlers
  *
  * @author Lenar Lõhmus <lenar@city.ee>
  */
-class GroupHandler extends AbstractHandler
+class ehough_epilog_handler_GroupHandler extends ehough_epilog_handler_AbstractHandler
 {
     protected $handlers;
 
@@ -27,8 +27,8 @@ class GroupHandler extends AbstractHandler
     public function __construct(array $handlers, $bubble = true)
     {
         foreach ($handlers as $handler) {
-            if (!$handler instanceof HandlerInterface) {
-                throw new \InvalidArgumentException('The first argument of the GroupHandler must be an array of HandlerInterface instances.');
+            if (!$handler instanceof ehough_epilog_handler_HandlerInterface) {
+                throw new InvalidArgumentException('The first argument of the GroupHandler must be an array of ehough_epilog_handler_HandlerInterface instances.');
             }
         }
 
@@ -57,7 +57,17 @@ class GroupHandler extends AbstractHandler
     {
         if ($this->processors) {
             foreach ($this->processors as $processor) {
-                $record = call_user_func($processor, $record);
+
+                if (is_callable($processor)) {
+
+                    $callback = $processor;
+
+                } else {
+
+                    $callback = array($processor, '__invoke');
+                }
+
+                $record = call_user_func($callback, $record);
             }
         }
 

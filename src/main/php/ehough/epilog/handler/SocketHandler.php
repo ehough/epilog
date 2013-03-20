@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Stores to any socket - uses fsockopen() or pfsockopen().
@@ -19,7 +19,7 @@ use Monolog\Logger;
  * @author Pablo de Leon Belloc <pablolb@gmail.com>
  * @see    http://php.net/manual/en/function.fsockopen.php
  */
-class SocketHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_SocketHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     private $connectionString;
     private $connectionTimeout;
@@ -34,7 +34,7 @@ class SocketHandler extends AbstractProcessingHandler
      * @param integer $level            The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble           Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct($connectionString, $level = Logger::DEBUG, $bubble = true)
+    public function __construct($connectionString, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         parent::__construct($level, $bubble);
         $this->connectionString = $connectionString;
@@ -215,7 +215,7 @@ class SocketHandler extends AbstractProcessingHandler
     {
         $ok = filter_var($value, FILTER_VALIDATE_FLOAT);
         if ($ok === false || $value < 0) {
-            throw new \InvalidArgumentException("Timeout must be 0 or a positive float (got $value)");
+            throw new InvalidArgumentException("Timeout must be 0 or a positive float (got $value)");
         }
     }
 
@@ -246,7 +246,7 @@ class SocketHandler extends AbstractProcessingHandler
             $resource = $this->fsockopen();
         }
         if (!$resource) {
-            throw new \UnexpectedValueException("Failed connecting to $this->connectionString ($this->errno: $this->errstr)");
+            throw new UnexpectedValueException("Failed connecting to $this->connectionString ($this->errno: $this->errstr)");
         }
         $this->resource = $resource;
     }
@@ -254,7 +254,7 @@ class SocketHandler extends AbstractProcessingHandler
     private function setSocketTimeout()
     {
         if (!$this->streamSetTimeout()) {
-            throw new \UnexpectedValueException("Failed setting timeout with stream_set_timeout()");
+            throw new UnexpectedValueException("Failed setting timeout with stream_set_timeout()");
         }
     }
 
@@ -269,16 +269,16 @@ class SocketHandler extends AbstractProcessingHandler
                 $chunk = $this->fwrite(substr($data, $sent));
             }
             if ($chunk === false) {
-                throw new \RuntimeException("Could not write to socket");
+                throw new RuntimeException("Could not write to socket");
             }
             $sent += $chunk;
             $socketInfo = $this->streamGetMetadata();
             if ($socketInfo['timed_out']) {
-                throw new \RuntimeException("Write timed-out");
+                throw new RuntimeException("Write timed-out");
             }
         }
         if (!$this->isConnected() && $sent < $length) {
-            throw new \RuntimeException("End-of-file reached, probably we got disconnected (sent $sent of $length)");
+            throw new RuntimeException("End-of-file reached, probably we got disconnected (sent $sent of $length)");
         }
     }
 

@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
 /**
  * Exception can be thrown if an extension for an handler is missing
  *
  * @author  Christian Bergau <cbergau86@gmail.com>
  */
-class MissingExtensionException extends \Exception
+class ehough_epilog_handler_MissingExtensionException extends Exception
 {
 
 }

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
-use Monolog\Formatter\LineFormatter;
+//use Monolog\Logger;
+//use Monolog\Formatter\LineFormatter;
 
 /**
  * Logs to syslog service.
@@ -27,20 +27,20 @@ use Monolog\Formatter\LineFormatter;
  *
  * @author Sven Paulus <sven@karlsruhe.org>
  */
-class SyslogHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_SyslogHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**
      * Translates Monolog log levels to syslog log priorities.
      */
     private $logLevels = array(
-        Logger::DEBUG     => LOG_DEBUG,
-        Logger::INFO      => LOG_INFO,
-        Logger::NOTICE    => LOG_NOTICE,
-        Logger::WARNING   => LOG_WARNING,
-        Logger::ERROR     => LOG_ERR,
-        Logger::CRITICAL  => LOG_CRIT,
-        Logger::ALERT     => LOG_ALERT,
-        Logger::EMERGENCY => LOG_EMERG,
+        ehough_epilog_Logger::DEBUG     => LOG_DEBUG,
+        ehough_epilog_Logger::INFO      => LOG_INFO,
+        ehough_epilog_Logger::NOTICE    => LOG_NOTICE,
+        ehough_epilog_Logger::WARNING   => LOG_WARNING,
+        ehough_epilog_Logger::ERROR     => LOG_ERR,
+        ehough_epilog_Logger::CRITICAL  => LOG_CRIT,
+        ehough_epilog_Logger::ALERT     => LOG_ALERT,
+        ehough_epilog_Logger::EMERGENCY => LOG_EMERG,
     );
 
     /**
@@ -67,7 +67,7 @@ class SyslogHandler extends AbstractProcessingHandler
      * @param Boolean $bubble   Whether the messages that are handled can bubble up the stack or not
      * @param int     $logopts  Option flags for the openlog() call, defaults to LOG_PID
      */
-    public function __construct($ident, $facility = LOG_USER, $level = Logger::DEBUG, $bubble = true, $logopts = LOG_PID)
+    public function __construct($ident, $facility = LOG_USER, $level = ehough_epilog_Logger::DEBUG, $bubble = true, $logopts = LOG_PID)
     {
         parent::__construct($level, $bubble);
 
@@ -86,11 +86,11 @@ class SyslogHandler extends AbstractProcessingHandler
         if (array_key_exists(strtolower($facility), $this->facilities)) {
             $facility = $this->facilities[strtolower($facility)];
         } elseif (!in_array($facility, array_values($this->facilities), true)) {
-            throw new \UnexpectedValueException('Unknown facility value "'.$facility.'" given');
+            throw new UnexpectedValueException('Unknown facility value "'.$facility.'" given');
         }
 
         if (!openlog($ident, $logopts, $facility)) {
-            throw new \LogicException('Can\'t open syslog for ident "'.$ident.'" and facility "'.$facility.'"');
+            throw new LogicException('Can\'t open syslog for ident "'.$ident.'" and facility "'.$facility.'"');
         }
     }
 

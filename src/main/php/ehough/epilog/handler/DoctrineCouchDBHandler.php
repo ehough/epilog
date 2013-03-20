@@ -9,22 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
-use Monolog\Formatter\NormalizerFormatter;
-use Doctrine\CouchDB\CouchDBClient;
+//use Monolog\Logger;
+//use Monolog\Formatter\NormalizerFormatter;
+//use Doctrine\CouchDB\CouchDBClient;
 
 /**
  * CouchDB handler for Doctrine CouchDB ODM
  *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class DoctrineCouchDBHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_DoctrineCouchDBHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     private $client;
 
-    public function __construct(CouchDBClient $client, $level = Logger::DEBUG, $bubble = true)
+    public function __construct(\Doctrine\CouchDB\CouchDBClient $client, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         $this->client = $client;
         parent::__construct($level, $bubble);
@@ -40,6 +40,6 @@ class DoctrineCouchDBHandler extends AbstractProcessingHandler
 
     protected function getDefaultFormatter()
     {
-        return new NormalizerFormatter;
+        return new ehough_epilog_formatter_NormalizerFormatter;
     }
 }

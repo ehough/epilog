@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
-use Monolog\Handler\FingersCrossed\ActivationStrategyInterface;
-use Monolog\Logger;
+//use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
+//use Monolog\Handler\FingersCrossed\ActivationStrategyInterface;
+//use Monolog\Logger;
 
 /**
  * Buffers all records until a certain level is reached
@@ -24,7 +24,7 @@ use Monolog\Logger;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class FingersCrossedHandler extends AbstractHandler
+class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_AbstractHandler
 {
     protected $handler;
     protected $activationStrategy;
@@ -34,7 +34,7 @@ class FingersCrossedHandler extends AbstractHandler
     protected $stopBuffering;
 
     /**
-     * @param callable|HandlerInterface       $handler            Handler or factory callable($record, $fingersCrossedHandler).
+     * @param callable|ehough_epilog_handler_HandlerInterface       $handler            Handler or factory callable($record, $fingersCrossedHandler).
      * @param int|ActivationStrategyInterface $activationStrategy Strategy which determines when this handler takes action
      * @param int                             $bufferSize         How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
      * @param Boolean                         $bubble             Whether the messages that are handled can bubble up the stack or not
@@ -43,7 +43,7 @@ class FingersCrossedHandler extends AbstractHandler
     public function __construct($handler, $activationStrategy = null, $bufferSize = 0, $bubble = true, $stopBuffering = true)
     {
         if (null === $activationStrategy) {
-            $activationStrategy = new ErrorLevelActivationStrategy(Logger::WARNING);
+            $activationStrategy = new ErrorLevelActivationStrategy(ehough_epilog_Logger::WARNING);
         }
         if (!$activationStrategy instanceof ActivationStrategyInterface) {
             $activationStrategy = new ErrorLevelActivationStrategy($activationStrategy);
@@ -84,13 +84,13 @@ class FingersCrossedHandler extends AbstractHandler
                 if ($this->stopBuffering) {
                     $this->buffering = false;
                 }
-                if (!$this->handler instanceof HandlerInterface) {
+                if (!$this->handler instanceof ehough_epilog_handler_HandlerInterface) {
                     if (!is_callable($this->handler)) {
-                        throw new \RuntimeException("The given handler (".json_encode($this->handler).") is not a callable nor a Monolog\Handler\HandlerInterface object");
+                        throw new RuntimeException("The given handler (".json_encode($this->handler).") is not a callable nor a Monolog\Handler\HandlerInterface object");
                     }
                     $this->handler = call_user_func($this->handler, $record, $this);
-                    if (!$this->handler instanceof HandlerInterface) {
-                        throw new \RuntimeException("The factory callable should return a HandlerInterface");
+                    if (!$this->handler instanceof ehough_epilog_handler_HandlerInterface) {
+                        throw new RuntimeException("The factory callable should return a ehough_epilog_handler_HandlerInterface");
                     }
                 }
                 $this->handler->handleBatch($this->buffer);

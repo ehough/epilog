@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Formatter\ChromePHPFormatter;
+//use Monolog\Formatter\ChromePHPFormatter;
 
 /**
  * Handler sending logs to the ChromePHP extension (http://www.chromephp.com/)
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
-class ChromePHPHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**
      * Version of the extension
@@ -66,7 +66,7 @@ class ChromePHPHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter()
     {
-        return new ChromePHPFormatter();
+        return new ehough_epilog_formatter_ChromePHPFormatter();
     }
 
     /**
@@ -131,7 +131,7 @@ class ChromePHPHandler extends AbstractProcessingHandler
     public function __get($property)
     {
         if ('sendHeaders' !== $property) {
-            throw new \InvalidArgumentException('Undefined property '.$property);
+            throw new InvalidArgumentException('Undefined property '.$property);
         }
 
         return static::$sendHeaders;
@@ -143,7 +143,7 @@ class ChromePHPHandler extends AbstractProcessingHandler
     public function __set($property, $value)
     {
         if ('sendHeaders' !== $property) {
-            throw new \InvalidArgumentException('Undefined property '.$property);
+            throw new InvalidArgumentException('Undefined property '.$property);
         }
 
         static::$sendHeaders = $value;

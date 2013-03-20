@@ -75,14 +75,14 @@ interface ehough_epilog_handler_HandlerInterface
     /**
      * Sets the formatter.
      *
-     * @param FormatterInterface $formatter
+     * @param ehough_epilog_formatter_FormatterInterface $formatter
      */
-    public function setFormatter(FormatterInterface $formatter);
+    public function setFormatter(ehough_epilog_formatter_FormatterInterface $formatter);
 
     /**
      * Gets the formatter.
      *
-     * @return FormatterInterface
+     * @return ehough_epilog_formatter_FormatterInterface
      */
     public function getFormatter();
 }

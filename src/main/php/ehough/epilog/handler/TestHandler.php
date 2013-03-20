@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Used for testing purposes.
@@ -20,7 +20,7 @@ use Monolog\Logger;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class TestHandler extends AbstractProcessingHandler
+class ehough_epilog_handler_TestHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     protected $records = array();
     protected $recordsByLevel = array();
@@ -32,82 +32,82 @@ class TestHandler extends AbstractProcessingHandler
 
     public function hasEmergency($record)
     {
-        return $this->hasRecord($record, Logger::EMERGENCY);
+        return $this->hasRecord($record, ehough_epilog_Logger::EMERGENCY);
     }
 
     public function hasAlert($record)
     {
-        return $this->hasRecord($record, Logger::ALERT);
+        return $this->hasRecord($record, ehough_epilog_Logger::ALERT);
     }
 
     public function hasCritical($record)
     {
-        return $this->hasRecord($record, Logger::CRITICAL);
+        return $this->hasRecord($record, ehough_epilog_Logger::CRITICAL);
     }
 
     public function hasError($record)
     {
-        return $this->hasRecord($record, Logger::ERROR);
+        return $this->hasRecord($record, ehough_epilog_Logger::ERROR);
     }
 
     public function hasWarning($record)
     {
-        return $this->hasRecord($record, Logger::WARNING);
+        return $this->hasRecord($record, ehough_epilog_Logger::WARNING);
     }
 
     public function hasNotice($record)
     {
-        return $this->hasRecord($record, Logger::NOTICE);
+        return $this->hasRecord($record, ehough_epilog_Logger::NOTICE);
     }
 
     public function hasInfo($record)
     {
-        return $this->hasRecord($record, Logger::INFO);
+        return $this->hasRecord($record, ehough_epilog_Logger::INFO);
     }
 
     public function hasDebug($record)
     {
-        return $this->hasRecord($record, Logger::DEBUG);
+        return $this->hasRecord($record, ehough_epilog_Logger::DEBUG);
     }
 
     public function hasEmergencyRecords()
     {
-        return isset($this->recordsByLevel[Logger::EMERGENCY]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::EMERGENCY]);
     }
 
     public function hasAlertRecords()
     {
-        return isset($this->recordsByLevel[Logger::ALERT]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::ALERT]);
     }
 
     public function hasCriticalRecords()
     {
-        return isset($this->recordsByLevel[Logger::CRITICAL]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::CRITICAL]);
     }
 
     public function hasErrorRecords()
     {
-        return isset($this->recordsByLevel[Logger::ERROR]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::ERROR]);
     }
 
     public function hasWarningRecords()
     {
-        return isset($this->recordsByLevel[Logger::WARNING]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::WARNING]);
     }
 
     public function hasNoticeRecords()
     {
-        return isset($this->recordsByLevel[Logger::NOTICE]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::NOTICE]);
     }
 
     public function hasInfoRecords()
     {
-        return isset($this->recordsByLevel[Logger::INFO]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::INFO]);
     }
 
     public function hasDebugRecords()
     {
-        return isset($this->recordsByLevel[Logger::DEBUG]);
+        return isset($this->recordsByLevel[ehough_epilog_Logger::DEBUG]);
     }
 
     protected function hasRecord($record, $level)

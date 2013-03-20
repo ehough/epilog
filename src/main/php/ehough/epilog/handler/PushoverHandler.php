@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Logger;
+//use Monolog\Logger;
 
 /**
  * Sends notifications through the pushover api to mobile phones
@@ -19,7 +19,7 @@ use Monolog\Logger;
  * @author Sebastian Göttschkes <sebastian.goettschkes@googlemail.com>
  * @see    https://www.pushover.net/api
  */
-class PushoverHandler extends SocketHandler
+class ehough_epilog_handler_PushoverHandler extends ehough_epilog_handler_SocketHandler
 {
     private $token;
     private $user;
@@ -34,7 +34,7 @@ class PushoverHandler extends SocketHandler
      * @param Boolean $useSSL Whether to connect via SSL. Required when pushing messages to users that are not
      *                        the pushover.net app owner. OpenSSL is required for this option.
      */
-    public function __construct($token, $user, $title = null, $level = Logger::CRITICAL, $bubble = true, $useSSL = true)
+    public function __construct($token, $user, $title = null, $level = ehough_epilog_Logger::CRITICAL, $bubble = true, $useSSL = true)
     {
         $connectionString = $useSSL ? 'ssl://api.pushover.net:443' : 'api.pushover.net:80';
         parent::__construct($connectionString, $level, $bubble);
