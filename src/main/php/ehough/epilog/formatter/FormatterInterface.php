@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Formatter;
+//namespace Monolog\Formatter;
 
 /**
  * Interface for formatters
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-interface FormatterInterface
+interface ehough_epilog_formatter_FormatterInterface
 {
     /**
      * Formats a log record.

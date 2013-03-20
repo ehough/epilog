@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog;
+//namespace Monolog;
 
-use Monolog\Handler\HandlerInterface;
-use Monolog\Handler\StreamHandler;
-use Psr\Log\LoggerInterface;
-use Psr\Log\InvalidArgumentException;
+//use Monolog\Handler\HandlerInterface;
+//use Monolog\Handler\StreamHandler;
+//use Psr\Log\LoggerInterface;
+//use Psr\Log\InvalidArgumentException;
 
 /**
  * Monolog log channel
@@ -24,7 +24,7 @@ use Psr\Log\InvalidArgumentException;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class Logger implements LoggerInterface
+class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
 {
     /**
      * Detailed debug information

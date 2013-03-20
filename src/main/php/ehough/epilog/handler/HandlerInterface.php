@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Monolog\Handler;
+//namespace Monolog\Handler;
 
-use Monolog\Formatter\FormatterInterface;
+//use Monolog\Formatter\FormatterInterface;
 
 /**
  * Interface that all Monolog Handlers must implement
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-interface HandlerInterface
+interface ehough_epilog_handler_HandlerInterface
 {
     /**
      * Checks whether the given record will be handled by this handler.
