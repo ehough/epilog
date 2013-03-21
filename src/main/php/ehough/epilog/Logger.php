@@ -348,7 +348,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     public static function getLevelName($level)
     {
         if (!isset(static::$levels[$level])) {
-            throw new InvalidArgumentException('Level "'.$level.'" is not defined, use one of: '.implode(', ', array_keys(static::$levels)));
+            throw new ehough_epilog_psr_InvalidArgumentException('Level "'.$level.'" is not defined, use one of: '.implode(', ', array_keys(static::$levels)));
         }
 
         return static::$levels[$level];

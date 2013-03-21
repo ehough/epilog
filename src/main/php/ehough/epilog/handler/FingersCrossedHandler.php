@@ -35,7 +35,7 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
 
     /**
      * @param callable|ehough_epilog_handler_HandlerInterface       $handler            Handler or factory callable($record, $fingersCrossedHandler).
-     * @param int|ActivationStrategyInterface $activationStrategy Strategy which determines when this handler takes action
+     * @param int|ehough_epilog_handler_fingerscrossed_ActivationStrategyInterface $activationStrategy Strategy which determines when this handler takes action
      * @param int                             $bufferSize         How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
      * @param Boolean                         $bubble             Whether the messages that are handled can bubble up the stack or not
      * @param Boolean                         $stopBuffering      Whether the handler should stop buffering after being triggered (default true)
@@ -43,10 +43,10 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
     public function __construct($handler, $activationStrategy = null, $bufferSize = 0, $bubble = true, $stopBuffering = true)
     {
         if (null === $activationStrategy) {
-            $activationStrategy = new ErrorLevelActivationStrategy(ehough_epilog_Logger::WARNING);
+            $activationStrategy = new ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy(ehough_epilog_Logger::WARNING);
         }
-        if (!$activationStrategy instanceof ActivationStrategyInterface) {
-            $activationStrategy = new ErrorLevelActivationStrategy($activationStrategy);
+        if (!$activationStrategy instanceof ehough_epilog_handler_fingerscrossed_ActivationStrategyInterface) {
+            $activationStrategy = new ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy($activationStrategy);
         }
 
         $this->handler = $handler;

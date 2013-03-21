@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="../php/ehough/epilog/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Monolog Test Suite">
+            <directory>../php/ehough/epilog/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../../main/php/ehough/epilog/</directory>
+        </whitelist>
+    </filter>
+</phpunit>

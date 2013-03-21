@@ -38,7 +38,7 @@ class ehough_epilog_processor_IntrospectionProcessor
         array_shift($trace);
 
         $i = 0;
-        while (isset($trace[$i]['class']) && false !== strpos($trace[$i]['class'], 'Monolog\\')) {
+        while (isset($trace[$i]['class']) && false !== strpos($trace[$i]['class'], 'ehough_epilog')) {
             $i++;
         }
 
