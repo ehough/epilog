@@ -16,7 +16,7 @@
 //use Monolog\Processor\PsrLogMessageProcessor;
 //use Psr\Log\Test\LoggerInterfaceTest;
 
-class PsrLogCompatTest extends ehough_epilog_psr_test_LoggerInterfaceTest
+class ehough_epilog_PsrLogCompatTest extends ehough_epilog_psr_test_LoggerInterfaceTest
 {
     private $handler;
 

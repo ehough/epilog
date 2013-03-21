@@ -53,11 +53,6 @@ class ehough_epilog_formatter_GelfMessageFormatter extends ehough_epilog_formatt
 
     public function __construct($systemName = null, $extraPrefix = null, $contextPrefix = 'ctxt_')
     {
-        if (version_compare(PHP_VERSION, '5.3.0') < 0) {
-
-            throw new RuntimeException('The Gelf formatter requires at least PHP 5.3.0');
-        }
-
         parent::__construct('U.u');
 
         $this->systemName = $systemName ?: gethostname();

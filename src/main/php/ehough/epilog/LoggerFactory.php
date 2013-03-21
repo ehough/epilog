@@ -22,7 +22,7 @@
 /**
  * Convenience class to build loggers.
  */
-final class ehough_epilog_api_LoggerFactory
+final class ehough_epilog_LoggerFactory
 {
     private static $_nameToLoggerMap = array();
 
@@ -35,7 +35,7 @@ final class ehough_epilog_api_LoggerFactory
      *
      * @param string $name The name of the logger to build or fetch.
      *
-     * @return ehough_epilog_api_ILogger The logger for the given name.
+     * @return ehough_epilog_psr_LoggerInterface The logger for the given name.
      */
     public static function getLogger($name)
     {
@@ -76,7 +76,7 @@ final class ehough_epilog_api_LoggerFactory
      *
      * @param string $name The name of the logger to build.
      *
-     * @return ehough_epilog_api_ILogger The logger for the given name.
+     * @return ehough_epilog_psr_LoggerInterface The logger for the given name.
      */
     private static function _buildLogger($name)
     {
