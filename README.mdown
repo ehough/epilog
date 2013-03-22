@@ -1,0 +1,46 @@
+# epilog [![Build Status](https://secure.travis-ci.org/ehough/epilog.png)](http://travis-ci.org/ehough/epilog)
+
+
+Fork of [monolog](https://github.com/Seldaek/monolog) compatible with PHP 5.2+. Fully tested and frequently merged with upstream changes from [monolog](https://github.com/Seldaek/monolog).
+### How to use
+
+```php
+<?php
+
+// create a log channel
+$log = new ehough_epilog_Logger('name');
+$log->pushHandler(new ehough_epilog_handler_StreamHandler('path/to/your.log', ehough_epilog_Logger::WARNING));
+
+// add records to the log
+$log->addWarning('Foo');
+$log->addError('Bar');
+```
+
+### Differences from  [monolog](https://github.com/Seldaek/monolog)
+
+The primary difference is naming conventions of monolog's classes. Instead of the `\Monolog` namespace
+(and sub-namespaces), instead prefix the monolog class names with `ehough_epilog` and follow the [PEAR
+naming convention](http://pear.php.net/manual/en/standards.php).
+
+A few examples of class naming conversions:
+
+    \Monolog\Logger                     ----->    ehough_epilog_Logger
+    \Monolog\Handler\StreamHandler      ----->    ehough_epilog_handler_StreamHandler
+    \Monolog\Processor\MemoryProcessor  ----->    ehough_epilog_processor_MemoryProcessor
+
+Other "gotchas" when using epilog instead of monolog:
+
+* The [Gelf handler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GelfHandler.php) can only be used with PHP 5.3+
+* The [DoctrineCouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DoctrineCouchDBHandler.php) can only be used with PHP 5.3+
+
+### LoggerFactory
+
+epilog also adds a handy class for building `ehough_epilog_Logger` instances: [`ehough_epilog_LoggerFactory`](https://github.com/ehough/epilog/tree/develop/src/main/php/ehough/epilog/LoggerFactory). You can use this factory to perform one-liner instantiations:
+
+```php
+<?php
+
+$logger = ehough_epilog_LoggerFactory::getLogger('name');
+```
+
+Any loggers built this way will share the same stack of handlers and processors, thereby reducing unnecessary memory overhead.

@@ -1,12 +1,8 @@
 {
     "name": "ehough/epilog",
-
-    "description": "Logger based heavily on Monolog, but works with PHP 5.1 and above.",
-
+    "description": "Fork of seldaek/monolog that works with PHP 5.2 and above.",
     "homepage": "https://github.com/ehough/epilog",
-
-    "license": "GPL-3.0+",
-
+    "license": "MIT",
     "authors": [
         {
             "name": "Eric Hough",
@@ -14,17 +10,16 @@
             "homepage": "http://ehough.com"
         }
     ],
-
-    "require-dev": {
-        
-	    "ehough/pulsar": "1.*"
+    "require": {
+        "php": ">=5.2.0",
+        "ehough/jameson": "*"
     },
-
+    "require-dev": {
+        "mlehner/gelf-php": "1.0.*",
+        "raven/raven": "0.3.*",
+        "doctrine/couchdb": "dev-master"
+    },
     "autoload": {
-
-        "psr-0": {
-
-            "ehough_epilog": "src/main/php"
-        }
+        "psr-0": {"ehough_epilog": "src/main/php"}
     }
 }
