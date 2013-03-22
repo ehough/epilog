@@ -11,8 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.2.0",
-        "ehough/jameson": "*"
+        "php": ">=5.2.0"
     },
     "require-dev": {
         "mlehner/gelf-php": "1.0.*",
