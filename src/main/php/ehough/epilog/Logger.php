@@ -366,7 +366,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
             'level' => $level,
         );
 
-        foreach ($this->handlers as $key => $handler) {
+        foreach ($this->handlers as $handler) {
             if ($handler->isHandling($record)) {
                 return true;
             }
