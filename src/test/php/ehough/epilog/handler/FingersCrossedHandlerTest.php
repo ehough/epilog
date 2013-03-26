@@ -17,6 +17,8 @@
 
 class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_TestCase
 {
+    private $_test;
+
     /**
      * @covers ehough_epilog_handler_FingersCrossedHandler::__construct
      * @covers ehough_epilog_handler_FingersCrossedHandler::handle
@@ -101,9 +103,8 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
     public function testHandleWithCallback()
     {
         $test = new ehough_epilog_handler_TestHandler();
-        $handler = new ehough_epilog_handler_FingersCrossedHandler(function($record, $handler) use ($test) {
-                    return $test;
-                });
+        $this->_test = $test;
+        $handler = new ehough_epilog_handler_FingersCrossedHandler(array($this, '_callbackTestHandleWithCallback'));
         $handler->handle($this->getRecord(ehough_epilog_Logger::DEBUG));
         $handler->handle($this->getRecord(ehough_epilog_Logger::INFO));
         $this->assertFalse($test->hasDebugRecords());
@@ -113,16 +114,24 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
         $this->assertTrue(count($test->getRecords()) === 3);
     }
 
+    public function _callbackTestHandleWithCallback($record, $handler)
+    {
+        return $this->_test;
+    }
+
     /**
      * @covers ehough_epilog_handler_FingersCrossedHandler::handle
      * @expectedException RuntimeException
      */
     public function testHandleWithBadCallbackThrowsException()
     {
-        $handler = new ehough_epilog_handler_FingersCrossedHandler(function($record, $handler) {
-                    return 'foo';
-                });
+        $handler = new ehough_epilog_handler_FingersCrossedHandler(array($this, '_callbackTestHandleWithBadCallbackThrowsException'));
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
+    }
+
+    public function _callbackTestHandleWithBadCallbackThrowsException($record, $handler)
+    {
+        return 'foo';
     }
 
     /**
@@ -156,14 +165,17 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
     {
         $test = new ehough_epilog_handler_TestHandler();
         $handler = new ehough_epilog_handler_FingersCrossedHandler($test, ehough_epilog_Logger::INFO);
-        $handler->pushProcessor(function ($record) {
-            $record['extra']['foo'] = true;
-
-            return $record;
-        });
+        $handler->pushProcessor(array($this, '_callbackTestHandleUsesProcessors'));
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
         $this->assertTrue($test->hasWarningRecords());
         $records = $test->getRecords();
         $this->assertTrue($records[0]['extra']['foo']);
+    }
+
+    public function _callbackTestHandleUsesProcessors($record)
+    {
+        $record['extra']['foo'] = true;
+
+        return $record;
     }
 }

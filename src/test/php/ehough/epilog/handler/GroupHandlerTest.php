@@ -76,14 +76,17 @@ class ehough_epilog_handler_GroupHandlerTest extends ehough_epilog_TestCase
     {
         $test = new ehough_epilog_handler_TestHandler();
         $handler = new ehough_epilog_handler_GroupHandler(array($test));
-        $handler->pushProcessor(function ($record) {
-            $record['extra']['foo'] = true;
-
-            return $record;
-        });
+        $handler->pushProcessor(array($this, '_callbackTestHandleUsesProcessors'));
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
         $this->assertTrue($test->hasWarningRecords());
         $records = $test->getRecords();
         $this->assertTrue($records[0]['extra']['foo']);
+    }
+
+    public function _callbackTestHandleUsesProcessors($record)
+    {
+        $record['extra']['foo'] = true;
+
+        return $record;
     }
 }

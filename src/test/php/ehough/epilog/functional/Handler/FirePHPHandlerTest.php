@@ -9,14 +9,17 @@
  * file that was distributed with this source code.
  */
 
-spl_autoload_register(function($class) {
+function _callbackFirePhpHandlerAutoload($class)
+{
     $file = dirname(__FILE__).'/../../../../src/'.strtr($class, '\\', '/').'.php';
     if (file_exists($file)) {
         require $file;
 
         return true;
     }
-});
+}
+
+spl_autoload_register('_callbackFirePhpHandlerAutoload');
 
 //use Monolog\Logger;
 //use Monolog\Handler\FirePHPHandler;

@@ -135,15 +135,18 @@ class ehough_epilog_handler_BufferHandlerTest extends ehough_epilog_TestCase
     {
         $test = new ehough_epilog_handler_TestHandler();
         $handler = new ehough_epilog_handler_BufferHandler($test);
-        $handler->pushProcessor(function ($record) {
-            $record['extra']['foo'] = true;
-
-            return $record;
-        });
+        $handler->pushProcessor(array($this, '_callbackTestHandleUsesProcessors'));
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
         $handler->flush();
         $this->assertTrue($test->hasWarningRecords());
         $records = $test->getRecords();
         $this->assertTrue($records[0]['extra']['foo']);
+    }
+
+    public function _callbackTestHandleUsesProcessors($record)
+    {
+        $record['extra']['foo'] = true;
+
+        return $record;
     }
 }

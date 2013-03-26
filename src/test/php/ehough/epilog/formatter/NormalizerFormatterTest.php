@@ -23,7 +23,7 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'message' => 'foo',
-            'datetime' => new \DateTime,
+            'datetime' => new DateTime,
             'extra' => array('foo' => new TestFooNorm, 'bar' => new TestBarNorm, 'baz' => array(), 'res' => fopen('php://memory', 'rb')),
             'context' => array(
                 'foo' => 'bar',
@@ -58,7 +58,7 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
                 'channel' => 'test',
                 'message' => 'bar',
                 'context' => array(),
-                'datetime' => new \DateTime,
+                'datetime' => new DateTime,
                 'extra' => array(),
             ),
             array(
@@ -66,7 +66,7 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
                 'channel' => 'log',
                 'message' => 'foo',
                 'context' => array(),
-                'datetime' => new \DateTime,
+                'datetime' => new DateTime,
                 'extra' => array(),
             ),
         ));
@@ -104,21 +104,24 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
 
         // set an error handler to assert that the error is not raised anymore
         $that = $this;
-        set_error_handler(function ($level, $message, $file, $line, $context) use ($that) {
-            if (error_reporting() & $level) {
-                restore_error_handler();
-                $that->fail("$message should not be raised");
-            }
-        });
+        set_error_handler(array($this, '_callbackTestIgnoresRecursiveObjectReferences'));
 
         $formatter = new ehough_epilog_formatter_NormalizerFormatter();
-        $reflMethod = new \ReflectionMethod($formatter, 'toJson');
+        $reflMethod = new ReflectionMethod($formatter, 'toJson');
         $reflMethod->setAccessible(true);
         $res = $reflMethod->invoke($formatter, array($foo, $bar), true);
 
         restore_error_handler();
 
         $this->assertEquals(@json_encode(array($foo, $bar)), $res);
+    }
+
+    public function _callbackTestIgnoresRecursiveObjectReferences($level, $message, $file, $line, $context)
+    {
+        if (error_reporting() & $level) {
+            restore_error_handler();
+            $this->fail("$message should not be raised");
+        }
     }
 
     public function testIgnoresInvalidTypes()
@@ -128,21 +131,24 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
 
         // set an error handler to assert that the error is not raised anymore
         $that = $this;
-        set_error_handler(function ($level, $message, $file, $line, $context) use ($that) {
-            if (error_reporting() & $level) {
-                restore_error_handler();
-                $that->fail("$message should not be raised");
-            }
-        });
+        set_error_handler(array($this, '_callbackTestIgnoresInvalidTypes'));
 
         $formatter = new ehough_epilog_formatter_NormalizerFormatter();
-        $reflMethod = new \ReflectionMethod($formatter, 'toJson');
+        $reflMethod = new ReflectionMethod($formatter, 'toJson');
         $reflMethod->setAccessible(true);
         $res = $reflMethod->invoke($formatter, array($resource), true);
 
         restore_error_handler();
 
         $this->assertEquals(@json_encode(array($resource)), $res);
+    }
+
+    public function _callbackTestIgnoresInvalidTypes($level, $message, $file, $line, $context)
+    {
+        if (error_reporting() & $level) {
+            restore_error_handler();
+            $this->fail("$message should not be raised");
+        }
     }
 }
 
