@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-global $deps;
+global $deps, $selfInfo;
 
 $deps = array(
 
@@ -16,3 +16,5 @@ $deps = array(
     array('raven/raven', 'git://github.com/getsentry/raven-php', 'lib'),
     array('doctrine/couchdb', 'git://github.com/doctrine/couchdb-client', 'lib'),
 );
+
+$selfInfo = array('ehough_epilog', dirname(__FILE__) . '/../../../main/php');
