@@ -95,6 +95,11 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
      */
     public function testIgnoresRecursiveObjectReferences()
     {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP < 5.3');
+        }
+
         // set up the recursion
         $foo = new stdClass();
         $bar = new stdClass();
@@ -126,6 +131,11 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
 
     public function testIgnoresInvalidTypes()
     {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP < 5.3');
+        }
+
         // set up the recursion
         $resource = fopen(__FILE__, 'r');
 
