@@ -32,6 +32,8 @@ Other "gotchas" when using epilog instead of monolog:
 
 * The [Gelf handler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GelfHandler.php) can only be used with PHP 5.3+
 * The [DoctrineCouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DoctrineCouchDBHandler.php) can only be used with PHP 5.3+
+* The [RedisHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RedisHandler.php) can only be used with PHP 5.3+
+
 
 ### LoggerFactory
 
