@@ -8,4 +8,4 @@
  * file that was distributed with this source code.
  */
 
-system('phpunit --verbose -c src/test/resources/phpunit.xml.dist');
+system('phpunit --verbose --debug -c src/test/resources/phpunit.xml.dist');
