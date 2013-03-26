@@ -55,7 +55,7 @@ class ehough_epilog_formatter_GelfMessageFormatter extends ehough_epilog_formatt
     {
         parent::__construct('U.u');
 
-        $this->systemName = $systemName ?: gethostname();
+        $this->systemName = $systemName ? $systemName : gethostname();
 
         $this->extraPrefix = $extraPrefix;
         $this->contextPrefix = $contextPrefix;

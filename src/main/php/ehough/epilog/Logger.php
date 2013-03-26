@@ -196,7 +196,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
         }
 
         if (!self::$timezone) {
-            self::$timezone = new DateTimeZone(date_default_timezone_get() ?: 'UTC');
+            self::$timezone = new DateTimeZone(date_default_timezone_get() ? date_default_timezone_get() : 'UTC');
         }
 
         $record = array(
