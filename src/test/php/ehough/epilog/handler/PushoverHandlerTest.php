@@ -84,7 +84,7 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
         $constructorArgs = array($token, $user, $title);
         $this->res = fopen('php://memory', 'a');
         $this->handler = $this->getMock(
-            '\ehough_epilog_handler_PushoverHandler',
+            'ehough_epilog_handler_PushoverHandler',
             array('fsockopen', 'streamSetTimeout', 'closeSocket'),
             $constructorArgs
         );
