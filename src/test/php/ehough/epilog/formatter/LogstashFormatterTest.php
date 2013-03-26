@@ -28,7 +28,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );
@@ -61,7 +61,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('file' => 'test', 'line' => 14),
             'message' => 'log',
         );
@@ -83,7 +83,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );
@@ -117,7 +117,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );
@@ -147,7 +147,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );

@@ -24,7 +24,7 @@ class ehough_epilog_TestCase extends PHPUnit_Framework_TestCase
             'level' => $level,
             'level_name' => ehough_epilog_Logger::getLevelName($level),
             'channel' => 'test',
-            'datetime' => \DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true))),
+            'datetime' => DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true))),
             'extra' => array(),
         );
     }

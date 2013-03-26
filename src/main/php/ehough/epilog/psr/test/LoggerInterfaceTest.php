@@ -97,7 +97,7 @@ abstract class ehough_epilog_psr_test_LoggerInterfaceTest extends PHPUnit_Framew
             'int' => 0,
             'float' => 0.5,
             'nested' => array('with object' => new DummyTest),
-            'object' => new \DateTime,
+            'object' => new DateTime,
             'resource' => fopen('php://memory', 'r'),
         );
 
