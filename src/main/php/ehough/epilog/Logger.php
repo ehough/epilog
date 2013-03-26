@@ -205,7 +205,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
             'level' => $level,
             'level_name' => self::getLevelName($level),
             'channel' => $this->name,
-            'datetime' => DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true)), self::$timezone)->setTimezone(self::$timezone),
+            'datetime' => $this->_createDateTimeFromFormat('U.u', sprintf('%.6F', microtime(true)), self::$timezone),
             'extra' => array(),
         );
         // check if any handler will handle this message
@@ -560,5 +560,18 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     public function emergency($message, array $context = array())
     {
         return $this->addRecord(self::EMERGENCY, $message, $context);
+    }
+
+    private function _createDateTimeFromFormat()
+    {
+        if (version_compare(PHP_VERSION, '5.3') >= 0) {
+
+            return DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true)), self::$timezone)->setTimezone(self::$timezone);
+        }
+
+        $time = new DateTime('@' . time());
+        $time->setTimestamp(self::$timezone);
+
+        return $time;
     }
 }
