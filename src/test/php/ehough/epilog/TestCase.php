@@ -51,8 +51,13 @@ class ehough_epilog_TestCase extends PHPUnit_Framework_TestCase
         $formatter = $this->getMock('ehough_epilog_formatter_FormatterInterface');
         $formatter->expects($this->any())
             ->method('format')
-            ->will($this->returnCallback(function($record) { return $record['message']; }));
+            ->will($this->returnCallback(array($this, '_callbackGetIdentityFormatter')));
 
         return $formatter;
+    }
+
+    public function _callbackGetIdentityFormatter($record)
+    {
+        return $record['message'];
     }
 }
