@@ -63,6 +63,6 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
      */
     public function testInvalidData()
     {
-        new ehough_epilog_processor_WebProcessor(new \stdClass);
+        new ehough_epilog_processor_WebProcessor(new stdClass);
     }
 }

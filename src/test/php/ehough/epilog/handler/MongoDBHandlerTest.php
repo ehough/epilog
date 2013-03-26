@@ -21,7 +21,7 @@ class ehough_epilog_handler_MongoDBHandlerTest extends ehough_epilog_TestCase
      */
     public function testConstructorShouldThrowExceptionForInvalidMongo()
     {
-        new ehough_epilog_handler_MongoDBHandler(new \stdClass(), 'DB', 'Collection');
+        new ehough_epilog_handler_MongoDBHandler(new stdClass(), 'DB', 'Collection');
     }
 
     public function testHandle()
@@ -34,7 +34,7 @@ class ehough_epilog_handler_MongoDBHandlerTest extends ehough_epilog_TestCase
             ->with('DB', 'Collection')
             ->will($this->returnValue($collection));
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $expected = array(
             'message' => 'test',

@@ -36,7 +36,7 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
 
         $handler = new AmqpHandler($exchange, 'log');
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $expected = array(
             array(

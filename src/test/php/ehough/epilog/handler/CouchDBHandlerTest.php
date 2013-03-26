@@ -18,7 +18,7 @@ class ehough_epilog_handler_CouchDBHandlerTest extends ehough_epilog_TestCase
 {
     public function testHandle()
     {
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $expected = array(
             'message' => 'test',

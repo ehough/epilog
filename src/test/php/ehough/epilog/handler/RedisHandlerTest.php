@@ -22,7 +22,7 @@ class ehough_epilog_handler_RedisHandlerTest extends ehough_epilog_TestCase
      */
     public function testConstructorShouldThrowExceptionForInvalidRedis()
     {
-        new ehough_epilog_handler_RedisHandler(new \stdClass(), 'key');
+        new ehough_epilog_handler_RedisHandler(new stdClass(), 'key');
     }
 
     public function testConstructorShouldWorkWithPredis()
@@ -46,7 +46,7 @@ class ehough_epilog_handler_RedisHandlerTest extends ehough_epilog_TestCase
             ->method('rpush')
             ->with('key', 'test');
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $handler = new ehough_epilog_handler_RedisHandler($redis, 'key');
         $handler->setFormatter(new ehough_epilog_formatter_LineFormatter("%message%"));
@@ -62,7 +62,7 @@ class ehough_epilog_handler_RedisHandlerTest extends ehough_epilog_TestCase
             ->method('rPush')
             ->with('key', 'test');
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $handler = new ehough_epilog_handler_RedisHandler($redis, 'key');
         $handler->setFormatter(new ehough_epilog_formatter_LineFormatter("%message%"));

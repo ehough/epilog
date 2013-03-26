@@ -99,6 +99,6 @@ class ehough_epilog_handler_AbstractHandlerTest extends ehough_epilog_TestCase
     {
         $handler = $this->getMockForAbstractClass('ehough_epilog_handler_AbstractHandler');
 
-        $handler->pushProcessor(new \stdClass());
+        $handler->pushProcessor(new stdClass());
     }
 }

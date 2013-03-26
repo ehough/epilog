@@ -11,7 +11,7 @@
 
 //namespace Monolog;
 
-class ehough_epilog_TestCase extends \PHPUnit_Framework_TestCase
+class ehough_epilog_TestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * @return array Record

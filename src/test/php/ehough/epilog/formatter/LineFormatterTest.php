@@ -14,7 +14,7 @@
 /**
  * @covers Monolog\Formatter\LineFormatter
  */
-class LineFormatterTest extends \PHPUnit_Framework_TestCase
+class LineFormatterTest extends PHPUnit_Framework_TestCase
 {
     public function testDefFormatWithString()
     {

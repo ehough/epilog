@@ -14,7 +14,7 @@
 //use Monolog\Processor\WebProcessor;
 //use ehough_epilog_handler_TestHandler;
 
-class ehough_epilog_LoggerTest extends \PHPUnit_Framework_TestCase
+class ehough_epilog_LoggerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @covers ehough_epilog_Logger::getName
@@ -151,7 +151,7 @@ class ehough_epilog_LoggerTest extends \PHPUnit_Framework_TestCase
     {
         $logger = new ehough_epilog_Logger(__METHOD__);
 
-        $logger->pushProcessor(new \stdClass());
+        $logger->pushProcessor(new stdClass());
     }
 
     /**
@@ -162,14 +162,17 @@ class ehough_epilog_LoggerTest extends \PHPUnit_Framework_TestCase
         $logger = new ehough_epilog_Logger(__METHOD__);
         $handler = new ehough_epilog_handler_TestHandler;
         $logger->pushHandler($handler);
-        $logger->pushProcessor(function($record) {
-            $record['extra']['win'] = true;
-
-            return $record;
-        });
+        $logger->pushProcessor(array($this, '_callbackTestProcessorsAreExecuted'));
         $logger->addError('test');
         list($record) = $handler->getRecords();
         $this->assertTrue($record['extra']['win']);
+    }
+
+    public function _callbackTestProcessorsAreExecuted($record)
+    {
+        $record['extra']['win'] = true;
+
+        return $record;
     }
 
     /**
@@ -215,11 +218,13 @@ class ehough_epilog_LoggerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(false))
         ;
         $logger->pushHandler($handler);
-        $that = $this;
-        $logger->pushProcessor(function($record) use ($that) {
-            $that->fail('The processor should not be called');
-        });
+        $logger->pushProcessor(array($this, '_callbackTestProcessorsNotCalledWhenNotHandled'));
         $logger->addAlert('test');
+    }
+
+    public function _callbackTestProcessorsNotCalledWhenNotHandled($record)
+    {
+        $this->fail('The processor should not be called');
     }
 
     /**

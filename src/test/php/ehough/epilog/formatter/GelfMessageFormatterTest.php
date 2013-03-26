@@ -14,7 +14,7 @@
 //use Monolog\Logger;
 //use Monolog\Formatter\GelfMessageFormatter;
 
-class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
+class GelfMessageFormatterTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {

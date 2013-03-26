@@ -14,7 +14,7 @@
 /**
  * @covers Monolog\Formatter\NormalizerFormatter
  */
-class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
+class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
 {
     public function testFormat()
     {
@@ -96,8 +96,8 @@ class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
     public function testIgnoresRecursiveObjectReferences()
     {
         // set up the recursion
-        $foo = new \stdClass();
-        $bar = new \stdClass();
+        $foo = new stdClass();
+        $bar = new stdClass();
 
         $foo->bar = $bar;
         $bar->foo = $foo;

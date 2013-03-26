@@ -12,7 +12,7 @@
 //namespace Monolog\Handler;
 //use Monolog\Logger;
 
-class ehough_epilog_handler_SyslogHandlerTest extends \PHPUnit_Framework_TestCase
+class ehough_epilog_handler_SyslogHandlerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @covers ehough_epilog_handler_SyslogHandler::__construct
