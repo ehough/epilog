@@ -102,15 +102,18 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
 
         // Sorting the files by name to remove the older ones
         $array = iterator_to_array($iterator);
-        usort($array, function($a, $b) {
-            return strcmp($b->getFilename(), $a->getFilename());
-        });
+        usort($array, array($this, '_callbackRotate'));
 
         foreach (array_slice($array, $this->maxFiles) as $file) {
             if ($file->isWritable()) {
                 unlink($file->getRealPath());
             }
         }
+    }
+
+    public function _callbackRotate($a, $b)
+    {
+        return strcmp($b->getFilename(), $a->getFilename());
     }
 
     protected function getTimedFilename()
