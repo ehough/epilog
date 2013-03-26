@@ -21,7 +21,7 @@ class ehough_epilog_processor_UidProcessorTest extends ehough_epilog_TestCase
     public function testProcessor()
     {
         $processor = new ehough_epilog_processor_UidProcessor();
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertArrayHasKey('uid', $record['extra']);
     }
 }

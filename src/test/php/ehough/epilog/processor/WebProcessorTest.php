@@ -26,7 +26,7 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
         );
 
         $processor = new ehough_epilog_processor_WebProcessor($server);
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertEquals($server['REQUEST_URI'], $record['extra']['url']);
         $this->assertEquals($server['REMOTE_ADDR'], $record['extra']['ip']);
         $this->assertEquals($server['REQUEST_METHOD'], $record['extra']['http_method']);
@@ -41,7 +41,7 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
             'REQUEST_METHOD' => 'C',
         );
         $processor = new ehough_epilog_processor_WebProcessor($server);
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertEmpty($record['extra']);
     }
 
@@ -54,7 +54,7 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
             'SERVER_NAME'    => 'F',
         );
         $processor = new ehough_epilog_processor_WebProcessor($server);
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertNull($record['extra']['referrer']);
     }
 

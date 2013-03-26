@@ -22,7 +22,7 @@ class ehough_epilog_processor_MemoryUsageProcessorTest extends ehough_epilog_Tes
     public function testProcessor()
     {
         $processor = new ehough_epilog_processor_MemoryUsageProcessor();
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertArrayHasKey('memory_usage', $record['extra']);
         $this->assertRegExp('#[0-9.]+ (M|K)?B$#', $record['extra']['memory_usage']);
     }
