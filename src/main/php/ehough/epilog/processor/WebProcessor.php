@@ -27,7 +27,7 @@ class ehough_epilog_processor_WebProcessor
     {
         if (null === $serverData) {
             $this->serverData =& $_SERVER;
-        } elseif (is_array($serverData) || $serverData instanceof \ArrayAccess) {
+        } elseif (is_array($serverData) || $serverData instanceof ArrayAccess) {
             $this->serverData = $serverData;
         } else {
             throw new UnexpectedValueException('$serverData must be an array or object implementing ArrayAccess.');

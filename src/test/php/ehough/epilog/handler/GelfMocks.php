@@ -14,7 +14,7 @@
 //use Gelf\MessagePublisher;
 //use Gelf\Message;
 
-class ehough_epilog_handler_MockMessagePublisher extends \Gelf\MessagePublisher
+class ehough_epilog_handler_MockMessagePublisher extends Gelf\MessagePublisher
 {
     public function publish(Gelf\Message $message)
     {

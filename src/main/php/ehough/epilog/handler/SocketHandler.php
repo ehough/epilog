@@ -46,8 +46,8 @@ class ehough_epilog_handler_SocketHandler extends ehough_epilog_handler_Abstract
      *
      * @param array $record
      *
-     * @throws \UnexpectedValueException
-     * @throws \RuntimeException
+     * @throws UnexpectedValueException
+     * @throws RuntimeException
      */
     public function write(array $record)
     {

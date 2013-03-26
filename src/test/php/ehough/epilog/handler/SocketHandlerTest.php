@@ -39,7 +39,7 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      */
     public function testBadConnectionTimeout()
     {
@@ -55,7 +55,7 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      */
     public function testBadTimeout()
     {

@@ -11,7 +11,7 @@
 
 //namespace Monolog\Handler;
 
-class ehough_epilog_handler_AmqpExchangeMock extends \AMQPExchange
+class ehough_epilog_handler_AmqpExchangeMock extends AMQPExchange
 {
     protected $messages = array();
 
