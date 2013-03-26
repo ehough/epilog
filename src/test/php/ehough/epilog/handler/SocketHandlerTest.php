@@ -120,20 +120,23 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
     {
         $this->setMockHandler(array('fwrite'));
 
-        $callback = function($arg) {
-            $map = array(
-                'Hello world' => 6,
-                'world' => false,
-            );
-
-            return $map[$arg];
-        };
+        $callback = array($this, '_callbackTestWriteFailsOnIfFwriteReturnsFalse');
 
         $this->handler->expects($this->exactly(2))
             ->method('fwrite')
             ->will($this->returnCallback($callback));
 
         $this->writeRecord('Hello world');
+    }
+
+    public function _callbackTestWriteFailsOnIfFwriteReturnsFalse($arg)
+    {
+        $map = array(
+            'Hello world' => 6,
+            'world' => false,
+        );
+
+        return $map[$arg];
     }
 
     /**
@@ -143,14 +146,7 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
     {
         $this->setMockHandler(array('fwrite', 'streamGetMetadata'));
 
-        $callback = function($arg) {
-            $map = array(
-                'Hello world' => 6,
-                'world' => 5,
-            );
-
-            return $map[$arg];
-        };
+        $callback = array($this, '_callbackTestWriteFailsIfStreamTimesOut');
 
         $this->handler->expects($this->exactly(1))
             ->method('fwrite')
@@ -162,6 +158,16 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
         $this->writeRecord('Hello world');
     }
 
+    public function _callbackTestWriteFailsIfStreamTimesOut($arg)
+    {
+        $map = array(
+            'Hello world' => 6,
+            'world' => 5,
+        );
+
+        return $map[$arg];
+    }
+
     /**
      * @expectedException RuntimeException
      */
@@ -169,12 +175,7 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
     {
         $this->setMockHandler(array('fwrite', 'streamGetMetadata'));
 
-        $res = $this->res;
-        $callback = function($string) use ($res) {
-            fclose($res);
-
-            return strlen('Hello');
-        };
+        $callback = array($this, '_callbackTestWriteFailsOnIncompleteWrite');
 
         $this->handler->expects($this->exactly(1))
             ->method('fwrite')
@@ -184,6 +185,13 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
             ->will($this->returnValue(array('timed_out' => false)));
 
         $this->writeRecord('Hello world');
+    }
+
+    public function _callbackTestWriteFailsOnIncompleteWrite($string)
+    {
+        fclose($this->res);
+
+        return strlen('Hello');
     }
 
     public function testWriteWithMemoryFile()
@@ -200,20 +208,23 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
     {
         $this->setMockHandler(array('fwrite'));
 
-        $callback = function($arg) {
-            $map = array(
-                'Hello world' => 6,
-                'world' => 5,
-            );
-
-            return $map[$arg];
-        };
+        $callback = array($this, '_callbackTestWriteWithMock');
 
         $this->handler->expects($this->exactly(2))
             ->method('fwrite')
             ->will($this->returnCallback($callback));
 
         $this->writeRecord('Hello world');
+    }
+
+    public function _callbackTestWriteWithMock($arg)
+    {
+        $map = array(
+            'Hello world' => 6,
+            'world' => 5,
+        );
+
+        return $map[$arg];
     }
 
     public function testClose()
