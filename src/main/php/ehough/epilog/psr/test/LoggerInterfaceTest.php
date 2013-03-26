@@ -80,7 +80,7 @@ abstract class ehough_epilog_psr_test_LoggerInterfaceTest extends PHPUnit_Framew
 
     public function testObjectCastToString()
     {
-        $dummy = $this->getMock('Psr\Log\Test\DummyTest', array('__toString'));
+        $dummy = $this->getMock('ehough_epilog_psr_test_DummyTest', array('__toString'));
         $dummy->expects($this->once())
             ->method('__toString')
             ->will($this->returnValue('DUMMY'));
@@ -96,7 +96,7 @@ abstract class ehough_epilog_psr_test_LoggerInterfaceTest extends PHPUnit_Framew
             'string' => 'Foo',
             'int' => 0,
             'float' => 0.5,
-            'nested' => array('with object' => new DummyTest),
+            'nested' => array('with object' => new ehough_epilog_psr_test_DummyTest),
             'object' => new DateTime,
             'resource' => fopen('php://memory', 'r'),
         );
@@ -111,6 +111,6 @@ abstract class ehough_epilog_psr_test_LoggerInterfaceTest extends PHPUnit_Framew
     }
 }
 
-class DummyTest
+class ehough_epilog_psr_test_DummyTest
 {
 }
