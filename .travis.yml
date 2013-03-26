@@ -5,4 +5,5 @@ php:
   - 5.3
   - 5.4
   - 5.5
-script: "src/test/bash/travis-test.sh"
+before_script: "src/test/bash/travis-setup.sh"
+script: "phpunit --verbose --debug -c src/test/resources/phpunit.xml.dist"
