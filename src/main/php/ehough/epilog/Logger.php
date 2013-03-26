@@ -570,7 +570,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
         }
 
         $time = new DateTime('@' . time());
-        $time->setTimestamp(self::$timezone);
+        $time->setTimezone(self::$timezone);
 
         return $time;
     }
