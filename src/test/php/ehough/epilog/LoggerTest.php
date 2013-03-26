@@ -192,7 +192,7 @@ class ehough_epilog_LoggerTest extends PHPUnit_Framework_TestCase
         ;
         $logger->pushHandler($handler);
 
-        $processor = $this->getMockBuilder('Monolog\Processor\WebProcessor')
+        $processor = $this->getMockBuilder('ehough_epilog_processor_WebProcessor')
             ->disableOriginalConstructor()
             ->setMethods(array('__invoke'))
             ->getMock()
