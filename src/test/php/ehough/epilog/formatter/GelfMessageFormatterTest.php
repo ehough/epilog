@@ -18,7 +18,7 @@ class GelfMessageFormatterTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if ((!class_exists("Gelf\Message")) || (version_compare(PHP_VERSION, '5.3.0') < 0)) {
+        if (version_compare(PHP_VERSION, '5.3.0') < 0 || !class_exists("Gelf\Message")) {
             $this->markTestSkipped("mlehner/gelf-php not installed");
         }
     }
