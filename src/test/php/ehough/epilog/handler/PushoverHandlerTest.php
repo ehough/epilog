@@ -81,6 +81,11 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
 
     private function createHandler($token = 'myToken', $user = 'myUser', $title = 'Monolog')
     {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP < 5.3');
+        }
+
         $constructorArgs = array($token, $user, $title);
         $this->res = fopen('php://memory', 'a');
         $this->handler = $this->getMock(
