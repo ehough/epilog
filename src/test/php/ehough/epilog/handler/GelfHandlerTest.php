@@ -19,7 +19,7 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
 {
     public function setUp()
     {
-        if (!class_exists("Gelf\MessagePublisher") || !class_exists("Gelf\Message") || version_compare(PHP_VERSION, '5.3') < 0) {
+        if (version_compare(PHP_VERSION, '5.3') < 0 || !class_exists("Gelf\MessagePublisher") || !class_exists("Gelf\Message")) {
             $this->markTestSkipped("mlehner/gelf-php not installed");
         }
 
