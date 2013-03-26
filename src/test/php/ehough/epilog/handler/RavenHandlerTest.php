@@ -88,6 +88,6 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
 
     private function methodThatThrowsAnException()
     {
-        throw new \Exception('This is an exception');
+        throw new Exception('This is an exception');
     }
 }

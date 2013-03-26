@@ -107,7 +107,7 @@ abstract class ehough_epilog_psr_test_LoggerInterfaceTest extends PHPUnit_Framew
     public function testContextExceptionKeyCanBeExceptionOrOtherValues()
     {
         $this->getLogger()->warning('Random message', array('exception' => 'oops'));
-        $this->getLogger()->critical('Uncaught Exception!', array('exception' => new \LogicException('Fail')));
+        $this->getLogger()->critical('Uncaught Exception!', array('exception' => new LogicException('Fail')));
     }
 }
 

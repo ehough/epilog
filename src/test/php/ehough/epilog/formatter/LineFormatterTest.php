@@ -96,7 +96,7 @@ class LineFormatterTest extends PHPUnit_Framework_TestCase
         $message = $formatter->format(array(
             'level_name' => 'CRITICAL',
             'channel' => 'core',
-            'context' => array('exception' => new \RuntimeException('Foo')),
+            'context' => array('exception' => new RuntimeException('Foo')),
             'datetime' => new DateTime,
             'extra' => array(),
             'message' => 'foobar',
