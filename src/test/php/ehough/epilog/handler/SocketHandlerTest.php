@@ -267,7 +267,7 @@ class ehough_epilog_handler_SocketHandlerTest extends ehough_epilog_TestCase
         $finalMethods = array_merge($defaultMethods, $newMethods);
 
         $this->handler = $this->getMock(
-            '\ehough_epilog_handler_SocketHandler', $finalMethods, array('localhost:1234')
+            'ehough_epilog_handler_SocketHandler', $finalMethods, array('localhost:1234')
         );
 
         if (!in_array('fsockopen', $methods)) {
