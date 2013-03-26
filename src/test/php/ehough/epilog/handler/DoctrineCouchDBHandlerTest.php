@@ -18,7 +18,7 @@ class ehough_epilog_handler_DoctrineCouchDBHandlerTest extends ehough_epilog_Tes
 {
     protected function setup()
     {
-        if (!class_exists('Doctrine\CouchDB\CouchDBClient')) {
+        if (version_compare(PHP_VERSION, '5.3') < 0 || !class_exists('Doctrine\CouchDB\CouchDBClient')) {
             $this->markTestSkipped('The "doctrine/couchdb" package is not installed');
         }
     }
