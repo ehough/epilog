@@ -78,7 +78,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
 
         try {
             $this->methodThatThrowsAnException();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $record = $this->getRecord(ehough_epilog_Logger::ERROR, $e->getMessage(), array('exception' => $e));
             $handler->handle($record);
         }

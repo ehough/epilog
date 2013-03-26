@@ -24,7 +24,7 @@ class ehough_epilog_handler_DoctrineCouchDBHandler extends ehough_epilog_handler
 {
     private $client;
 
-    public function __construct(\Doctrine\CouchDB\CouchDBClient $client, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
+    public function __construct(Doctrine\CouchDB\CouchDBClient $client, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         $this->client = $client;
         parent::__construct($level, $bubble);
