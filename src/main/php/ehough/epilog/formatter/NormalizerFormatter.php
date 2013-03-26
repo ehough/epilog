@@ -27,7 +27,7 @@ class ehough_epilog_formatter_NormalizerFormatter implements ehough_epilog_forma
      */
     public function __construct($dateFormat = null)
     {
-        $this->dateFormat = $dateFormat ?: static::SIMPLE_DATE;
+        $this->dateFormat = $dateFormat ?: self::SIMPLE_DATE;
     }
 
     /**

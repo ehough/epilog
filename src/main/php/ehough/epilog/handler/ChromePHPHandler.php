@@ -134,7 +134,7 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
             throw new InvalidArgumentException('Undefined property '.$property);
         }
 
-        return static::$sendHeaders;
+        return self::$sendHeaders;
     }
 
     /**
@@ -146,6 +146,6 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
             throw new InvalidArgumentException('Undefined property '.$property);
         }
 
-        static::$sendHeaders = $value;
+        self::$sendHeaders = $value;
     }
 }
