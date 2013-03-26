@@ -23,7 +23,7 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
             $this->markTestSkipped("mlehner/gelf-php not installed");
         }
 
-        require_once __DIR__ . '/GelfMocks.php';
+        require_once dirname(__FILE__) . '/GelfMocks.php';
     }
 
     /**

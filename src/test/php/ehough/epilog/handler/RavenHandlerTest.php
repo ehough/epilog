@@ -23,7 +23,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
             $this->markTestSkipped("raven/raven not installed");
         }
 
-        require_once __DIR__ . '/MockRavenClient.php';
+        require_once dirname(__FILE__) . '/MockRavenClient.php';
     }
 
     /**
