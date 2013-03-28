@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-//use Monolog\TestCase;
-
 class ehough_epilog_handler_NativeMailerHandlerTest extends ehough_epilog_TestCase
 {
     /**
@@ -23,7 +18,7 @@ class ehough_epilog_handler_NativeMailerHandlerTest extends ehough_epilog_TestCa
     {
         $mailer = new ehough_epilog_handler_NativeMailerHandler('spammer@example.org', 'dear victim', "receiver@example.org\r\nFrom: faked@attacker.org");
     }
-    
+
     /**
      * @expectedException InvalidArgumentException
      */
@@ -32,7 +27,7 @@ class ehough_epilog_handler_NativeMailerHandlerTest extends ehough_epilog_TestCa
         $mailer = new ehough_epilog_handler_NativeMailerHandler('spammer@example.org', 'dear victim', 'receiver@example.org');
         $mailer->addHeader("Content-Type: text/html\r\nFrom: faked@attacker.org");
     }
-    
+
     /**
      * @expectedException InvalidArgumentException
      */

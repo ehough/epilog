@@ -38,8 +38,8 @@ class ehough_epilog_handler_RavenHandler extends ehough_epilog_handler_AbstractP
 
     /**
      * @param Raven_Client $ravenClient
-     * @param integer $level The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param integer      $level       The minimum logging level at which this handler will be triggered
+     * @param Boolean      $bubble      Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct(Raven_Client $ravenClient, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {

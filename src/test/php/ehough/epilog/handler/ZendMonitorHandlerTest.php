@@ -8,11 +8,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-//use Monolog\TestCase;
-
 class ehough_epilog_handler_ZendMonitorHandlerTest extends ehough_epilog_TestCase
 {
     protected $zendMonitorHandler;
