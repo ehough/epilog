@@ -1,6 +1,6 @@
 {
     "name": "ehough/epilog",
-    "description": "Fork of seldaek/monolog that works with PHP 5.2 and above.",
+    "description": "Fork of seldaek/monolog compatible with PHP 5.2+.",
     "homepage": "https://github.com/ehough/epilog",
     "license": "MIT",
     "authors": [

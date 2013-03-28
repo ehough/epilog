@@ -5,5 +5,8 @@ php:
   - 5.3
   - 5.4
   - 5.5
-before_script: "src/test/bash/travis-setup.sh"
-script: "phpunit --verbose --debug -c src/test/resources/phpunit.xml.dist"
+before_script:
+  - wget https://raw.github.com/ehough/throwback/develop/src/main/bash/travis-setup.sh
+  - chmod a+x travis-setup.sh
+  - ./travis-setup.sh
+script: "phpunit -c src/test/resources/phpunit.xml.dist"

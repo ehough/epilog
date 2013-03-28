@@ -1,7 +1,15 @@
 # epilog [![Build Status](https://secure.travis-ci.org/ehough/epilog.png)](http://travis-ci.org/ehough/epilog)
 
+Fork of [monolog](https://github.com/Seldaek/monolog) compatible with PHP 5.2+.
 
-Fork of [monolog](https://github.com/Seldaek/monolog) compatible with PHP 5.2+. Fully tested and frequently merged with upstream changes from [monolog](https://github.com/Seldaek/monolog).
+### Motivation
+
+[monolog](https://github.com/Seldaek/monolog) is a fantastic logging library, but it's only compatible with PHP 5.3+. While 97% of PHP servers run PHP 5.2 or higher,
+a whopping **47% of all servers are still running PHP 5.2** ([source](http://w3techs.com/technologies/details/pl-php/5/all)).
+It would be a shame to exempt this library from nearly half of the world's servers just because of a few version incompatibilities.
+
+Once PHP 5.3+ adoption levels near closer to 100%, this library will be retired.
+
 ### How to use
 
 ```php
