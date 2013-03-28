@@ -12,8 +12,8 @@
 class ehough_epilog_processor_MemoryUsageProcessorTest extends ehough_epilog_TestCase
 {
     /**
-     * @covers Monolog\Processor\MemoryUsageProcessor::__invoke
-     * @covers Monolog\Processor\MemoryProcessor::formatBytes
+     * @covers ehough_epilog_processor_MemoryUsageProcessor::__invoke
+     * @covers ehough_epilog_processor_MemoryProcessor::formatBytes
      */
     public function testProcessor()
     {

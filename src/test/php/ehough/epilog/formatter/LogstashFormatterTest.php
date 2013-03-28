@@ -13,7 +13,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testDefaultFormatter()
     {
@@ -46,7 +46,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -68,7 +68,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testFormatWithContext()
     {
@@ -102,7 +102,7 @@ class LogstashFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testFormatWithExtra()
     {

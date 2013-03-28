@@ -19,7 +19,7 @@ class GelfMessageFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testDefaultFormatter()
     {
@@ -54,7 +54,7 @@ class GelfMessageFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -77,7 +77,7 @@ class GelfMessageFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testFormatWithContext()
     {
@@ -115,7 +115,7 @@ class GelfMessageFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testFormatWithExtra()
     {

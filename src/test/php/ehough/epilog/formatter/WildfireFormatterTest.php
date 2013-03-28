@@ -12,7 +12,7 @@
 class WildfireFormatterTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::format
+     * @covers ehough_epilog_formatter_WildfireFormatter::format
      */
     public function testDefaultFormat()
     {
@@ -37,7 +37,7 @@ class WildfireFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::format
+     * @covers ehough_epilog_formatter_WildfireFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -62,7 +62,7 @@ class WildfireFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::format
+     * @covers ehough_epilog_formatter_WildfireFormatter::format
      */
     public function testFormatWithoutContext()
     {
@@ -86,7 +86,7 @@ class WildfireFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::formatBatch
+     * @covers ehough_epilog_formatter_WildfireFormatter::formatBatch
      * @expectedException BadMethodCallException
      */
     public function testBatchFormatThrowException()

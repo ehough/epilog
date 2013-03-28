@@ -10,7 +10,7 @@
  */
 
 /**
- * @covers Monolog\Formatter\LineFormatter
+ * @covers ehough_epilog_formatter_LineFormatter
  */
 class LineFormatterTest extends PHPUnit_Framework_TestCase
 {

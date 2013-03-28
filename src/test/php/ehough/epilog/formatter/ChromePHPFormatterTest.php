@@ -12,7 +12,7 @@
 class ChromePHPFormatterTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::format
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::format
      */
     public function testDefaultFormat()
     {
@@ -45,7 +45,7 @@ class ChromePHPFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::format
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -78,7 +78,7 @@ class ChromePHPFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::format
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::format
      */
     public function testFormatWithoutContext()
     {
@@ -107,7 +107,7 @@ class ChromePHPFormatterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::formatBatch
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::formatBatch
      */
     public function testBatchFormatThrowException()
     {

@@ -12,7 +12,7 @@
 class ehough_epilog_formatter_JsonFormatterTest extends ehough_epilog_TestCase
 {
     /**
-     * @covers Monolog\Formatter\JsonFormatter::format
+     * @covers ehough_epilog_formatter_JsonFormatter::format
      */
     public function testFormat()
     {
@@ -22,7 +22,7 @@ class ehough_epilog_formatter_JsonFormatterTest extends ehough_epilog_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\JsonFormatter::formatBatch
+     * @covers ehough_epilog_formatter_JsonFormatter::formatBatch
      */
     public function testFormatBatch()
     {

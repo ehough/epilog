@@ -12,7 +12,7 @@
 class ehough_epilog_processor_UidProcessorTest extends ehough_epilog_TestCase
 {
     /**
-     * @covers Monolog\Processor\UidProcessor::__invoke
+     * @covers ehough_epilog_processor_UidProcessor::__invoke
      */
     public function testProcessor()
     {

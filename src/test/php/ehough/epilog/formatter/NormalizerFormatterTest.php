@@ -10,7 +10,7 @@
  */
 
 /**
- * @covers Monolog\Formatter\NormalizerFormatter
+ * @covers ehough_epilog_formatter_NormalizerFormatter
  */
 class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
 {
