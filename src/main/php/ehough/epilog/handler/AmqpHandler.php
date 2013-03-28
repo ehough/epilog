@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-//use Monolog\Formatter\JsonFormatter;
-
 class ehough_epilog_handler_AmqpHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     /**

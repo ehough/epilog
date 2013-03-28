@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-//use Monolog\Formatter\LogstashFormatter;
-
 class LogstashFormatterTest extends PHPUnit_Framework_TestCase
 {
 

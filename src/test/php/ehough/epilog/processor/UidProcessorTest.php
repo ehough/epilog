@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Processor;
-
-//use Monolog\TestCase;
-
 class ehough_epilog_processor_UidProcessorTest extends ehough_epilog_TestCase
 {
     /**

@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-//use Monolog\Formatter\GelfMessageFormatter;
-
 class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
 {
     public function setUp()

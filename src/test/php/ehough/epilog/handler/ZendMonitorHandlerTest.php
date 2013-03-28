@@ -33,7 +33,7 @@ class ehough_epilog_handler_ZendMonitorHandlerTest extends ehough_epilog_TestCas
             ->setMethods(array('writeZendMonitorCustomEvent', 'getDefaultFormatter'))
             ->getMock();
 
-        $formatterMock = $this->getMockBuilder('Monolog\Formatter\NormalizerFormatter')
+        $formatterMock = $this->getMockBuilder('ehough_epilog_formatter_NormalizerFormatter')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -60,6 +60,6 @@ class ehough_epilog_handler_ZendMonitorHandlerTest extends ehough_epilog_TestCas
     public function testGetDefaultFormatterReturnsNormalizerFormatter()
     {
         $zendMonitor = new ZendMonitorHandler();
-        $this->assertInstanceOf('Monolog\Formatter\NormalizerFormatter', $zendMonitor->getDefaultFormatter());
+        $this->assertInstanceOf('ehough_epilog_formatter_NormalizerFormatter', $zendMonitor->getDefaultFormatter());
     }
 }

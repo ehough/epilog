@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
-//use Monolog\Handler\FingersCrossed\ActivationStrategyInterface;
-//use Monolog\Logger;
-
 /**
  * Buffers all records until a certain level is reached
  *
@@ -86,7 +80,7 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
                 }
                 if (!$this->handler instanceof ehough_epilog_handler_HandlerInterface) {
                     if (!is_callable($this->handler)) {
-                        throw new RuntimeException("The given handler (".json_encode($this->handler).") is not a callable nor a Monolog\Handler\HandlerInterface object");
+                        throw new RuntimeException("The given handler (".json_encode($this->handler).") is not a callable nor a ehough_epilog_handler_HandlerInterface object");
                     }
                     $this->handler = call_user_func($this->handler, $record, $this);
                     if (!$this->handler instanceof ehough_epilog_handler_HandlerInterface) {

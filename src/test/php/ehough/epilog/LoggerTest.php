@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog;
-
-//use Monolog\Processor\WebProcessor;
-//use ehough_epilog_handler_TestHandler;
-
 class ehough_epilog_LoggerTest extends PHPUnit_Framework_TestCase
 {
     /**

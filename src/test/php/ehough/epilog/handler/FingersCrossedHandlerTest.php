@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-//use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
-
 class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_TestCase
 {
     private $_test;

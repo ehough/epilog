@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
 /**
  * @covers Monolog\Formatter\LineFormatter
  */

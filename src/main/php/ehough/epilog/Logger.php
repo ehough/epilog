@@ -9,13 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog;
-
-//use Monolog\Handler\HandlerInterface;
-//use Monolog\Handler\StreamHandler;
-//use Psr\Log\LoggerInterface;
-//use Psr\Log\InvalidArgumentException;
-
 /**
  * Monolog log channel
  *
@@ -97,7 +90,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     /**
      * The handler stack
      *
-     * @var array of Monolog\Handler\HandlerInterface
+     * @var array of ehough_epilog_handler_HandlerInterface
      */
     protected $handlers;
 

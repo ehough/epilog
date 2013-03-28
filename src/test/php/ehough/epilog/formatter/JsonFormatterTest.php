@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-//use Monolog\TestCase;
-
 class ehough_epilog_formatter_JsonFormatterTest extends ehough_epilog_TestCase
 {
     /**

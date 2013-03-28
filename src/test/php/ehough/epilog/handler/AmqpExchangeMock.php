@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
 class ehough_epilog_handler_AmqpExchangeMock extends AMQPExchange
 {
     protected $messages = array();

@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
 /**
  * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets
  *

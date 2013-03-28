@@ -9,13 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog;
-
-//use ehough_epilog_handler_TestHandler;
-//use Monolog\Formatter\LineFormatter;
-//use Monolog\Processor\PsrLogMessageProcessor;
-//use Psr\Log\Test\LoggerInterfaceTest;
-
 class ehough_epilog_PsrLogCompatTest extends ehough_epilog_psr_test_LoggerInterfaceTest
 {
     private $handler;

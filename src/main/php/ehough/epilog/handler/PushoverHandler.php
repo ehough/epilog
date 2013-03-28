@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-
 /**
  * Sends notifications through the pushover api to mobile phones
  *

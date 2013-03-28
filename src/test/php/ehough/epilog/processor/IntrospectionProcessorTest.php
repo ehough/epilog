@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Processor;
-
-//use Monolog\TestCase;
-//use ehough_epilog_handler_TestHandler;
-
 class ehough_epilog_processor_IntrospectionProcessorTest extends ehough_epilog_TestCase
 {
     public function getHandler()
@@ -48,8 +43,6 @@ class ehough_epilog_processor_IntrospectionProcessorTest extends ehough_epilog_T
         $this->assertEquals('tester', $record['extra']['function']);
     }
 }
-
-//namespace Acme;
 
 class Tester
 {

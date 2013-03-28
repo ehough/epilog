@@ -9,9 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-//use Monolog\Logger;
-
 class ehough_epilog_handler_SyslogHandlerTest extends PHPUnit_Framework_TestCase
 {
     /**

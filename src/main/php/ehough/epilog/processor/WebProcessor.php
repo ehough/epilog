@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Processor;
-
 /**
  * Injects url/method and remote IP of the current web request in all records
  *

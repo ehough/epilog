@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-
 /**
  * @author Pablo de Leon Belloc <pablolb@gmail.com>
  */

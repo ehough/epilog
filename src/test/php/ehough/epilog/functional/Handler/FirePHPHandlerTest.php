@@ -21,10 +21,6 @@ function _callbackFirePhpHandlerAutoload($class)
 
 spl_autoload_register('_callbackFirePhpHandlerAutoload');
 
-//use Monolog\Logger;
-//use Monolog\Handler\FirePHPHandler;
-//use Monolog\Handler\ChromePHPHandler;
-
 $logger = new ehough_epilog_Logger('firephp');
 $logger->pushHandler(new ehough_epilog_handler_FirePHPHandler);
 $logger->pushHandler(new ehough_epilog_handler_ChromePHPHandler());

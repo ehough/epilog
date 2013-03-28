@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-//use Monolog\Processor\WebProcessor;
-
 class ehough_epilog_handler_AbstractProcessingHandlerTest extends ehough_epilog_TestCase
 {
     private $_handledRecord;

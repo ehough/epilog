@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-//use Gelf\Message;
-
 /**
  * Serializes a log message to GELF
  * @see http://www.graylog2.org/about/gelf

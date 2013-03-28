@@ -8,11 +8,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Formatter\NormalizerFormatter;
-//use Monolog\Logger;
-
 /**
  * Handler sending logs to Zend Monitor
  *

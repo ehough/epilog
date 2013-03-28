@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-
 /**
  * @covers ehough_epilog_handler_RotatingFileHandler
  */

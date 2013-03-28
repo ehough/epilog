@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-//use Monolog\Formatter\NormalizerFormatter;
-//use Doctrine\CouchDB\CouchDBClient;
-
 /**
  * CouchDB handler for Doctrine CouchDB ODM
  *

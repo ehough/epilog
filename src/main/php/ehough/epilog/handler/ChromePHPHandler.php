@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Formatter\ChromePHPFormatter;
-
 /**
  * Handler sending logs to the ChromePHP extension (http://www.chromephp.com/)
  *

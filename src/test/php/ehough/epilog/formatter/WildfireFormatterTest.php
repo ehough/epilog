@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-
 class WildfireFormatterTest extends PHPUnit_Framework_TestCase
 {
     /**

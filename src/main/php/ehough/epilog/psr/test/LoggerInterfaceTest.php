@@ -1,9 +1,5 @@
 <?php
 
-//namespace Psr\Log\Test;
-
-//use Psr\Log\LogLevel;
-
 /**
  * Provides a base test class for ensuring compliance with the LoggerInterface
  *
