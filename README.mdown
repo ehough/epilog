@@ -27,7 +27,7 @@ $log->addError('Bar');
 ### Differences from  [monolog](https://github.com/Seldaek/monolog)
 
 The primary difference is naming conventions of monolog's classes. Instead of the `\Monolog` namespace
-(and sub-namespaces), instead prefix the monolog class names with `ehough_epilog` and follow the [PEAR
+(and sub-namespaces), instead prefix the class names with `ehough_epilog` and follow the [PEAR
 naming convention](http://pear.php.net/manual/en/standards.php).
 
 A few examples of class naming conversions:
@@ -45,7 +45,7 @@ Other "gotchas" when using epilog instead of monolog:
 
 ### LoggerFactory
 
-epilog also adds a handy class for building `ehough_epilog_Logger` instances: [`ehough_epilog_LoggerFactory`](https://github.com/ehough/epilog/tree/develop/src/main/php/ehough/epilog/LoggerFactory). You can use this factory to perform one-liner instantiations:
+epilog also adds a handy class for building `ehough_epilog_Logger` instances: [`ehough_epilog_LoggerFactory`](https://github.com/ehough/epilog/blob/develop/src/main/php/ehough/epilog/LoggerFactory.php). You can use this factory to perform one-liner instantiations:
 
 ```php
 <?php
