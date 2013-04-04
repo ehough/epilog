@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-//use Monolog\Formatter\FormatterInterface;
-//use Monolog\Formatter\LineFormatter;
-
 /**
  * Base Handler class providing the Handler structure
  *

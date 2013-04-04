@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-
 /**
  * Almost all examples (expected header, titles, messages) taken from
  * https://www.pushover.net/api
@@ -81,15 +76,20 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
 
     private function createHandler($token = 'myToken', $user = 'myUser', $title = 'Monolog')
     {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP < 5.3');
+        }
+
         $constructorArgs = array($token, $user, $title);
         $this->res = fopen('php://memory', 'a');
         $this->handler = $this->getMock(
-            '\ehough_epilog_handler_PushoverHandler',
+            'ehough_epilog_handler_PushoverHandler',
             array('fsockopen', 'streamSetTimeout', 'closeSocket'),
             $constructorArgs
         );
 
-        $reflectionProperty = new \ReflectionProperty('\ehough_epilog_handler_SocketHandler', 'connectionString');
+        $reflectionProperty = new ReflectionProperty('ehough_epilog_handler_SocketHandler', 'connectionString');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($this->handler, 'localhost:1234');
 

@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-
 /**
  * Stores to any socket - uses fsockopen() or pfsockopen().
  *
@@ -46,8 +42,8 @@ class ehough_epilog_handler_SocketHandler extends ehough_epilog_handler_Abstract
      *
      * @param array $record
      *
-     * @throws \UnexpectedValueException
-     * @throws \RuntimeException
+     * @throws UnexpectedValueException
+     * @throws RuntimeException
      */
     public function write(array $record)
     {

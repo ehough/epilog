@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-
 /**
  * Sends notifications through the pushover api to mobile phones
  *
@@ -41,7 +37,7 @@ class ehough_epilog_handler_PushoverHandler extends ehough_epilog_handler_Socket
 
         $this->token = $token;
         $this->user = $user;
-        $this->title = $title ?: gethostname();
+        $this->title = $title ? $title : gethostname();
     }
 
     protected function generateDataStream($record)

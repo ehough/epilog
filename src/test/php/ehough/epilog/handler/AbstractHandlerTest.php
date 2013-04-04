@@ -9,13 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-//use Monolog\Formatter\LineFormatter;
-//use Monolog\Processor\WebProcessor;
-
 class ehough_epilog_handler_AbstractHandlerTest extends ehough_epilog_TestCase
 {
     /**
@@ -99,6 +92,6 @@ class ehough_epilog_handler_AbstractHandlerTest extends ehough_epilog_TestCase
     {
         $handler = $this->getMockForAbstractClass('ehough_epilog_handler_AbstractHandler');
 
-        $handler->pushProcessor(new \stdClass());
+        $handler->pushProcessor(new stdClass());
     }
 }

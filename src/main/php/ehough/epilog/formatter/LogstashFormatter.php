@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
 /**
  * Serializes a log message to Logstash Event Format
  *
@@ -52,7 +50,7 @@ class ehough_epilog_formatter_LogstashFormatter extends ehough_epilog_formatter_
         //log stash requires a ISO 8601 format date
         parent::__construct('c');
 
-        $this->systemName = $systemName ?: (function_exists('gethostname') ? gethostname() : php_uname('n'));
+        $this->systemName = $systemName ? $systemName : (function_exists('gethostname') ? gethostname() : php_uname('n'));
         $this->applicationName = $applicationName;
 
         $this->extraPrefix = $extraPrefix;

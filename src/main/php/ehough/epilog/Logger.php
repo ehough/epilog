@@ -9,13 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog;
-
-//use Monolog\Handler\HandlerInterface;
-//use Monolog\Handler\StreamHandler;
-//use Psr\Log\LoggerInterface;
-//use Psr\Log\InvalidArgumentException;
-
 /**
  * Monolog log channel
  *
@@ -97,7 +90,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     /**
      * The handler stack
      *
-     * @var array of Monolog\Handler\HandlerInterface
+     * @var array of ehough_epilog_handler_HandlerInterface
      */
     protected $handlers;
 
@@ -192,20 +185,20 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     public function addRecord($level, $message, array $context = array())
     {
         if (!$this->handlers) {
-            $this->pushHandler(new ehough_epilog_handler_StreamHandler('php://stderr', static::DEBUG));
+            $this->pushHandler(new ehough_epilog_handler_StreamHandler('php://stderr', self::DEBUG));
         }
 
-        if (!static::$timezone) {
-            static::$timezone = new DateTimeZone(date_default_timezone_get() ?: 'UTC');
+        if (!self::$timezone) {
+            self::$timezone = new DateTimeZone(date_default_timezone_get() ? date_default_timezone_get() : 'UTC');
         }
 
         $record = array(
             'message' => (string) $message,
             'context' => $context,
             'level' => $level,
-            'level_name' => static::getLevelName($level),
+            'level_name' => self::getLevelName($level),
             'channel' => $this->name,
-            'datetime' => DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true)), static::$timezone)->setTimezone(static::$timezone),
+            'datetime' => $this->_createDateTimeFromFormat('U.u', sprintf('%.6F', microtime(true)), self::$timezone),
             'extra' => array(),
         );
         // check if any handler will handle this message
@@ -252,7 +245,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addDebug($message, array $context = array())
     {
-        return $this->addRecord(static::DEBUG, $message, $context);
+        return $this->addRecord(self::DEBUG, $message, $context);
     }
 
     /**
@@ -264,7 +257,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addInfo($message, array $context = array())
     {
-        return $this->addRecord(static::INFO, $message, $context);
+        return $this->addRecord(self::INFO, $message, $context);
     }
 
     /**
@@ -276,7 +269,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addNotice($message, array $context = array())
     {
-        return $this->addRecord(static::NOTICE, $message, $context);
+        return $this->addRecord(self::NOTICE, $message, $context);
     }
 
     /**
@@ -288,7 +281,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addWarning($message, array $context = array())
     {
-        return $this->addRecord(static::WARNING, $message, $context);
+        return $this->addRecord(self::WARNING, $message, $context);
     }
 
     /**
@@ -300,7 +293,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addError($message, array $context = array())
     {
-        return $this->addRecord(static::ERROR, $message, $context);
+        return $this->addRecord(self::ERROR, $message, $context);
     }
 
     /**
@@ -312,7 +305,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addCritical($message, array $context = array())
     {
-        return $this->addRecord(static::CRITICAL, $message, $context);
+        return $this->addRecord(self::CRITICAL, $message, $context);
     }
 
     /**
@@ -324,7 +317,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addAlert($message, array $context = array())
     {
-        return $this->addRecord(static::ALERT, $message, $context);
+        return $this->addRecord(self::ALERT, $message, $context);
     }
 
     /**
@@ -336,7 +329,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addEmergency($message, array $context = array())
     {
-      return $this->addRecord(static::EMERGENCY, $message, $context);
+      return $this->addRecord(self::EMERGENCY, $message, $context);
     }
 
     /**
@@ -347,11 +340,11 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public static function getLevelName($level)
     {
-        if (!isset(static::$levels[$level])) {
-            throw new ehough_epilog_psr_InvalidArgumentException('Level "'.$level.'" is not defined, use one of: '.implode(', ', array_keys(static::$levels)));
+        if (!isset(self::$levels[$level])) {
+            throw new ehough_epilog_psr_InvalidArgumentException('Level "'.$level.'" is not defined, use one of: '.implode(', ', array_keys(self::$levels)));
         }
 
-        return static::$levels[$level];
+        return self::$levels[$level];
     }
 
     /**
@@ -366,7 +359,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
             'level' => $level,
         );
 
-        foreach ($this->handlers as $key => $handler) {
+        foreach ($this->handlers as $handler) {
             if ($handler->isHandling($record)) {
                 return true;
             }
@@ -405,7 +398,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function debug($message, array $context = array())
     {
-        return $this->addRecord(static::DEBUG, $message, $context);
+        return $this->addRecord(self::DEBUG, $message, $context);
     }
 
     /**
@@ -419,7 +412,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function info($message, array $context = array())
     {
-        return $this->addRecord(static::INFO, $message, $context);
+        return $this->addRecord(self::INFO, $message, $context);
     }
 
     /**
@@ -433,7 +426,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function notice($message, array $context = array())
     {
-        return $this->addRecord(static::NOTICE, $message, $context);
+        return $this->addRecord(self::NOTICE, $message, $context);
     }
 
     /**
@@ -447,7 +440,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function warn($message, array $context = array())
     {
-        return $this->addRecord(static::WARNING, $message, $context);
+        return $this->addRecord(self::WARNING, $message, $context);
     }
 
     /**
@@ -461,7 +454,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function warning($message, array $context = array())
     {
-        return $this->addRecord(static::WARNING, $message, $context);
+        return $this->addRecord(self::WARNING, $message, $context);
     }
 
     /**
@@ -475,7 +468,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function err($message, array $context = array())
     {
-        return $this->addRecord(static::ERROR, $message, $context);
+        return $this->addRecord(self::ERROR, $message, $context);
     }
 
     /**
@@ -489,7 +482,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function error($message, array $context = array())
     {
-        return $this->addRecord(static::ERROR, $message, $context);
+        return $this->addRecord(self::ERROR, $message, $context);
     }
 
     /**
@@ -503,7 +496,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function crit($message, array $context = array())
     {
-        return $this->addRecord(static::CRITICAL, $message, $context);
+        return $this->addRecord(self::CRITICAL, $message, $context);
     }
 
     /**
@@ -517,7 +510,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function critical($message, array $context = array())
     {
-        return $this->addRecord(static::CRITICAL, $message, $context);
+        return $this->addRecord(self::CRITICAL, $message, $context);
     }
 
     /**
@@ -531,7 +524,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function alert($message, array $context = array())
     {
-        return $this->addRecord(static::ALERT, $message, $context);
+        return $this->addRecord(self::ALERT, $message, $context);
     }
 
     /**
@@ -545,7 +538,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function emerg($message, array $context = array())
     {
-        return $this->addRecord(static::EMERGENCY, $message, $context);
+        return $this->addRecord(self::EMERGENCY, $message, $context);
     }
 
     /**
@@ -559,6 +552,19 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function emergency($message, array $context = array())
     {
-        return $this->addRecord(static::EMERGENCY, $message, $context);
+        return $this->addRecord(self::EMERGENCY, $message, $context);
+    }
+
+    private function _createDateTimeFromFormat()
+    {
+        if (version_compare(PHP_VERSION, '5.3') >= 0) {
+
+            return DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true)), self::$timezone)->setTimezone(self::$timezone);
+        }
+
+        $time = new DateTime('@' . time());
+        $time->setTimezone(self::$timezone);
+
+        return $time;
     }
 }

@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
 /**
  * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets
  *
@@ -27,7 +25,7 @@ class ehough_epilog_formatter_NormalizerFormatter implements ehough_epilog_forma
      */
     public function __construct($dateFormat = null)
     {
-        $this->dateFormat = $dateFormat ?: static::SIMPLE_DATE;
+        $this->dateFormat = $dateFormat ? $dateFormat : self::SIMPLE_DATE;
     }
 
     /**

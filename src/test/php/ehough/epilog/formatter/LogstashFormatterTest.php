@@ -9,16 +9,11 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-//use Monolog\Formatter\LogstashFormatter;
-
-class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
+class LogstashFormatterTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testDefaultFormatter()
     {
@@ -28,7 +23,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );
@@ -51,7 +46,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -61,7 +56,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('file' => 'test', 'line' => 14),
             'message' => 'log',
         );
@@ -73,7 +68,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testFormatWithContext()
     {
@@ -83,7 +78,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );
@@ -107,7 +102,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\LogstashFormatter::format
+     * @covers ehough_epilog_formatter_LogstashFormatter::format
      */
     public function testFormatWithExtra()
     {
@@ -117,7 +112,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );
@@ -147,7 +142,7 @@ class LogstashFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );

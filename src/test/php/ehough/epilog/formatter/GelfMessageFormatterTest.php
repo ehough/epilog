@@ -9,22 +9,17 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-//use Monolog\Formatter\GelfMessageFormatter;
-
-class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
+class GelfMessageFormatterTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!class_exists("Gelf\Message")) {
+        if (version_compare(PHP_VERSION, '5.3.0') < 0 || !class_exists("Gelf\Message")) {
             $this->markTestSkipped("mlehner/gelf-php not installed");
         }
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testDefaultFormatter()
     {
@@ -34,7 +29,7 @@ class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );
@@ -59,7 +54,7 @@ class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -69,7 +64,7 @@ class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('file' => 'test', 'line' => 14),
             'message' => 'log',
         );
@@ -82,7 +77,7 @@ class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testFormatWithContext()
     {
@@ -92,7 +87,7 @@ class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );
@@ -120,7 +115,7 @@ class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\GelfMessageFormatter::format
+     * @covers ehough_epilog_formatter_GelfMessageFormatter::format
      */
     public function testFormatWithExtra()
     {
@@ -130,7 +125,7 @@ class GelfMessageFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('key' => 'pair'),
             'message' => 'log'
         );

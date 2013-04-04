@@ -9,20 +9,16 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Processor;
-
-//use Monolog\TestCase;
-
 class ehough_epilog_processor_MemoryPeakUsageProcessorTest extends ehough_epilog_TestCase
 {
     /**
-     * @covers Monolog\Processor\MemoryPeakUsageProcessor::__invoke
-     * @covers Monolog\Processor\MemoryProcessor::formatBytes
+     * @covers ehough_epilog_processor_MemoryPeakUsageProcessor::__invoke
+     * @covers ehough_epilog_processor_MemoryProcessor::formatBytes
      */
     public function testProcessor()
     {
         $processor = new ehough_epilog_processor_MemoryPeakUsageProcessor();
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertArrayHasKey('memory_peak_usage', $record['extra']);
         $this->assertRegExp('#[0-9.]+ (M|K)?B$#', $record['extra']['memory_peak_usage']);
     }

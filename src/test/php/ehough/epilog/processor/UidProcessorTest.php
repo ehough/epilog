@@ -9,19 +9,15 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Processor;
-
-//use Monolog\TestCase;
-
 class ehough_epilog_processor_UidProcessorTest extends ehough_epilog_TestCase
 {
     /**
-     * @covers Monolog\Processor\UidProcessor::__invoke
+     * @covers ehough_epilog_processor_UidProcessor::__invoke
      */
     public function testProcessor()
     {
         $processor = new ehough_epilog_processor_UidProcessor();
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertArrayHasKey('uid', $record['extra']);
     }
 }

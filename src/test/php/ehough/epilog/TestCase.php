@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog;
-
-class ehough_epilog_TestCase extends \PHPUnit_Framework_TestCase
+class ehough_epilog_TestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * @return array Record
@@ -24,7 +22,7 @@ class ehough_epilog_TestCase extends \PHPUnit_Framework_TestCase
             'level' => $level,
             'level_name' => ehough_epilog_Logger::getLevelName($level),
             'channel' => 'test',
-            'datetime' => \DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true))),
+            'datetime' => $this->_createDateTimeFromFormat(),
             'extra' => array(),
         );
     }
@@ -51,8 +49,25 @@ class ehough_epilog_TestCase extends \PHPUnit_Framework_TestCase
         $formatter = $this->getMock('ehough_epilog_formatter_FormatterInterface');
         $formatter->expects($this->any())
             ->method('format')
-            ->will($this->returnCallback(function($record) { return $record['message']; }));
+            ->will($this->returnCallback(array($this, '_callbackGetIdentityFormatter')));
 
         return $formatter;
+    }
+
+    public function _callbackGetIdentityFormatter($record)
+    {
+        return $record['message'];
+    }
+
+    private function _createDateTimeFromFormat()
+    {
+        if (version_compare(PHP_VERSION, '5.3') >= 0) {
+
+            return DateTime::createFromFormat('U.u', sprintf('%.6F', microtime(true)));
+        }
+
+        $time = new DateTime('@' . time());
+
+        return $time;
     }
 }

@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-//use Monolog\Formatter\NormalizerFormatter;
-
 /**
  * Logs to a MongoDB database.
  *

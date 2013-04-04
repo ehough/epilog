@@ -9,14 +9,10 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-
-class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
+class WildfireFormatterTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::format
+     * @covers ehough_epilog_formatter_WildfireFormatter::format
      */
     public function testDefaultFormat()
     {
@@ -26,7 +22,7 @@ class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('ip' => '127.0.0.1'),
             'message' => 'log',
         );
@@ -41,7 +37,7 @@ class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::format
+     * @covers ehough_epilog_formatter_WildfireFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -51,7 +47,7 @@ class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('ip' => '127.0.0.1', 'file' => 'test', 'line' => 14),
             'message' => 'log',
         );
@@ -66,7 +62,7 @@ class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::format
+     * @covers ehough_epilog_formatter_WildfireFormatter::format
      */
     public function testFormatWithoutContext()
     {
@@ -76,7 +72,7 @@ class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );
@@ -90,7 +86,7 @@ class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\WildfireFormatter::formatBatch
+     * @covers ehough_epilog_formatter_WildfireFormatter::formatBatch
      * @expectedException BadMethodCallException
      */
     public function testBatchFormatThrowException()
@@ -101,7 +97,7 @@ class WildfireFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array(),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );

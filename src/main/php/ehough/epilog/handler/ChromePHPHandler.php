@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Formatter\ChromePHPFormatter;
-
 /**
  * Handler sending logs to the ChromePHP extension (http://www.chromephp.com/)
  *
@@ -134,7 +130,7 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
             throw new InvalidArgumentException('Undefined property '.$property);
         }
 
-        return static::$sendHeaders;
+        return self::$sendHeaders;
     }
 
     /**
@@ -146,6 +142,6 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
             throw new InvalidArgumentException('Undefined property '.$property);
         }
 
-        static::$sendHeaders = $value;
+        self::$sendHeaders = $value;
     }
 }

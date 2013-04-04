@@ -8,11 +8,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Formatter\NormalizerFormatter;
-//use Monolog\Logger;
-
 /**
  * Handler sending logs to Zend Monitor
  *
@@ -39,9 +34,9 @@ class ehough_epilog_handler_ZendMonitorHandler extends ehough_epilog_handler_Abs
     /**
      * Construct
      *
-     * @param   int     $level
-     * @param   bool    $bubble
-     * @throws  ehough_epilog_handler_MissingExtensionException
+     * @param  int                       $level
+     * @param  bool                      $bubble
+     * @throws ehough_epilog_handler_MissingExtensionException
      */
     public function __construct($level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
@@ -66,9 +61,9 @@ class ehough_epilog_handler_ZendMonitorHandler extends ehough_epilog_handler_Abs
     /**
      * Write a record to Zend Monitor
      *
-     * @param   int     $level
-     * @param   string  $message
-     * @param   array   $formatted
+     * @param int    $level
+     * @param string $message
+     * @param array  $formatted
      */
     protected function writeZendMonitorCustomEvent($level, $message, $formatted)
     {

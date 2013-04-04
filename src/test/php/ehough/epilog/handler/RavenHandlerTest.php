@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-//use Monolog\Handler\RavenHandler;
-
 class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
 {
     public function setUp()
@@ -23,7 +17,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
             $this->markTestSkipped("raven/raven not installed");
         }
 
-        require_once __DIR__ . '/MockRavenClient.php';
+        require_once dirname(__FILE__) . '/MockRavenClient.php';
     }
 
     /**
@@ -44,6 +38,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
     protected function getRavenClient()
     {
         $dsn = 'http://43f6017361224d098402974103bfc53d:a6a0538fc2934ba2bed32e08741b2cd3@marca.python.live.cheggnet.com:9000/1';
+
         return new MockRavenClient($dsn);
     }
 
@@ -55,7 +50,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         $record = $this->getRecord(ehough_epilog_Logger::DEBUG, "A test debug message");
         $handler->handle($record);
 
-        $this->assertEquals($ravenClient::DEBUG, $ravenClient->lastData['level']);
+        $this->assertEquals(MockRavenClient::DEBUG, $ravenClient->lastData['level']);
         $this->assertContains($record['message'], $ravenClient->lastData['message']);
     }
 
@@ -67,7 +62,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         $record = $this->getRecord(ehough_epilog_Logger::WARNING, "A test warning message");
         $handler->handle($record);
 
-        $this->assertEquals($ravenClient::WARNING, $ravenClient->lastData['level']);
+        $this->assertEquals(MockRavenClient::WARNING, $ravenClient->lastData['level']);
         $this->assertContains($record['message'], $ravenClient->lastData['message']);
     }
 
@@ -78,7 +73,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
 
         try {
             $this->methodThatThrowsAnException();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $record = $this->getRecord(ehough_epilog_Logger::ERROR, $e->getMessage(), array('exception' => $e));
             $handler->handle($record);
         }
@@ -88,6 +83,6 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
 
     private function methodThatThrowsAnException()
     {
-        throw new \Exception('This is an exception');
+        throw new Exception('This is an exception');
     }
 }

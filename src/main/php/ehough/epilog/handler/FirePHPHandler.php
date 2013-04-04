@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Formatter\WildfireFormatter;
-
 /**
  * Simple FirePHP Handler (http://www.firephp.org/), which uses the Wildfire protocol.
  *
@@ -167,7 +163,7 @@ class ehough_epilog_handler_FirePHPHandler extends ehough_epilog_handler_Abstrac
             throw new InvalidArgumentException('Undefined property '.$property);
         }
 
-        return static::$sendHeaders;
+        return self::$sendHeaders;
     }
 
     /**
@@ -179,6 +175,6 @@ class ehough_epilog_handler_FirePHPHandler extends ehough_epilog_handler_Abstrac
             throw new InvalidArgumentException('Undefined property '.$property);
         }
 
-        static::$sendHeaders = $value;
+        self::$sendHeaders = $value;
     }
 }

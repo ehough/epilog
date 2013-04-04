@@ -9,16 +9,11 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-
 class ehough_epilog_handler_DoctrineCouchDBHandlerTest extends ehough_epilog_TestCase
 {
     protected function setup()
     {
-        if (!class_exists('Doctrine\CouchDB\CouchDBClient')) {
+        if (version_compare(PHP_VERSION, '5.3') < 0 || !class_exists('Doctrine\CouchDB\CouchDBClient')) {
             $this->markTestSkipped('The "doctrine/couchdb" package is not installed');
         }
     }
@@ -30,7 +25,7 @@ class ehough_epilog_handler_DoctrineCouchDBHandlerTest extends ehough_epilog_Tes
             ->disableOriginalConstructor()
             ->getMock();
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $expected = array(
             'message' => 'test',

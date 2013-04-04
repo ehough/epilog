@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-
 /**
  * NativeMailerHandler uses the mail() function to send the emails
  *

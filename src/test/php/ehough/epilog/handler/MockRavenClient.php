@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Raven_Client;
-
 class MockRavenClient extends Raven_Client
 {
     public function capture($data, $stack)

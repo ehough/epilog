@@ -9,20 +9,22 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-//use Monolog\Formatter\LineFormatter;
-
 class ehough_epilog_handler_RedisHandlerTest extends ehough_epilog_TestCase
 {
+    public function setUp()
+    {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP < 5.3');
+        }
+    }
+
     /**
      * @expectedException InvalidArgumentException
      */
     public function testConstructorShouldThrowExceptionForInvalidRedis()
     {
-        new ehough_epilog_handler_RedisHandler(new \stdClass(), 'key');
+        new ehough_epilog_handler_RedisHandler(new stdClass(), 'key');
     }
 
     public function testConstructorShouldWorkWithPredis()
@@ -46,7 +48,7 @@ class ehough_epilog_handler_RedisHandlerTest extends ehough_epilog_TestCase
             ->method('rpush')
             ->with('key', 'test');
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $handler = new ehough_epilog_handler_RedisHandler($redis, 'key');
         $handler->setFormatter(new ehough_epilog_formatter_LineFormatter("%message%"));
@@ -62,7 +64,7 @@ class ehough_epilog_handler_RedisHandlerTest extends ehough_epilog_TestCase
             ->method('rPush')
             ->with('key', 'test');
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $handler = new ehough_epilog_handler_RedisHandler($redis, 'key');
         $handler->setFormatter(new ehough_epilog_formatter_LineFormatter("%message%"));

@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
 /**
  * Formats incoming records into a one-line string
  *
@@ -31,7 +29,7 @@ class ehough_epilog_formatter_LineFormatter extends ehough_epilog_formatter_Norm
      */
     public function __construct($format = null, $dateFormat = null)
     {
-        $this->format = $format ?: static::SIMPLE_FORMAT;
+        $this->format = $format ? $format : self::SIMPLE_FORMAT;
         parent::__construct($dateFormat);
     }
 

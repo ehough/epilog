@@ -9,19 +9,15 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Processor;
-
-//use Monolog\TestCase;
-
 class ehough_epilog_processor_ProcessIdProcessorTest extends ehough_epilog_TestCase
 {
     /**
-     * @covers Monolog\Processor\ProcessIdProcessor::__invoke
+     * @covers ehough_epilog_processor_ProcessIdProcessor::__invoke
      */
     public function testProcessor()
     {
         $processor = new ehough_epilog_processor_ProcessIdProcessor();
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertArrayHasKey('process_id', $record['extra']);
         $this->assertInternalType('int', $record['extra']['process_id']);
         $this->assertGreaterThan(0, $record['extra']['process_id']);

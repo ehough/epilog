@@ -9,16 +9,11 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-
 class ehough_epilog_handler_CouchDBHandlerTest extends ehough_epilog_TestCase
 {
     public function testHandle()
     {
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new \stdClass, 'foo' => 34));
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
         $expected = array(
             'message' => 'test',
@@ -34,7 +29,7 @@ class ehough_epilog_handler_CouchDBHandlerTest extends ehough_epilog_TestCase
 
         try {
             $handler->handle($record);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->markTestSkipped('Could not connect to couchdb server on http://localhost:5984');
         }
     }

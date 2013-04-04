@@ -9,13 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Gelf\IMessagePublisher;
-//use Monolog\Logger;
-//use Monolog\Handler\AbstractProcessingHandler;
-//use Monolog\Formatter\GelfMessageFormatter;
-
 /**
  * Handler to send messages to a Graylog2 (http://www.graylog2.org) server
  *
@@ -33,7 +26,7 @@ class ehough_epilog_handler_GelfHandler extends ehough_epilog_handler_AbstractPr
      * @param integer                $level     The minimum logging level at which this handler will be triggered
      * @param Boolean                $bubble    Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct(\Gelf\IMessagePublisher $publisher, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
+    public function __construct(Gelf\IMessagePublisher $publisher, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         parent::__construct($level, $bubble);
 

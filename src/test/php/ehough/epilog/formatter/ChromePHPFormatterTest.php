@@ -9,14 +9,10 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-
-class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
+class ChromePHPFormatterTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::format
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::format
      */
     public function testDefaultFormat()
     {
@@ -26,7 +22,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'ERROR',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('ip' => '127.0.0.1'),
             'message' => 'log',
         );
@@ -49,7 +45,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::format
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::format
      */
     public function testFormatWithFileAndLine()
     {
@@ -59,7 +55,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'CRITICAL',
             'channel' => 'meh',
             'context' => array('from' => 'logger'),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array('ip' => '127.0.0.1', 'file' => 'test', 'line' => 14),
             'message' => 'log',
         );
@@ -82,7 +78,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::format
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::format
      */
     public function testFormatWithoutContext()
     {
@@ -92,7 +88,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
             'level_name' => 'DEBUG',
             'channel' => 'meh',
             'context' => array(),
-            'datetime' => new \DateTime("@0"),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );
@@ -111,7 +107,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\ChromePHPFormatter::formatBatch
+     * @covers ehough_epilog_formatter_ChromePHPFormatter::formatBatch
      */
     public function testBatchFormatThrowException()
     {
@@ -122,7 +118,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
                 'level_name' => 'INFO',
                 'channel' => 'meh',
                 'context' => array(),
-                'datetime' => new \DateTime("@0"),
+                'datetime' => new DateTime("@0"),
                 'extra' => array(),
                 'message' => 'log',
             ),
@@ -131,7 +127,7 @@ class ChromePHPFormatterTest extends \PHPUnit_Framework_TestCase
                 'level_name' => 'WARNING',
                 'channel' => 'foo',
                 'context' => array(),
-                'datetime' => new \DateTime("@0"),
+                'datetime' => new DateTime("@0"),
                 'extra' => array(),
                 'message' => 'log2',
             ),

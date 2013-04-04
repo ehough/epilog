@@ -9,18 +9,17 @@
  * file that was distributed with this source code.
  */
 
-spl_autoload_register(function($class) {
-    $file = __DIR__.'/../../../../src/'.strtr($class, '\\', '/').'.php';
+function _callbackFirePhpHandlerAutoload($class)
+{
+    $file = dirname(__FILE__).'/../../../../src/'.strtr($class, '\\', '/').'.php';
     if (file_exists($file)) {
         require $file;
 
         return true;
     }
-});
+}
 
-//use Monolog\Logger;
-//use Monolog\Handler\FirePHPHandler;
-//use Monolog\Handler\ChromePHPHandler;
+spl_autoload_register('_callbackFirePhpHandlerAutoload');
 
 $logger = new ehough_epilog_Logger('firephp');
 $logger->pushHandler(new ehough_epilog_handler_FirePHPHandler);

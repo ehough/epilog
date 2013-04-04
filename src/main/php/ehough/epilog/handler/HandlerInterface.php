@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Formatter\FormatterInterface;
-
 /**
  * Interface that all Monolog Handlers must implement
  *

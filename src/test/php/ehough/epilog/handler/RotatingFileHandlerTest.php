@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-
 /**
  * @covers ehough_epilog_handler_RotatingFileHandler
  */
@@ -20,7 +16,7 @@ class ehough_epilog_handler_RotatingFileHandlerTest extends ehough_epilog_TestCa
 {
     public function setUp()
     {
-        $dir = __DIR__.'/Fixtures';
+        $dir = dirname(__FILE__).'/Fixtures';
         chmod($dir, 0777);
         if (!is_writable($dir)) {
             $this->markTestSkipped($dir.' must be writeable to test the RotatingFileHandler.');
@@ -29,13 +25,13 @@ class ehough_epilog_handler_RotatingFileHandlerTest extends ehough_epilog_TestCa
 
     public function testRotationCreatesNewFile()
     {
-        touch(__DIR__.'/Fixtures/foo-'.date('Y-m-d', time() - 86400).'.rot');
+        touch(dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d', time() - 86400).'.rot');
 
-        $handler = new ehough_epilog_handler_RotatingFileHandler(__DIR__.'/Fixtures/foo.rot');
+        $handler = new ehough_epilog_handler_RotatingFileHandler(dirname(__FILE__).'/Fixtures/foo.rot');
         $handler->setFormatter($this->getIdentityFormatter());
         $handler->handle($this->getRecord());
 
-        $log = __DIR__.'/Fixtures/foo-'.date('Y-m-d').'.rot';
+        $log = dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d').'.rot';
         $this->assertTrue(file_exists($log));
         $this->assertEquals('test', file_get_contents($log));
     }
@@ -45,18 +41,18 @@ class ehough_epilog_handler_RotatingFileHandlerTest extends ehough_epilog_TestCa
      */
     public function testRotation($createFile)
     {
-        touch($old1 = __DIR__.'/Fixtures/foo-'.date('Y-m-d', time() - 86400).'.rot');
-        touch($old2 = __DIR__.'/Fixtures/foo-'.date('Y-m-d', time() - 86400 * 2).'.rot');
-        touch($old3 = __DIR__.'/Fixtures/foo-'.date('Y-m-d', time() - 86400 * 3).'.rot');
-        touch($old4 = __DIR__.'/Fixtures/foo-'.date('Y-m-d', time() - 86400 * 4).'.rot');
+        touch($old1 = dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d', time() - 86400).'.rot');
+        touch($old2 = dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d', time() - 86400 * 2).'.rot');
+        touch($old3 = dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d', time() - 86400 * 3).'.rot');
+        touch($old4 = dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d', time() - 86400 * 4).'.rot');
 
-        $log = __DIR__.'/Fixtures/foo-'.date('Y-m-d').'.rot';
+        $log = dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d').'.rot';
 
         if ($createFile) {
             touch($log);
         }
 
-        $handler = new ehough_epilog_handler_RotatingFileHandler(__DIR__.'/Fixtures/foo.rot', 2);
+        $handler = new ehough_epilog_handler_RotatingFileHandler(dirname(__FILE__).'/Fixtures/foo.rot', 2);
         $handler->setFormatter($this->getIdentityFormatter());
         $handler->handle($this->getRecord());
 
@@ -82,9 +78,9 @@ class ehough_epilog_handler_RotatingFileHandlerTest extends ehough_epilog_TestCa
 
     public function testReuseCurrentFile()
     {
-        $log = __DIR__.'/Fixtures/foo-'.date('Y-m-d').'.rot';
+        $log = dirname(__FILE__).'/Fixtures/foo-'.date('Y-m-d').'.rot';
         file_put_contents($log, "foo");
-        $handler = new ehough_epilog_handler_RotatingFileHandler(__DIR__.'/Fixtures/foo.rot');
+        $handler = new ehough_epilog_handler_RotatingFileHandler(dirname(__FILE__).'/Fixtures/foo.rot');
         $handler->setFormatter($this->getIdentityFormatter());
         $handler->handle($this->getRecord());
         $this->assertEquals('footest', file_get_contents($log));
@@ -92,7 +88,7 @@ class ehough_epilog_handler_RotatingFileHandlerTest extends ehough_epilog_TestCa
 
     public function tearDown()
     {
-        foreach (glob(__DIR__.'/Fixtures/*.rot') as $file) {
+        foreach (glob(dirname(__FILE__).'/Fixtures/*.rot') as $file) {
             unlink($file);
         }
     }

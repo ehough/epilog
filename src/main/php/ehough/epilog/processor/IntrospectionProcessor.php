@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Processor;
-
 /**
  * Injects line/file:class/function where the log message came from
  *

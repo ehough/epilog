@@ -9,21 +9,15 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\TestCase;
-//use Monolog\Logger;
-//use Monolog\Formatter\GelfMessageFormatter;
-
 class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
 {
     public function setUp()
     {
-        if (!class_exists("Gelf\MessagePublisher") || !class_exists("Gelf\Message")) {
+        if (version_compare(PHP_VERSION, '5.3') < 0 || !class_exists("Gelf\MessagePublisher") || !class_exists("Gelf\Message")) {
             $this->markTestSkipped("mlehner/gelf-php not installed");
         }
 
-        require_once __DIR__ . '/GelfMocks.php';
+        require_once dirname(__FILE__) . '/GelfMocks.php';
     }
 
     /**

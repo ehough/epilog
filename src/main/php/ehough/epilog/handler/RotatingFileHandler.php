@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-
 /**
  * Stores logs to files that are rotated every day and a limited number of files are kept.
  *
@@ -93,24 +89,26 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
         if (!empty($fileInfo['extension'])) {
             $glob .= '.'.$fileInfo['extension'];
         }
-        $iterator = new GlobIterator($glob);
-        $count = $iterator->count();
-        if ($this->maxFiles >= $count) {
+        $iterator = $this->_globIterator($glob);
+        if ($this->maxFiles >= count($iterator)) {
             // no files to remove
             return;
         }
 
         // Sorting the files by name to remove the older ones
-        $array = iterator_to_array($iterator);
-        usort($array, function($a, $b) {
-            return strcmp($b->getFilename(), $a->getFilename());
-        });
+        $array = $iterator;
+        usort($array, array($this, '_callbackRotate'));
 
         foreach (array_slice($array, $this->maxFiles) as $file) {
-            if ($file->isWritable()) {
-                unlink($file->getRealPath());
+            if (is_writable($file)) {
+                unlink(realpath($file));
             }
         }
+    }
+
+    public function _callbackRotate($a, $b)
+    {
+        return strcmp($b, $a);
     }
 
     protected function getTimedFilename()
@@ -122,5 +120,10 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
         }
 
         return $timedFilename;
+    }
+
+    private function _globIterator($glob)
+    {
+        return glob($glob);
     }
 }

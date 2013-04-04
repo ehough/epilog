@@ -9,5 +9,5 @@
  * file that was distributed with this source code.
  */
 
-$loader = require_once __DIR__ . "/../../../../../vendor/autoload.php";
-$loader->add('ehough_epilog', __DIR__ . '/../../');
+$loader = require_once dirname(__FILE__) . "/../../../../../vendor/autoload.php";
+$loader->add('ehough_epilog', dirname(__FILE__) . '/../../');

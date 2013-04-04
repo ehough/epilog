@@ -9,11 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Formatter;
-
-//use Monolog\Logger;
-//use Gelf\Message;
-
 /**
  * Serializes a log message to GELF
  * @see http://www.graylog2.org/about/gelf
@@ -55,7 +50,7 @@ class ehough_epilog_formatter_GelfMessageFormatter extends ehough_epilog_formatt
     {
         parent::__construct('U.u');
 
-        $this->systemName = $systemName ?: gethostname();
+        $this->systemName = $systemName ? $systemName : gethostname();
 
         $this->extraPrefix = $extraPrefix;
         $this->contextPrefix = $contextPrefix;

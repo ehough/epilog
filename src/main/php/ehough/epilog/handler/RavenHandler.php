@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//namespace Monolog\Handler;
-
-//use Monolog\Logger;
-//use Monolog\Handler\AbstractProcessingHandler;
-//use Raven_Client;
-
 /**
  * Handler to send messages to a Sentry (https://github.com/dcramer/sentry) server
  * using raven-php (https://github.com/getsentry/raven-php)
@@ -44,8 +38,8 @@ class ehough_epilog_handler_RavenHandler extends ehough_epilog_handler_AbstractP
 
     /**
      * @param Raven_Client $ravenClient
-     * @param integer $level The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param integer      $level       The minimum logging level at which this handler will be triggered
+     * @param Boolean      $bubble      Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct(Raven_Client $ravenClient, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
@@ -59,14 +53,33 @@ class ehough_epilog_handler_RavenHandler extends ehough_epilog_handler_AbstractP
      */
     protected function write(array $record)
     {
+        $level = $this->logLevels[$record['level']];
+
+        $options = array();
+        $options['level'] = $level;
+        if (!empty($record['context'])) {
+            $options['extra']['context'] = $record['context'];
+        }
+        if (!empty($record['extra'])) {
+            $options['extra']['extra'] = $record['extra'];
+        }
+
         $this->ravenClient->captureMessage(
             $record['formatted'],
-            array(),                              // $params - not used
-            $this->logLevels[$record['level']],   // $level
-            false                                 // $stack
+            array(),                                                                  // $params - not used
+            version_compare(Raven_Client::VERSION, '0.1.0', '>') ? $options : $level, // $level or $options
+            false                                                                     // $stack
         );
         if ($record['level'] >= ehough_epilog_Logger::ERROR && isset($record['context']['exception'])) {
             $this->ravenClient->captureException($record['context']['exception']);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getDefaultFormatter()
+    {
+        return new ehough_epilog_formatter_LineFormatter('[%channel%] %message%');
     }
 }
