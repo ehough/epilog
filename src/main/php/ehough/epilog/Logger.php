@@ -339,7 +339,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public static function getLevels()
     {
-        return array_flip(static::$levels);
+        return array_flip(self::$levels);
     }
 
     /**
