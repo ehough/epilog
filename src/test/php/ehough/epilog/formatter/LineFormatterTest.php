@@ -113,7 +113,7 @@ class LineFormatterTest extends PHPUnit_Framework_TestCase
             'level_name' => 'CRITICAL',
             'channel' => 'core',
             'context' => array('exception' => new RuntimeException('Foo', 0, $previous)),
-            'datetime' => new DateTime,
+            'datetime' => new DateTime('@' . time()),
             'extra' => array(),
             'message' => 'foobar',
         ));
