@@ -107,13 +107,18 @@ class LineFormatterTest extends PHPUnit_Framework_TestCase
 
     public function testDefFormatWithPreviousException()
     {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP 5.2');
+            return;
+        }
         $formatter = new ehough_epilog_formatter_LineFormatter(null, 'Y-m-d');
         $previous = new LogicException('Wut?');
         $message = $formatter->format(array(
             'level_name' => 'CRITICAL',
             'channel' => 'core',
             'context' => array('exception' => new RuntimeException('Foo', 0, $previous)),
-            'datetime' => new DateTime('@' . time()),
+            'datetime' => new DateTime,
             'extra' => array(),
             'message' => 'foobar',
         ));
