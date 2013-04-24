@@ -333,6 +333,16 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     }
 
     /**
+     * Gets all supported logging levels.
+     * 
+     * @return array Assoc array with human-readable level names => level codes.
+     */
+    public static function getLevels()
+    {
+        return array_flip(static::$levels);
+    }
+
+    /**
      * Gets the name of the logging level.
      *
      * @param  integer $level
