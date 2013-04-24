@@ -72,7 +72,7 @@ class ehough_epilog_formatter_LineFormatter extends ehough_epilog_formatter_Norm
 
         if ($data instanceof Exception) {
             $previousText = '';
-            if ($previous = $data->getPrevious()) {
+            if (version_compare(PHP_VERSION, '5.3') >= 0 && $previous = $data->getPrevious()) {
                 do {
                     $previousText .= ', '.get_class($previous).': '.$previous->getMessage().' at '.$previous->getFile().':'.$previous->getLine();
                 } while ($previous = $previous->getPrevious());
