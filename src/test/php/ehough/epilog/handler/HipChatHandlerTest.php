@@ -19,6 +19,14 @@ class ehough_epilog_handler_HipChatHandlerTest extends ehough_epilog_TestCase
     private $res;
     private $handler;
 
+    public function setUp()
+    {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+            $this->markTestSkipped("PHP 5.2");
+        }
+    }
+
+
     public function testWriteHeader()
     {
         $this->createHandler();
