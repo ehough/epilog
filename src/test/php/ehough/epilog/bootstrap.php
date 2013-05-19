@@ -9,6 +9,10 @@
  * file that was distributed with this source code.
  */
 
+if (!class_exists('ehough_pulsar_ComposerClassLoader')) {
+
+    require dirname(__FILE__) . '/../../../../../vendor/ehough/pulsar/src/main/php/ehough/pulsar/ComposerClassLoader.php';
+}
 $loader = new ehough_pulsar_ComposerClassLoader(dirname(__FILE__) . '/../../../../../vendor');
 $loader->registerPrefixFallback(dirname(__FILE__) . '/../../');
 $loader->register();
