@@ -9,5 +9,6 @@
  * file that was distributed with this source code.
  */
 
-$loader = require_once dirname(__FILE__) . "/../../../../../vendor/autoload.php";
-$loader->add('ehough_epilog', dirname(__FILE__) . '/../../');
+$loader = new ehough_pulsar_ComposerClassLoader(dirname(__FILE__) . '/../../../../../vendor');
+$loader->registerPrefixFallback(dirname(__FILE__) . '/../../');
+$loader->register();
