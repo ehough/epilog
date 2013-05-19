@@ -15,4 +15,5 @@ if (!class_exists('ehough_pulsar_UniversalClassLoader')) {
 }
 $loader = new ehough_pulsar_UniversalClassLoader(dirname(__FILE__) . '/../../../../../vendor');
 $loader->registerPrefixFallback(dirname(__FILE__) . '/../../');
+$loader->registerPrefixFallback(dirname(__FILE__) . '/../../../../../src/main/php');
 $loader->register();
