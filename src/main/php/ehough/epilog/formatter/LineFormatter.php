@@ -71,7 +71,14 @@ class ehough_epilog_formatter_LineFormatter extends ehough_epilog_formatter_Norm
         }
 
         if ($data instanceof Exception) {
-            return '[object] ('.get_class($data).': '.$data->getMessage().' at '.$data->getFile().':'.$data->getLine().')';
+            $previousText = '';
+            if (version_compare(PHP_VERSION, '5.3') >= 0 && $previous = $data->getPrevious()) {
+                do {
+                    $previousText .= ', '.get_class($previous).': '.$previous->getMessage().' at '.$previous->getFile().':'.$previous->getLine();
+                } while ($previous = $previous->getPrevious());
+            }
+
+            return '[object] ('.get_class($data).': '.$data->getMessage().' at '.$data->getFile().':'.$data->getLine().$previousText.')';
         }
 
         return parent::normalize($data);

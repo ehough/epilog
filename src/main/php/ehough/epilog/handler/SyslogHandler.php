@@ -24,6 +24,10 @@
  */
 class ehough_epilog_handler_SyslogHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
+    protected $ident;
+    protected $logopts;
+    protected $facility;
+
     /**
      * Translates Monolog log levels to syslog log priorities.
      */
@@ -87,6 +91,10 @@ class ehough_epilog_handler_SyslogHandler extends ehough_epilog_handler_Abstract
         if (!openlog($ident, $logopts, $facility)) {
             throw new LogicException('Can\'t open syslog for ident "'.$ident.'" and facility "'.$facility.'"');
         }
+
+        $this->ident = $ident;
+        $this->logopts = $logopts;
+        $this->facility = $facility;
     }
 
     /**
@@ -102,6 +110,9 @@ class ehough_epilog_handler_SyslogHandler extends ehough_epilog_handler_Abstract
      */
     protected function write(array $record)
     {
+        if (!openlog($this->ident, $this->logopts, $this->facility)) {
+            throw new LogicException('Can\'t open syslog for ident "'.$this->ident.'" and facility "'.$this->facility.'"');
+        }
         syslog($this->logLevels[$record['level']], (string) $record['formatted']);
     }
 
@@ -110,6 +121,6 @@ class ehough_epilog_handler_SyslogHandler extends ehough_epilog_handler_Abstract
      */
     protected function getDefaultFormatter()
     {
-        return new LineFormatter('%channel%.%level_name%: %message% %context% %extra%');
+        return new ehough_epilog_formatter_LineFormatter('%channel%.%level_name%: %message% %context% %extra%');
     }
 }

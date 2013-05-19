@@ -9,5 +9,11 @@
  * file that was distributed with this source code.
  */
 
-$loader = require_once dirname(__FILE__) . "/../../../../../vendor/autoload.php";
-$loader->add('ehough_epilog', dirname(__FILE__) . '/../../');
+if (!class_exists('ehough_pulsar_UniversalClassLoader')) {
+
+    require dirname(__FILE__) . '/../../../../../vendor/ehough/pulsar/src/main/php/ehough/pulsar/UniversalClassLoader.php';
+}
+$loader = new ehough_pulsar_UniversalClassLoader(dirname(__FILE__) . '/../../../../../vendor');
+$loader->registerPrefixFallback(dirname(__FILE__) . '/../../');
+$loader->registerPrefixFallback(dirname(__FILE__) . '/../../../../../src/main/php');
+$loader->register();

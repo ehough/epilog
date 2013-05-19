@@ -19,14 +19,23 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
     /**
      * Version of the extension
      */
-    const VERSION = '3.0';
+    const VERSION = '4.0';
 
     /**
      * Header name
      */
-    const HEADER_NAME = 'X-ChromePhp-Data';
+    const HEADER_NAME = 'X-ChromeLogger-Data';
 
     protected static $initialized = false;
+
+    /**
+     * Tracks whether we sent too much data
+     *
+     * Chrome limits the headers to 256KB, so when we sent 240KB we stop sending
+     *
+     * @var Boolean
+     */
+    protected static $overflowed = false;
 
     protected static $json = array(
         'version' => self::VERSION,
@@ -86,6 +95,10 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
      */
     protected function send()
     {
+        if (self::$overflowed) {
+            return;
+        }
+
         if (!self::$initialized) {
             self::$sendHeaders = $this->headersAccepted();
             self::$json['request_uri'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
@@ -94,7 +107,25 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
         }
 
         $json = @json_encode(self::$json);
-        $this->sendHeader(self::HEADER_NAME, base64_encode(utf8_encode($json)));
+        $data = base64_encode(utf8_encode($json));
+        if (strlen($data) > 240*1024) {
+            self::$overflowed = true;
+
+            $record = array(
+                'message' => 'Incomplete logs, chrome header size limit reached',
+                'context' => array(),
+                'level' => ehough_epilog_Logger::WARNING,
+                'level_name' => ehough_epilog_Logger::getLevelName(ehough_epilog_Logger::WARNING),
+                'channel' => 'monolog',
+                'datetime' => new DateTime(),
+                'extra' => array(),
+            );
+            self::$json['rows'][count(self::$json['rows']) - 1] = $this->getFormatter()->format($record);
+            $json = @json_encode(self::$json);
+            $data = base64_encode(utf8_encode($json));
+        }
+
+        $this->sendHeader(self::HEADER_NAME, $data);
     }
 
     /**
