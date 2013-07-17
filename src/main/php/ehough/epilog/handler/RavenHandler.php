@@ -53,10 +53,8 @@ class ehough_epilog_handler_RavenHandler extends ehough_epilog_handler_AbstractP
      */
     protected function write(array $record)
     {
-        $level = $this->logLevels[$record['level']];
-
         $options = array();
-        $options['level'] = $level;
+        $options['level'] = $this->logLevels[$record['level']];
         if (!empty($record['context'])) {
             $options['extra']['context'] = $record['context'];
         }
@@ -64,15 +62,13 @@ class ehough_epilog_handler_RavenHandler extends ehough_epilog_handler_AbstractP
             $options['extra']['extra'] = $record['extra'];
         }
 
-        $this->ravenClient->captureMessage(
-            $record['formatted'],
-            array(),                                                                  // $params - not used
-            version_compare(Raven_Client::VERSION, '0.1.0', '>') ? $options : $level, // $level or $options
-            false                                                                     // $stack
-        );
-        if ($record['level'] >= ehough_epilog_Logger::ERROR && isset($record['context']['exception'])) {
-            $this->ravenClient->captureException($record['context']['exception']);
+        if (isset($record['context']['exception']) && $record['context']['exception'] instanceof Exception) {
+            $options['extra']['message'] = $record['formatted'];
+            $this->ravenClient->captureException($record['context']['exception'], $options);
+            return;
         }
+
+        $this->ravenClient->captureMessage($record['formatted'], array(), $options);
     }
 
     /**
