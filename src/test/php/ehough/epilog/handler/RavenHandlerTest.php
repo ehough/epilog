@@ -49,7 +49,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         $record = $this->getRecord(ehough_epilog_Logger::DEBUG, "A test debug message");
         $handler->handle($record);
 
-        $this->assertEquals($ravenClient::DEBUG, $ravenClient->lastData['level']);
+        $this->assertEquals(MockRavenClient::DEBUG, $ravenClient->lastData['level']);
         $this->assertContains($record['message'], $ravenClient->lastData['message']);
     }
 
@@ -61,7 +61,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         $record = $this->getRecord(ehough_epilog_Logger::WARNING, "A test warning message");
         $handler->handle($record);
 
-        $this->assertEquals($ravenClient::WARNING, $ravenClient->lastData['level']);
+        $this->assertEquals(MockRavenClient::WARNING, $ravenClient->lastData['level']);
         $this->assertContains($record['message'], $ravenClient->lastData['message']);
     }
 
