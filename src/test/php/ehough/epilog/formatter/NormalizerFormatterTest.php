@@ -50,14 +50,21 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
     public function testFormatExceptions()
     {
         $formatter = new ehough_epilog_formatter_NormalizerFormatter('Y-m-d');
-        $e = new LogicException('bar');
-        $e2 = new RuntimeException('foo', 0, $e);
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+            $e2 = new RuntimeException('foo');
+        } else {
+            $e = new LogicException('bar');
+            $e2 = new RuntimeException('foo', 0, $e);
+        }
+
         $formatted = $formatter->format(array(
             'exception' => $e2,
         ));
 
         $this->assertGreaterThan(5, count($formatted['exception']['trace']));
-        $this->assertTrue(isset($formatted['exception']['previous']));
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+            $this->assertTrue(isset($formatted['exception']['previous']));
+        }
         unset($formatted['exception']['trace'], $formatted['exception']['previous']);
 
         $this->assertEquals(array(
