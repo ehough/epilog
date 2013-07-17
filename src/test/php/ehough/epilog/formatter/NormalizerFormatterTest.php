@@ -62,7 +62,7 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
         ));
 
         $this->assertGreaterThan(5, count($formatted['exception']['trace']));
-        if (version_compare(PHP_VERSION, '5.3') < 0) {
+        if (version_compare(PHP_VERSION, '5.3') >= 0) {
             $this->assertTrue(isset($formatted['exception']['previous']));
         }
         unset($formatted['exception']['trace'], $formatted['exception']['previous']);
