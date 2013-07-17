@@ -16,6 +16,9 @@
  * Only requests which actually trigger an error (or whatever your actionLevel is) will be
  * in the logs, but they will contain all records, not only those above the level threshold.
  *
+ * You can find the various activation strategies in the
+ * Monolog\Handler\FingersCrossed\ namespace.
+ *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
 class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_AbstractHandler
@@ -39,6 +42,8 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
         if (null === $activationStrategy) {
             $activationStrategy = new ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy(ehough_epilog_Logger::WARNING);
         }
+
+        // convert simple int activationStrategy to an object
         if (!$activationStrategy instanceof ehough_epilog_handler_fingerscrossed_ActivationStrategyInterface) {
             $activationStrategy = new ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy($activationStrategy);
         }

@@ -24,6 +24,7 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
     public function testWriteHeader()
     {
         $this->createHandler();
+        $this->handler->setHighPriorityLevel(ehough_epilog_Logger::EMERGENCY); // skip priority notifications
         $this->handler->handle($this->getRecord(ehough_epilog_Logger::CRITICAL, 'test1'));
         fseek($this->res, 0);
         $content = fread($this->res, 1024);
@@ -43,7 +44,7 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
 
     public function testWriteWithComplexTitle()
     {
-        $this->createHandler('myToken', 'myUser', 'Backup finished - SQL1');
+        $this->createHandler('myToken', 'myUser', 'Backup finished - SQL1', ehough_epilog_Logger::EMERGENCY);
         $this->handler->handle($this->getRecord(ehough_epilog_Logger::CRITICAL, 'test1'));
         fseek($this->res, 0);
         $content = fread($this->res, 1024);
@@ -54,6 +55,7 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
     public function testWriteWithComplexMessage()
     {
         $this->createHandler();
+        $this->handler->setHighPriorityLevel(ehough_epilog_Logger::EMERGENCY); // skip priority notifications
         $this->handler->handle($this->getRecord(ehough_epilog_Logger::CRITICAL, 'Backup of database "example" finished in 16 minutes.'));
         fseek($this->res, 0);
         $content = fread($this->res, 1024);
@@ -65,6 +67,7 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
     {
         $message = str_pad('test', 520, 'a');
         $this->createHandler();
+        $this->handler->setHighPriorityLevel(ehough_epilog_Logger::EMERGENCY); // skip priority notifications
         $this->handler->handle($this->getRecord(ehough_epilog_Logger::CRITICAL, $message));
         fseek($this->res, 0);
         $content = fread($this->res, 1024);
@@ -72,6 +75,26 @@ class ehough_epilog_handler_PushoverHandlerTest extends ehough_epilog_TestCase
         $expectedMessage = substr($message, 0, 505);
 
         $this->assertRegexp('/message=' . $expectedMessage . '&title/', $content);
+    }
+
+    public function testWriteWithHighPriority() 
+    {
+        $this->createHandler();
+        $this->handler->handle($this->getRecord(ehough_epilog_Logger::CRITICAL, 'test1'));
+        fseek($this->res, 0);
+        $content = fread($this->res, 1024);
+
+        $this->assertRegexp('/token=myToken&user=myUser&message=test1&title=Monolog&timestamp=\d{10}&priority=1$/', $content);
+    }
+
+    public function testWriteWithEmergencyPriority() 
+    {
+        $this->createHandler();
+        $this->handler->handle($this->getRecord(ehough_epilog_Logger::EMERGENCY, 'test1'));
+        fseek($this->res, 0);
+        $content = fread($this->res, 1024);
+
+        $this->assertRegexp('/token=myToken&user=myUser&message=test1&title=Monolog&timestamp=\d{10}&priority=2$/', $content);
     }
 
     private function createHandler($token = 'myToken', $user = 'myUser', $title = 'Monolog')

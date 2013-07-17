@@ -89,17 +89,16 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
         if (!empty($fileInfo['extension'])) {
             $glob .= '.'.$fileInfo['extension'];
         }
-        $iterator = $this->_globIterator($glob);
-        if ($this->maxFiles >= count($iterator)) {
+        $logFiles = glob($glob);
+        if ($this->maxFiles >= count($logFiles)) {
             // no files to remove
             return;
         }
 
         // Sorting the files by name to remove the older ones
-        $array = $iterator;
-        usort($array, array($this, '_callbackRotate'));
+        usort($logFiles, array($this, '_callbackRotate'));
 
-        foreach (array_slice($array, $this->maxFiles) as $file) {
+        foreach (array_slice($logFiles, $this->maxFiles) as $file) {
             if (is_writable($file)) {
                 unlink(realpath($file));
             }
@@ -120,10 +119,5 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
         }
 
         return $timedFilename;
-    }
-
-    private function _globIterator($glob)
-    {
-        return glob($glob);
     }
 }

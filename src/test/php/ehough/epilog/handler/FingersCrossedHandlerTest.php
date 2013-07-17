@@ -11,8 +11,6 @@
 
 class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_TestCase
 {
-    private $_test;
-
     /**
      * @covers ehough_epilog_handler_FingersCrossedHandler::__construct
      * @covers ehough_epilog_handler_FingersCrossedHandler::handle
@@ -140,14 +138,33 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
 
     /**
      * @covers ehough_epilog_handler_FingersCrossedHandler::__construct
+     * @covers ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy::__construct
+     * @covers ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy::isHandlerActivated
      */
-    public function testActivationStrategy()
+    public function testErrorLevelActivationStrategy()
     {
         $test = new ehough_epilog_handler_TestHandler();
         $handler = new ehough_epilog_handler_FingersCrossedHandler($test, new ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy(ehough_epilog_Logger::WARNING));
         $handler->handle($this->getRecord(ehough_epilog_Logger::DEBUG));
         $this->assertFalse($test->hasDebugRecords());
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
+        $this->assertTrue($test->hasDebugRecords());
+        $this->assertTrue($test->hasWarningRecords());
+    }
+
+    /**
+     * @covers ehough_epilog_handler_fingerscrossed_ChannelLevelActivationStrategy::__construct
+     * @covers ehough_epilog_handler_fingerscrossed_ChannelLevelActivationStrategy::isHandlerActivated
+     */
+    public function testChannelLevelActivationStrategy()
+    {
+        $test = new ehough_epilog_handler_TestHandler();
+        $handler = new ehough_epilog_handler_FingersCrossedHandler($test, new ehough_epilog_handler_fingerscrossed_ChannelLevelActivationStrategy(ehough_epilog_Logger::ERROR, array('othertest' => ehough_epilog_Logger::DEBUG)));
+        $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
+        $this->assertFalse($test->hasWarningRecords());
+        $record = $this->getRecord(ehough_epilog_Logger::DEBUG);
+        $record['channel'] = 'othertest';
+        $handler->handle($record);
         $this->assertTrue($test->hasDebugRecords());
         $this->assertTrue($test->hasWarningRecords());
     }
