@@ -78,7 +78,7 @@ class ehough_epilog_ErrorHandler
         $prev = set_error_handler(array($this, 'handleError'), $errorTypes);
         $this->errorLevelMap = array_replace($this->defaultErrorLevelMap(), $levelMap);
         if ($callPrevious) {
-            $this->previousErrorHandler = $prev ?: true;
+            $this->previousErrorHandler = $prev ? $prev : true;
         }
     }
 

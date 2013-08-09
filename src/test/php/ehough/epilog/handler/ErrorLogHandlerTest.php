@@ -1,6 +1,6 @@
 <?php
 
-function __error_log()
+function error_log()
 {
     $GLOBALS['error_log'] = func_get_args();
 }
@@ -10,14 +10,7 @@ class ehough_epilog_handler_ErrorLogHandlerTest extends ehough_epilog_TestCase
 
     protected function setUp()
     {
-        set_error_handler('__error_log');
-
         $GLOBALS['error_log'] = array();
-    }
-
-    protected function tearDown()
-    {
-        restore_error_handler();
     }
 
     /**

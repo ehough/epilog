@@ -45,7 +45,7 @@ class ehough_epilog_handler_PushoverHandler extends ehough_epilog_handler_Socket
 
         $this->token = $token;
         $this->users = (array) $users;
-        $this->title = $title ?: gethostname();
+        $this->title = $title ? $title : gethostname();
         $this->highPriorityLevel = $highPriorityLevel;
         $this->emergencyLevel = $emergencyLevel;
     }
