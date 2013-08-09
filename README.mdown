@@ -57,5 +57,5 @@ Any loggers built this way will share the same stack of handlers and processors,
 
 ### Releases and Versioning
 
-Releases are synchronized with the upstream monolog repository. e.g. `ehough/epilog 1.5.0` has merged the code
-from `Seldaek/monolog 1.5.0`.
+Releases are synchronized with the upstream monolog repository. e.g. `ehough/epilog 1.6.0` has merged the code
+from `Seldaek/monolog 1.6.0`.

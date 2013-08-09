@@ -16,20 +16,37 @@
  */
 class ehough_epilog_handler_ErrorLogHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
+    const OPERATING_SYSTEM = 0;
+    const SAPI = 4;
+
     protected $messageType;
 
     /**
-     * @param integer $messageType  Says where the error should go.
-     * @param integer $level  The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param integer $messageType Says where the error should go.
+     * @param integer $level       The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble      Whether the messages that are handled can bubble up the stack or not
      */
-    public function __construct($messageType = 0, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
+    public function __construct($messageType = self::OPERATING_SYSTEM, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
         parent::__construct($level, $bubble);
-        if (!in_array($messageType, array(0, 4))) {
-            throw new InvalidArgumentException('Only message types 0 and 4 are supported');
+
+        if (false === in_array($messageType, self::getAvailableTypes())) {
+            $message = sprintf('The given message type "%s" is not supported', print_r($messageType, true));
+            throw new InvalidArgumentException($message);
         }
+
         $this->messageType = $messageType;
+    }
+
+    /**
+     * @return array With all available types
+     */
+    public static function getAvailableTypes()
+    {
+        return array(
+            self::OPERATING_SYSTEM,
+            self::SAPI,
+        );
     }
 
     /**
