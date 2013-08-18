@@ -57,7 +57,8 @@ interface ehough_epilog_handler_HandlerInterface
     /**
      * Adds a processor in the stack.
      *
-     * @param callable $callback
+     * @param  callable $callback
+     * @return self
      */
     public function pushProcessor($callback);
 
@@ -72,6 +73,7 @@ interface ehough_epilog_handler_HandlerInterface
      * Sets the formatter.
      *
      * @param ehough_epilog_formatter_FormatterInterface $formatter
+     * @return self
      */
     public function setFormatter(ehough_epilog_formatter_FormatterInterface $formatter);
 
