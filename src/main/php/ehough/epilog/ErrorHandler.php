@@ -76,7 +76,7 @@ class ehough_epilog_ErrorHandler
     public function registerErrorHandler(array $levelMap = array(), $callPrevious = true, $errorTypes = -1)
     {
         $prev = set_error_handler(array($this, 'handleError'), $errorTypes);
-        $this->errorLevelMap = array_replace($this->defaultErrorLevelMap(), $levelMap);
+        $this->errorLevelMap = $this->_arrayReplace($this->defaultErrorLevelMap(), $levelMap);
         if ($callPrevious) {
             $this->previousErrorHandler = $prev ? $prev : true;
         }
@@ -114,7 +114,7 @@ class ehough_epilog_ErrorHandler
     /**
      * @private
      */
-    public function handleException(\Exception $e)
+    public function handleException(Exception $e)
     {
         $this->logger->log($this->uncaughtExceptionLevel, 'Uncaught exception', array('exception' => $e));
 
@@ -195,5 +195,45 @@ class ehough_epilog_ErrorHandler
         }
 
         return 'Unknown PHP error';
+    }
+
+    /**
+     * http://us2.php.net/manual/en/function.array-replace.php#94458
+     */
+    private function _arrayReplace($array1, $array2, $filterEmpty = false)
+    {
+        if (function_exists('array_replace')) {
+
+            return array_replace($array1, $array2);
+        }
+
+        $args = func_get_args();
+        $count = func_num_args() - 1;
+        $array = array();
+
+        for ($i = 0; $i < $count; ++$i) {
+
+            if (is_array($args[$i])) {
+
+                foreach ($args[$i] as $key => $val) {
+
+                    if ($filterEmpty && empty($val)) continue;
+
+                    $array[$key] = $val;
+                }
+
+            } else {
+
+                trigger_error(
+                    __FUNCTION__ . '(): Argument #' . ($i+1) . ' is not an array',
+                    E_USER_WARNING
+                );
+
+                return NULL;
+            }
+        }
+
+        return $array;
+
     }
 }
