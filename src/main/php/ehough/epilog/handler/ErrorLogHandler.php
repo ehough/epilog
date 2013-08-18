@@ -21,6 +21,8 @@ class ehough_epilog_handler_ErrorLogHandler extends ehough_epilog_handler_Abstra
 
     protected $messageType;
 
+    private $_writer;
+
     /**
      * @param integer $messageType Says where the error should go.
      * @param integer $level       The minimum logging level at which this handler will be triggered
@@ -54,6 +56,23 @@ class ehough_epilog_handler_ErrorLogHandler extends ehough_epilog_handler_Abstra
      */
     protected function write(array $record)
     {
-        error_log((string) $record['formatted'], $this->messageType);
+        if (isset($this->_writer)) {
+
+            call_user_func($this->_writer, (string) $record['formatted'], $this->messageType);
+
+        } else {
+
+            error_log((string) $record['formatted'], $this->messageType);
+        }
+    }
+
+    /**
+     * This method should never be used outside of testing!
+     *
+     * @param $callback
+     */
+    public function __setWriter($callback)
+    {
+        $this->_writer = $callback;
     }
 }

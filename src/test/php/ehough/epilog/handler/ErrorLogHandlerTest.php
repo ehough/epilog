@@ -1,16 +1,17 @@
 <?php
 
-function error_log()
-{
-    $GLOBALS['error_log'] = func_get_args();
-}
-
 class ehough_epilog_handler_ErrorLogHandlerTest extends ehough_epilog_TestCase
 {
+    private $_writtenRecord;
 
     protected function setUp()
     {
-        $GLOBALS['error_log'] = array();
+        $this->_writtenRecord = array();
+    }
+
+    public function __write()
+    {
+        $this->_writtenRecord = func_get_args();
     }
 
     /**
@@ -30,9 +31,12 @@ class ehough_epilog_handler_ErrorLogHandlerTest extends ehough_epilog_TestCase
     {
         $type = ehough_epilog_handler_ErrorLogHandler::OPERATING_SYSTEM;
         $handler = new ehough_epilog_handler_ErrorLogHandler($type);
+
+        $handler->__setWriter(array($this, '__write'));
+
         $handler->handle($this->getRecord(ehough_epilog_Logger::ERROR));
 
-        $this->assertStringMatchesFormat('[%s] test.ERROR: test [] []', $GLOBALS['error_log'][0]);
-        $this->assertSame($GLOBALS['error_log'][1], $type);
+        $this->assertStringMatchesFormat('[%s] test.ERROR: test [] []', $this->_writtenRecord[0]);
+        $this->assertSame($this->_writtenRecord[1], $type);
     }
 }
