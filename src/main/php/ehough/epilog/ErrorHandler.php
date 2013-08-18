@@ -76,7 +76,18 @@ class ehough_epilog_ErrorHandler
     public function registerErrorHandler(array $levelMap = array(), $callPrevious = true, $errorTypes = -1)
     {
         $prev = set_error_handler(array($this, 'handleError'), $errorTypes);
-        $this->errorLevelMap = $this->_arrayReplace($this->defaultErrorLevelMap(), $levelMap);
+
+        if (function_exists('array_replace')) {
+
+            $this->errorLevelMap = array_replace($this->defaultErrorLevelMap(), $levelMap);
+
+        } else {
+
+            $defaultMap          = $this->defaultErrorLevelMap();
+            $this->errorLevelMap = $this->_arrayReplace($defaultMap, $levelMap);
+        }
+
+
         if ($callPrevious) {
             $this->previousErrorHandler = $prev ? $prev : true;
         }
@@ -200,13 +211,8 @@ class ehough_epilog_ErrorHandler
     /**
      * http://us2.php.net/manual/en/function.array-replace.php#94458
      */
-    private function _arrayReplace($array1, $array2, $filterEmpty = false)
+    private function _arrayReplace(&$array1, &$array2, $filterEmpty = false)
     {
-        if (function_exists('array_replace')) {
-
-            return array_replace($array1, $array2);
-        }
-
         $args = func_get_args();
         $count = func_num_args() - 1;
         $array = array();
