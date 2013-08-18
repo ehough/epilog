@@ -15,10 +15,10 @@
     },
     "require-dev": {
         "mlehner/gelf-php": "1.0.*",
-        "raven/raven": "0.5.*",
+        "raven/raven":      "0.5.*",
         "doctrine/couchdb": "dev-master",
-        "phpunit/phpunit": "3.7.*",
-        "ehough/pulsar": "~2.0"
+        "phpunit/phpunit":  "3.7.*",
+        "ehough/pulsar":    "~2.3"
     },
     "autoload": {
         "psr-0": {"ehough_epilog": "src/main/php"}

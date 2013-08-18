@@ -106,7 +106,7 @@ class ehough_epilog_formatter_NormalizerFormatter implements ehough_epilog_forma
             }
         }
 
-        if ($previous = $e->getPrevious()) {
+        if (version_compare(PHP_VERSION, '5.3') >= 0 && $previous = $e->getPrevious()) {
             $data['previous'] = $this->normalizeException($previous);
         }
 

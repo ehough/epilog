@@ -35,7 +35,7 @@ class ehough_epilog_handler_fingerscrossed_ChannelLevelActivationStrategy implem
     private $channelToActionLevel;
 
     /**
-     * @param int $defaultActionLevel The default action level to be used if the record's category doesn't match any
+     * @param int   $defaultActionLevel    The default action level to be used if the record's category doesn't match any
      * @param array $categoryToActionLevel An array that maps channel names to action levels.
      */
     public function __construct($defaultActionLevel, $channelToActionLevel = array())

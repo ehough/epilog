@@ -60,7 +60,7 @@ class ehough_epilog_handler_CubeHandler extends ehough_epilog_handler_AbstractPr
     protected function connectUdp()
     {
         if (!extension_loaded('sockets')) {
-            throw new LogicException('The sockets extension is needed to use udp URLs with the CubeHandler');
+            throw new ehough_epilog_handler_MissingExtensionException('The sockets extension is required to use udp URLs with the CubeHandler');
         }
 
         $this->udpConnection = socket_create(AF_INET, SOCK_DGRAM, 0);

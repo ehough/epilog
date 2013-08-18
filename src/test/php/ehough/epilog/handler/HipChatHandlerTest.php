@@ -94,7 +94,7 @@ class ehough_epilog_handler_HipChatHandlerTest extends ehough_epilog_TestCase
             $constructorArgs
         );
 
-        $reflectionProperty = new \ReflectionProperty('ehough_epilog_handler_SocketHandler', 'connectionString');
+        $reflectionProperty = new ReflectionProperty('ehough_epilog_handler_SocketHandler', 'connectionString');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($this->handler, 'localhost:1234');
 

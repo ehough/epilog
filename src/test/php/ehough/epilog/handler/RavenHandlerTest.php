@@ -49,7 +49,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         $record = $this->getRecord(ehough_epilog_Logger::DEBUG, "A test debug message");
         $handler->handle($record);
 
-        $this->assertEquals($ravenClient::DEBUG, $ravenClient->lastData['level']);
+        $this->assertEquals(MockRavenClient::DEBUG, $ravenClient->lastData['level']);
         $this->assertContains($record['message'], $ravenClient->lastData['message']);
     }
 
@@ -61,7 +61,7 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         $record = $this->getRecord(ehough_epilog_Logger::WARNING, "A test warning message");
         $handler->handle($record);
 
-        $this->assertEquals($ravenClient::WARNING, $ravenClient->lastData['level']);
+        $this->assertEquals(MockRavenClient::WARNING, $ravenClient->lastData['level']);
         $this->assertContains($record['message'], $ravenClient->lastData['message']);
     }
 
@@ -78,6 +78,45 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         }
 
         $this->assertEquals($record['message'], $ravenClient->lastData['message']);
+    }
+
+    public function testHandleBatch()
+    {
+        $records = $this->getMultipleRecords();
+
+        $logFormatter = $this->getMock('ehough_epilog_formatter_FormatterInterface');
+        $logFormatter->expects($this->once())->method('formatBatch');
+
+        $formatter = $this->getMock('ehough_epilog_formatter_FormatterInterface');
+        $formatter->expects($this->once())->method('format');
+
+        $handler = $this->getHandler($this->getRavenClient());
+        $handler->setBatchFormatter($logFormatter);
+        $handler->setFormatter($formatter);
+        $handler->handleBatch($records);
+    }
+
+    public function testHandleBatchDoNothingIfRecordsAreBelowLevel()
+    {
+        $records = array(
+            $this->getRecord(ehough_epilog_Logger::DEBUG, 'debug message 1'),
+            $this->getRecord(ehough_epilog_Logger::DEBUG, 'debug message 2'),
+            $this->getRecord(ehough_epilog_Logger::INFO, 'information'),
+        );
+
+        $handler = $this->getMock('ehough_epilog_handler_RavenHandler', null, array($this->getRavenClient()));
+        $handler->expects($this->never())->method('handle');
+        $handler->setLevel(ehough_epilog_Logger::ERROR);
+        $handler->handleBatch($records);
+    }
+
+    public function testGetSetBatchFormatter()
+    {
+        $ravenClient = $this->getRavenClient();
+        $handler = $this->getHandler($ravenClient);
+
+        $handler->setBatchFormatter($formatter = new ehough_epilog_formatter_LineFormatter());
+        $this->assertSame($formatter, $handler->getBatchFormatter());
     }
 
     private function methodThatThrowsAnException()
