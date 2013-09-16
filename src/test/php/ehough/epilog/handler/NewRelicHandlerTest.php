@@ -11,6 +11,13 @@
 
 class ehough_epilog_handler_NewRelicHandlerTest extends ehough_epilog_TestCase
 {
+    public static $appname;
+
+    public function setUp()
+    {
+        self::$appname = null;
+    }
+
     /**
      * @expectedException ehough_epilog_handler_MissingExtensionException
      */
@@ -30,6 +37,30 @@ class ehough_epilog_handler_NewRelicHandlerTest extends ehough_epilog_TestCase
     {
         $handler = new StubNewRelicHandler();
         $handler->handle($this->getRecord(ehough_epilog_Logger::ERROR, 'log message', array('a' => 'b')));
+    }
+
+    public function testTheAppNameIsNullByDefault()
+    {
+        $handler = new StubNewRelicHandler();
+        $handler->handle($this->getRecord(ehough_epilog_Logger::ERROR, 'log message'));
+
+        $this->assertEquals(null, self::$appname);
+    }
+
+    public function testTheAppNameCanBeInjectedFromtheConstructor()
+    {
+        $handler = new StubNewRelicHandler(ehough_epilog_psr_LogLevel::ALERT, false, 'myAppName');
+        $handler->handle($this->getRecord(ehough_epilog_Logger::ERROR, 'log message'));
+
+        $this->assertEquals('myAppName', self::$appname);
+    }
+
+    public function testTheAppNameCanBeOverriddenFromEachLog()
+    {
+        $handler = new StubNewRelicHandler(ehough_epilog_psr_LogLevel::ALERT, false, 'myAppName');
+        $handler->handle($this->getRecord(ehough_epilog_Logger::ERROR, 'log message', array('appname' => 'logAppName')));
+
+        $this->assertEquals('logAppName', self::$appname);
     }
 }
 
@@ -52,6 +83,11 @@ class StubNewRelicHandler extends ehough_epilog_handler_NewRelicHandler
 function newrelic_notice_error()
 {
     return true;
+}
+
+function newrelic_set_appname($appname)
+{
+    return ehough_epilog_handler_NewRelicHandlerTest::$appname = $appname;
 }
 
 function newrelic_add_custom_parameter()

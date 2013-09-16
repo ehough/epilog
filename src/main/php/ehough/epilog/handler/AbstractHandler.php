@@ -17,7 +17,7 @@
 abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_handler_HandlerInterface
 {
     protected $level = ehough_epilog_Logger::DEBUG;
-    protected $bubble = false;
+    protected $bubble = true;
 
     /**
      * @var ehough_epilog_formatter_FormatterInterface
@@ -135,8 +135,8 @@ abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_ha
     /**
      * Sets the bubbling behavior.
      *
-     * @param Boolean $bubble True means that bubbling is not permitted.
-     *                        False means that this handler allows bubbling.
+     * @param Boolean $bubble true means that this handler allows bubbling.
+     *                        false means that bubbling is not permitted.
      * @return self
      */
     public function setBubble($bubble)
@@ -149,8 +149,8 @@ abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_ha
     /**
      * Gets the bubbling behavior.
      *
-     * @return Boolean True means that bubbling is not permitted.
-     *                 False means that this handler allows bubbling.
+     * @return Boolean true means that this handler allows bubbling.
+     *                 false means that bubbling is not permitted.
      */
     public function getBubble()
     {
