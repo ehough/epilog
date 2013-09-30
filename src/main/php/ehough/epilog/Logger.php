@@ -79,6 +79,11 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     const API = 1;
 
+    /**
+     * Logging levels from syslog protocol defined in RFC 5424
+     *
+     * @var array $levels Logging levels
+     */
     protected static $levels = array(
         100 => 'DEBUG',
         200 => 'INFO',
