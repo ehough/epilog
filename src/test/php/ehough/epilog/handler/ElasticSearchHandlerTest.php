@@ -163,25 +163,26 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
             'level' => ehough_epilog_Logger::ERROR,
             'level_name' => 'ERROR',
             'channel' => 'meh',
-            'context' => array('foo' => 7, 'bar', 'class' => new \stdClass),
-            'datetime' => new \DateTime("@0"),
+            'context' => array('foo' => 7, 'bar', 'class' => new stdClass),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );
 
         $expected = $msg;
-        $expected['datetime'] = $msg['datetime']->format(\DateTime::ISO8601);
+        $expected['datetime'] = $msg['datetime']->format(DateTime::ISO8601);
         $expected['context'] = array(
             'class' => '[object] (stdClass: {})',
             'foo' => 7,
             0 => 'bar',
         );
 
-        $client = new Elastica\Client();
+        $ref = new ReflectionClass('Elastica\Client');
+        $client = $ref->newInstance();
         $handler = new ehough_epilog_handler_ElasticSearchHandler($client, $this->options);
         try {
             $handler->handleBatch(array($msg));
-        } catch(\RuntimeException $e) {
+        } catch(RuntimeException $e) {
             $this->markTestSkipped("Cannot connect to Elastic Search server on localhost");
         }
 
