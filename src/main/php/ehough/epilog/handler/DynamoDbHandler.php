@@ -34,9 +34,9 @@ class ehough_epilog_handler_DynamoDbHandler extends ehough_epilog_handler_Abstra
 
     /**
      * @param Aws\DynamoDb\DynamoDbClient $client
-     * @param string $table
-     * @param integer $level
-     * @param boolean $bubble
+     * @param string                      $table
+     * @param integer                     $level
+     * @param boolean                     $bubble
      */
     public function __construct(Aws\DynamoDb\DynamoDbClient $client, $table, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
@@ -65,7 +65,7 @@ class ehough_epilog_handler_DynamoDbHandler extends ehough_epilog_handler_Abstra
     }
 
     /**
-     * @param array $record
+     * @param  array $record
      * @return array
      */
     protected function filterEmptyFields(array $record)

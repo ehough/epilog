@@ -30,7 +30,7 @@ class ehough_epilog_formatter_ScalarFormatter extends ehough_epilog_formatter_No
     }
 
     /**
-     * @param mixed $value
+     * @param  mixed $value
      * @return mixed
      */
     protected function normalizeValue($value)

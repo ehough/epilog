@@ -69,7 +69,8 @@ class ehough_epilog_handler_StreamHandler extends ehough_epilog_handler_Abstract
         fwrite($this->stream, (string) $record['formatted']);
     }
 
-    public function customErrorHandler($code, $msg) {
-        $this->errorMessage =  preg_replace('{^fopen\(.*?\): }', '', $msg);
+    private function customErrorHandler($code, $msg)
+    {
+        $this->errorMessage = preg_replace('{^fopen\(.*?\): }', '', $msg);
     }
 }
