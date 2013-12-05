@@ -157,9 +157,9 @@ class ehough_epilog_handler_RavenHandler extends ehough_epilog_handler_AbstractP
     public function __callbackHandleBatchMaxSeverity(&$highest, $record)
     {
         if ($record['level'] >= $highest['level']) {
-            $highest = $record;
-
-            return $highest;
+            return $record;
         }
+
+        return $highest;
     }
 }

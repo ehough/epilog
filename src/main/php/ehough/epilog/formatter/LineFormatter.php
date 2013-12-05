@@ -48,7 +48,9 @@ class ehough_epilog_formatter_LineFormatter extends ehough_epilog_formatter_Norm
             }
         }
         foreach ($vars as $var => $val) {
-            $output = str_replace('%'.$var.'%', $this->convertToString($val), $output);
+            if (false !== strpos($output, '%'.$var.'%')) {
+                $output = str_replace('%'.$var.'%', $this->convertToString($val), $output);
+            }
         }
 
         return $output;
@@ -92,9 +94,9 @@ class ehough_epilog_formatter_LineFormatter extends ehough_epilog_formatter_Norm
 
         $data = $this->normalize($data);
         if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
-            return $this->toJson($data);
+            return $this->toJson($data, true);
         }
 
-        return str_replace('\\/', '/', json_encode($data));
+        return str_replace('\\/', '/', @json_encode($data));
     }
 }

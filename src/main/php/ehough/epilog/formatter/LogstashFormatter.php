@@ -55,8 +55,8 @@ class ehough_epilog_formatter_LogstashFormatter extends ehough_epilog_formatter_
      */
     public function __construct($applicationName, $systemName = null, $extraPrefix = null, $contextPrefix = 'ctxt_', $version = self::V0)
     {
-        // logstash requires a ISO 8601 format date
-        parent::__construct('c');
+        // logstash requires a ISO 8601 format date with optional millisecond precision.
+        parent::__construct('Y-m-d\TH:i:s.uP');
 
         $this->systemName = $systemName ? $systemName : (function_exists('gethostname') ? gethostname() : php_uname('n'));
         $this->applicationName = $applicationName;

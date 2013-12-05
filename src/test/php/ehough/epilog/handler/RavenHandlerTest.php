@@ -83,17 +83,24 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
     public function testHandleBatch()
     {
         $records = $this->getMultipleRecords();
+        $records[] = $this->getRecord(ehough_epilog_Logger::WARNING, 'warning');
+        $records[] = $this->getRecord(ehough_epilog_Logger::WARNING, 'warning');
 
         $logFormatter = $this->getMock('ehough_epilog_formatter_FormatterInterface');
         $logFormatter->expects($this->once())->method('formatBatch');
 
         $formatter = $this->getMock('ehough_epilog_formatter_FormatterInterface');
-        $formatter->expects($this->once())->method('format');
+        $formatter->expects($this->once())->method('format')->with($this->callback(array($this, '__callbackTestHandleBatch')));
 
         $handler = $this->getHandler($this->getRavenClient());
         $handler->setBatchFormatter($logFormatter);
         $handler->setFormatter($formatter);
         $handler->handleBatch($records);
+    }
+
+    public function __callbackTestHandleBatch($record)
+    {
+        return $record['level'] == 400;
     }
 
     public function testHandleBatchDoNothingIfRecordsAreBelowLevel()

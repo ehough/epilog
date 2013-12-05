@@ -84,6 +84,13 @@ class ehough_epilog_formatter_GelfMessageFormatter extends ehough_epilog_formatt
             $message->setAdditional($this->contextPrefix . $key, is_scalar($val) ? $val : $this->toJson($val));
         }
 
+        if (null === $message->getFile() && isset($record['context']['exception'])) {
+            if (preg_match("/^(.+):([0-9]+)$/", $record['context']['exception']['file'], $matches)) {
+                $message->setFile($matches[1]);
+                $message->setLine($matches[2]);
+            }
+        }
+
         return $message;
     }
 }

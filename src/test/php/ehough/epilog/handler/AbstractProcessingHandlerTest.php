@@ -61,6 +61,7 @@ class ehough_epilog_handler_AbstractProcessingHandlerTest extends ehough_epilog_
             'REQUEST_METHOD' => '',
             'REMOTE_ADDR' => '',
             'SERVER_NAME' => '',
+            'UNIQUE_ID' => '',
         )));
         $this->_handledRecord = null;
         $handler->expects($this->once())
@@ -68,7 +69,7 @@ class ehough_epilog_handler_AbstractProcessingHandlerTest extends ehough_epilog_
             ->will($this->returnCallback(array($this, '_callbackTestProcessRecord')))
         ;
         $handler->handle($this->getRecord());
-        $this->assertEquals(5, count($this->_handledRecord['extra']));
+        $this->assertEquals(6, count($this->_handledRecord['extra']));
     }
 
     public function _callbackTestProcessRecord($record)

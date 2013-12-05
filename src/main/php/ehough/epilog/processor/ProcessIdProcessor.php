@@ -16,22 +16,13 @@
  */
 class ehough_epilog_processor_ProcessIdProcessor
 {
-    private static $pid;
-
-    public function __construct()
-    {
-        if (null === self::$pid) {
-            self::$pid = getmypid();
-        }
-    }
-
     /**
      * @param  array $record
      * @return array
      */
     public function __invoke(array $record)
     {
-        $record['extra']['process_id'] = self::$pid;
+        $record['extra']['process_id'] = getmypid();
 
         return $record;
     }

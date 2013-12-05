@@ -55,6 +55,10 @@ class ehough_epilog_processor_WebProcessor
             )
         );
 
+        if (isset($this->serverData['UNIQUE_ID'])) {
+            $record['extra']['unique_id'] = $this->serverData['UNIQUE_ID'];
+        }
+
         return $record;
     }
 }
