@@ -4,6 +4,12 @@ class ScalarFormatterTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
+        if (version_compare(PHP_VERSION, '5.3', '<')) {
+
+            $this->markTestSkipped('Requires PHP 5.3 or higher');
+            return;
+        }
+
         $this->formatter = new ehough_epilog_formatter_ScalarFormatter();
     }
 

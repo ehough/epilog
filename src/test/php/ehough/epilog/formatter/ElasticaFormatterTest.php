@@ -17,6 +17,11 @@ class ElasticaFormatterTest extends PHPUnit_Framework_TestCase
         if (!class_exists("Elastica\Document")) {
             $this->markTestSkipped("ruflin/elastica not installed");
         }
+
+        if (version_compare(PHP_VERSION, '5.3', '<')) {
+
+            $this->markTestSkipped('Requires PHP 5.3 or higher');
+        }
     }
 
     /**
@@ -31,8 +36,8 @@ class ElasticaFormatterTest extends PHPUnit_Framework_TestCase
             'level' => ehough_epilog_Logger::ERROR,
             'level_name' => 'ERROR',
             'channel' => 'meh',
-            'context' => array('foo' => 7, 'bar', 'class' => new \stdClass),
-            'datetime' => new \DateTime("@0"),
+            'context' => array('foo' => 7, 'bar', 'class' => new stdClass),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );

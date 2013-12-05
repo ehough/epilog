@@ -31,6 +31,12 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
             $this->markTestSkipped("ruflin/elastica not installed");
         }
 
+        if (version_compare(PHP_VERSION, '5.3', '<')) {
+
+            $this->markTestSkipped('Requires PHP 5.3 or higher');
+            return;
+        }
+
         // base mock Elastica Client object
         $this->client = $this->getMockBuilder('Elastica\Client')
             ->setMethods(array('addDocuments'))
@@ -51,8 +57,8 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
             'level' => ehough_epilog_Logger::ERROR,
             'level_name' => 'ERROR',
             'channel' => 'meh',
-            'context' => array('foo' => 7, 'bar', 'class' => new \stdClass),
-            'datetime' => new \DateTime("@0"),
+            'context' => array('foo' => 7, 'bar', 'class' => new stdClass),
+            'datetime' => new DateTime("@0"),
             'extra' => array(),
             'message' => 'log',
         );
