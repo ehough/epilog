@@ -66,7 +66,7 @@ class ehough_epilog_processor_IntrospectionProcessorTest extends ehough_epilog_T
         $expected = $input;
 
         $processor = new ehough_epilog_processor_IntrospectionProcessor(ehough_epilog_Logger::CRITICAL);
-        $actual = $processor($input);
+        $actual = $processor->__invoke($input);
 
         $this->assertEquals($expected, $actual);
     }
@@ -87,7 +87,7 @@ class ehough_epilog_processor_IntrospectionProcessorTest extends ehough_epilog_T
         );
 
         $processor = new ehough_epilog_processor_IntrospectionProcessor(ehough_epilog_Logger::CRITICAL);
-        $actual = $processor($input);
+        $actual = $processor->__invoke($input);
 
         $this->assertEquals($expected, $actual);
     }
@@ -108,7 +108,7 @@ class ehough_epilog_processor_IntrospectionProcessorTest extends ehough_epilog_T
         );
 
         $processor = new ehough_epilog_processor_IntrospectionProcessor(ehough_epilog_Logger::CRITICAL);
-        $actual = $processor($input);
+        $actual = $processor->__invoke($input);
 
         $this->assertEquals($expected, $actual);
     }
