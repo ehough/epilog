@@ -27,7 +27,7 @@ class ehough_epilog_handler_SyslogUdpHandler extends ehough_epilog_handler_Abstr
     {
         parent::__construct($facility, $level, $bubble);
 
-        $this->socket = new ehough_epilog_handler_syslogudp_UdpSocket($host, $port ?: 514);
+        $this->socket = new ehough_epilog_handler_syslogudp_UdpSocket($host, $port ? $port : 514);
     }
 
     protected function write(array $record)
