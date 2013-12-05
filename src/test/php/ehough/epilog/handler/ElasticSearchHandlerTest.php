@@ -224,7 +224,7 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
      * @param string $documentId
      * @return array
      */
-    protected function getDocSourceFromElastic(Elastica\Client $client, $index, $type, $documentId)
+    protected function getDocSourceFromElastic($client, $index, $type, $documentId)
     {
         $resp = $client->request("/{$index}/{$type}/{$documentId}", Request::GET);
         $data = $resp->getData();
