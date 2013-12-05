@@ -65,7 +65,7 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
             'SERVER_NAME'    => 'F',
         );
         $processor = new ehough_epilog_processor_WebProcessor($server);
-        $record = $processor($this->getRecord());
+        $record = $processor->__invoke($this->getRecord());
         $this->assertFalse(isset($record['extra']['unique_id']));
     }
 
