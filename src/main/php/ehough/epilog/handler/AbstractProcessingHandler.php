@@ -24,7 +24,7 @@ abstract class ehough_epilog_handler_AbstractProcessingHandler extends ehough_ep
      */
     public function handle(array $record)
     {
-        if ($record['level'] < $this->level) {
+        if (!$this->isHandling($record)) {
             return false;
         }
 

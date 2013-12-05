@@ -20,8 +20,7 @@ class ehough_epilog_handler_StreamHandler extends ehough_epilog_handler_Abstract
 {
     protected $stream;
     protected $url;
-
-    private $_errorMessage;
+    private $errorMessage;
 
     /**
      * @param string  $stream
@@ -58,20 +57,19 @@ class ehough_epilog_handler_StreamHandler extends ehough_epilog_handler_Abstract
             if (!$this->url) {
                 throw new LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
             }
-            $this->_errorMessage = null;
-            set_error_handler(array($this, '_callbackWriteErrorHandler'));
+            $this->errorMessage = null;
+            set_error_handler(array($this, 'customErrorHandler'));
             $this->stream = fopen($this->url, 'a');
             restore_error_handler();
             if (!is_resource($this->stream)) {
                 $this->stream = null;
-                throw new UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: '.$this->_errorMessage, $this->url));
+                throw new UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: '.$this->errorMessage, $this->url));
             }
         }
         fwrite($this->stream, (string) $record['formatted']);
     }
 
-    public function _callbackWriteErrorHandler($code, $msg)
-    {
-        $this->_errorMessage = preg_replace('{^fopen\(.*?\): }', '', $msg);
+    public function customErrorHandler($code, $msg) {
+        $this->errorMessage =  preg_replace('{^fopen\(.*?\): }', '', $msg);
     }
 }

@@ -19,6 +19,7 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
             'REQUEST_METHOD' => 'C',
             'HTTP_REFERER'   => 'D',
             'SERVER_NAME'    => 'F',
+            'UNIQUE_ID'      => 'G',
         );
 
         $processor = new ehough_epilog_processor_WebProcessor($server);
@@ -28,6 +29,7 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
         $this->assertEquals($server['REQUEST_METHOD'], $record['extra']['http_method']);
         $this->assertEquals($server['HTTP_REFERER'], $record['extra']['referrer']);
         $this->assertEquals($server['SERVER_NAME'], $record['extra']['server']);
+        $this->assertEquals($server['UNIQUE_ID'], $record['extra']['unique_id']);
     }
 
     public function testProcessorDoNothingIfNoRequestUri()
@@ -52,6 +54,19 @@ class ehough_epilog_processor_WebProcessorTest extends ehough_epilog_TestCase
         $processor = new ehough_epilog_processor_WebProcessor($server);
         $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertNull($record['extra']['referrer']);
+    }
+
+    public function testProcessorDoesNotAddUniqueIdIfNotPresent()
+    {
+        $server = array(
+            'REQUEST_URI'    => 'A',
+            'REMOTE_ADDR'    => 'B',
+            'REQUEST_METHOD' => 'C',
+            'SERVER_NAME'    => 'F',
+        );
+        $processor = new ehough_epilog_processor_WebProcessor($server);
+        $record = $processor->__invoke($this->getRecord());
+        $this->assertFalse(isset($record['extra']['unique_id']));
     }
 
     /**

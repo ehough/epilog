@@ -19,6 +19,9 @@
  */
 class ehough_epilog_formatter_LogstashFormatter extends ehough_epilog_formatter_NormalizerFormatter
 {
+    const V0 = 0;
+    const V1 = 1;
+
     /**
      * @var string the name of the system for the Logstash log message, used to fill the @source field
      */
@@ -40,21 +43,26 @@ class ehough_epilog_formatter_LogstashFormatter extends ehough_epilog_formatter_
     protected $contextPrefix;
 
     /**
+     * @var integer logstash format version to use
+     */
+    protected $version;
+
+    /**
      * @param string $applicationName the application that sends the data, used as the "type" field of logstash
      * @param string $systemName      the system/machine name, used as the "source" field of logstash, defaults to the hostname of the machine
      * @param string $extraPrefix     prefix for extra keys inside logstash "fields"
      * @param string $contextPrefix   prefix for context keys inside logstash "fields", defaults to ctxt_
      */
-    public function __construct($applicationName, $systemName = null, $extraPrefix = null, $contextPrefix = 'ctxt_')
+    public function __construct($applicationName, $systemName = null, $extraPrefix = null, $contextPrefix = 'ctxt_', $version = self::V0)
     {
-        //log stash requires a ISO 8601 format date
-        parent::__construct('c');
+        // logstash requires a ISO 8601 format date with optional millisecond precision.
+        parent::__construct('Y-m-d\TH:i:s.uP');
 
         $this->systemName = $systemName ? $systemName : (function_exists('gethostname') ? gethostname() : php_uname('n'));
         $this->applicationName = $applicationName;
-
         $this->extraPrefix = $extraPrefix;
         $this->contextPrefix = $contextPrefix;
+        $this->version = $version;
     }
 
     /**
@@ -63,19 +71,32 @@ class ehough_epilog_formatter_LogstashFormatter extends ehough_epilog_formatter_
     public function format(array $record)
     {
         $record = parent::format($record);
+
+        if ($this->version === self::V1) {
+            $message = $this->formatV1($record);
+        } else {
+            $message = $this->formatV0($record);
+        }
+
+        return $this->toJson($message) . "\n";
+    }
+
+    protected function formatV0(array $record)
+    {
         $message = array(
             '@timestamp' => $record['datetime'],
             '@message' => $record['message'],
             '@tags' => array($record['channel']),
-            '@source' => $this->systemName
+            '@source' => $this->systemName,
+            '@fields' => array(
+                'channel' => $record['channel'],
+                'level' => $record['level']
+            )
         );
 
         if ($this->applicationName) {
             $message['@type'] = $this->applicationName;
         }
-        $message['@fields'] = array();
-        $message['@fields']['channel'] = $record['channel'];
-        $message['@fields']['level'] = $record['level'];
 
         if (isset($record['extra']['server'])) {
             $message['@source_host'] = $record['extra']['server'];
@@ -91,6 +112,33 @@ class ehough_epilog_formatter_LogstashFormatter extends ehough_epilog_formatter_
             $message['@fields'][$this->contextPrefix . $key] = $val;
         }
 
-        return json_encode($message) . "\n";
+        return $message;
+    }
+
+    protected function formatV1(array $record)
+    {
+        $message = array(
+            '@timestamp' => $record['datetime'],
+            '@version' => 1,
+            'message' => $record['message'],
+            'host' => $this->systemName,
+            'type' => $record['channel'],
+            'channel' => $record['channel'],
+            'level' => $record['level_name']
+        );
+
+        if ($this->applicationName) {
+            $message['type'] = $this->applicationName;
+        }
+
+        foreach ($record['extra'] as $key => $val) {
+            $message[$this->extraPrefix . $key] = $val;
+        }
+
+        foreach ($record['context'] as $key => $val) {
+            $message[$this->contextPrefix . $key] = $val;
+        }
+
+        return $message;
     }
 }

@@ -22,12 +22,24 @@
  */
 class ehough_epilog_processor_IntrospectionProcessor
 {
+    private $level;
+
+    public function __construct($level = ehough_epilog_Logger::DEBUG)
+    {
+        $this->level = $level;
+    }
+
     /**
      * @param  array $record
      * @return array
      */
     public function __invoke(array $record)
     {
+        // return if the level is not high enough
+        if ($record['level'] < $this->level) {
+            return $record;
+        }
+
         $trace = debug_backtrace();
 
         // skip first since it's always the current method

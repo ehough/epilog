@@ -42,8 +42,8 @@ interface ehough_epilog_handler_HandlerInterface
      * calling further handlers in the stack with a given log record.
      *
      * @param  array   $record The record to handle
-     * @return Boolean True means that this handler handled the record, and that bubbling is not permitted.
-     *                 False means the record was either not processed or that this handler allows bubbling.
+     * @return Boolean true means that this handler handled the record, and that bubbling is not permitted.
+     *                 false means the record was either not processed or that this handler allows bubbling.
      */
     public function handle(array $record);
 
@@ -57,7 +57,8 @@ interface ehough_epilog_handler_HandlerInterface
     /**
      * Adds a processor in the stack.
      *
-     * @param callable $callback
+     * @param  callable $callback
+     * @return self
      */
     public function pushProcessor($callback);
 
@@ -72,6 +73,7 @@ interface ehough_epilog_handler_HandlerInterface
      * Sets the formatter.
      *
      * @param ehough_epilog_formatter_FormatterInterface $formatter
+     * @return self
      */
     public function setFormatter(ehough_epilog_formatter_FormatterInterface $formatter);
 

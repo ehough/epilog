@@ -3,7 +3,7 @@
 /*
  * This file is part of the Monolog package.
  *
- * (c) Thomas Tourlourat <thomas@tourlourat.com>
+ * (c) Jordi Boggiano <j.boggiano@seld.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,7 +22,7 @@
  */
 class ehough_epilog_handler_MongoDBHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
-    private $mongoCollection;
+    protected $mongoCollection;
 
     public function __construct($mongo, $database, $collection, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {

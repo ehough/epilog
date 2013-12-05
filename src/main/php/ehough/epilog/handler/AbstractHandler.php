@@ -17,7 +17,7 @@
 abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_handler_HandlerInterface
 {
     protected $level = ehough_epilog_Logger::DEBUG;
-    protected $bubble = false;
+    protected $bubble = true;
 
     /**
      * @var ehough_epilog_formatter_FormatterInterface
@@ -71,6 +71,8 @@ abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_ha
             throw new InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
         }
         array_unshift($this->processors, $callback);
+
+        return $this;
     }
 
     /**
@@ -91,6 +93,8 @@ abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_ha
     public function setFormatter(ehough_epilog_formatter_FormatterInterface $formatter)
     {
         $this->formatter = $formatter;
+
+        return $this;
     }
 
     /**
@@ -108,11 +112,14 @@ abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_ha
     /**
      * Sets minimum logging level at which this handler will be triggered.
      *
-     * @param integer $level
+     * @param  integer $level
+     * @return self
      */
     public function setLevel($level)
     {
         $this->level = $level;
+
+        return $this;
     }
 
     /**
@@ -128,19 +135,22 @@ abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_ha
     /**
      * Sets the bubbling behavior.
      *
-     * @param Boolean $bubble True means that bubbling is not permitted.
-     *                        False means that this handler allows bubbling.
+     * @param Boolean $bubble true means that this handler allows bubbling.
+     *                        false means that bubbling is not permitted.
+     * @return self
      */
     public function setBubble($bubble)
     {
         $this->bubble = $bubble;
+
+        return $this;
     }
 
     /**
      * Gets the bubbling behavior.
      *
-     * @return Boolean True means that bubbling is not permitted.
-     *                 False means that this handler allows bubbling.
+     * @return Boolean true means that this handler allows bubbling.
+     *                 false means that bubbling is not permitted.
      */
     public function getBubble()
     {
