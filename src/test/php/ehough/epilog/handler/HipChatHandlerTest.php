@@ -104,29 +104,29 @@ class ehough_epilog_handler_HipChatHandlerTest extends ehough_epilog_TestCase
         return array(
             array(
                 array(
-                    array('level' => ehough_epilog_Logger::WARNING, 'message' => 'Oh bugger!', 'level_name' => 'warning', 'datetime' => new \DateTime()),
-                    array('level' => ehough_epilog_Logger::NOTICE, 'message' => 'Something noticeable happened.', 'level_name' => 'notice', 'datetime' => new \DateTime()),
-                    array('level' => ehough_epilog_Logger::CRITICAL, 'message' => 'Everything is broken!', 'level_name' => 'critical', 'datetime' => new \DateTime())
+                    array('level' => ehough_epilog_Logger::WARNING, 'message' => 'Oh bugger!', 'level_name' => 'warning', 'datetime' => new DateTime()),
+                    array('level' => ehough_epilog_Logger::NOTICE, 'message' => 'Something noticeable happened.', 'level_name' => 'notice', 'datetime' => new DateTime()),
+                    array('level' => ehough_epilog_Logger::CRITICAL, 'message' => 'Everything is broken!', 'level_name' => 'critical', 'datetime' => new DateTime())
                 ),
                 'red',
             ),
             array(
                 array(
-                    array('level' => ehough_epilog_Logger::WARNING, 'message' => 'Oh bugger!', 'level_name' => 'warning', 'datetime' => new \DateTime()),
-                    array('level' => ehough_epilog_Logger::NOTICE, 'message' => 'Something noticeable happened.', 'level_name' => 'notice', 'datetime' => new \DateTime()),
+                    array('level' => ehough_epilog_Logger::WARNING, 'message' => 'Oh bugger!', 'level_name' => 'warning', 'datetime' => new DateTime()),
+                    array('level' => ehough_epilog_Logger::NOTICE, 'message' => 'Something noticeable happened.', 'level_name' => 'notice', 'datetime' => new DateTime()),
                 ),
                 'yellow',
             ),
             array(
                 array(
-                    array('level' => ehough_epilog_Logger::DEBUG, 'message' => 'Just debugging.', 'level_name' => 'debug', 'datetime' => new \DateTime()),
-                    array('level' => ehough_epilog_Logger::NOTICE, 'message' => 'Something noticeable happened.', 'level_name' => 'notice', 'datetime' => new \DateTime()),
+                    array('level' => ehough_epilog_Logger::DEBUG, 'message' => 'Just debugging.', 'level_name' => 'debug', 'datetime' => new DateTime()),
+                    array('level' => ehough_epilog_Logger::NOTICE, 'message' => 'Something noticeable happened.', 'level_name' => 'notice', 'datetime' => new DateTime()),
                 ),
                 'green',
             ),
             array(
                 array(
-                    array('level' => ehough_epilog_Logger::DEBUG, 'message' => 'Just debugging.', 'level_name' => 'debug', 'datetime' => new \DateTime()),
+                    array('level' => ehough_epilog_Logger::DEBUG, 'message' => 'Just debugging.', 'level_name' => 'debug', 'datetime' => new DateTime()),
                 ),
                 'gray',
             ),
