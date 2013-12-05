@@ -18,7 +18,7 @@ class GitProcessorTest extends ehough_epilog_TestCase
     public function testProcessor()
     {
         $processor = new ehough_epilog_processor_GitProcessor();
-        $record = $processor($this->getRecord());
+        $record = $processor->__invoke($this->getRecord());
 
         $this->assertArrayHasKey('git', $record['extra']);
         $this->assertTrue(!is_array($record['extra']['git']['branch']));
