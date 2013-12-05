@@ -125,7 +125,8 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
     public function testConnectionErrors($ignore, $expectedError)
     {
         $clientOpts = array('host' => '127.0.0.1', 'port' => 1);
-        $client = new Elastica\Client($clientOpts);
+        $ref = new ReflectionClass('Elastica\Client');
+        $client = $ref->newInstance($clientOpts);
         $handlerOpts = array('ignore_error' => $ignore);
         $handler = new ehough_epilog_handler_ElasticSearchHandler($client, $handlerOpts);
 
