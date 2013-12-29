@@ -159,4 +159,12 @@ class ehough_epilog_handler_HipChatHandlerTest extends ehough_epilog_TestCase
 
         $this->handler->setFormatter($this->getIdentityFormatter());
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCreateWithTooLongName()
+    {
+        $hipChatHandler = new ehough_epilog_handler_HipChatHandler('token', 'room', 'SixteenCharsHere');
+    }
 }

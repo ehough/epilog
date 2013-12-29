@@ -44,7 +44,7 @@ class ehough_epilog_Registry
      * Adds new logging channel to the registry
      *
      * @param  ehough_epilog_Logger      $logger    Instance of the logging channel
-     * @param  string                    $name      Name of the logging channel ($logger->getName() by default)
+     * @param  string|null               $name      Name of the logging channel ($logger->getName() by default)
      * @param  boolean                   $overwrite Overwrite instance in the registry if the given name already exists?
      * @throws \InvalidArgumentException If $overwrite set to false and named Logger instance already exists
      */

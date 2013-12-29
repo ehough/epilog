@@ -43,7 +43,7 @@ interface ehough_epilog_handler_HandlerInterface
      *
      * @param  array   $record The record to handle
      * @return Boolean true means that this handler handled the record, and that bubbling is not permitted.
-     *                 false means the record was either not processed or that this handler allows bubbling.
+     *                        false means the record was either not processed or that this handler allows bubbling.
      */
     public function handle(array $record);
 

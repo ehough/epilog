@@ -135,8 +135,8 @@ abstract class ehough_epilog_handler_AbstractHandler implements ehough_epilog_ha
     /**
      * Sets the bubbling behavior.
      *
-     * @param Boolean $bubble true means that this handler allows bubbling.
-     *                        false means that bubbling is not permitted.
+     * @param  Boolean $bubble true means that this handler allows bubbling.
+     *                         false means that bubbling is not permitted.
      * @return self
      */
     public function setBubble($bubble)

@@ -70,7 +70,7 @@ class ehough_epilog_handler_DynamoDbHandler extends ehough_epilog_handler_Abstra
      */
     protected function filterEmptyFields(array $record)
     {
-        return array_filter($record, function($value) {
+        return array_filter($record, function ($value) {
             return !empty($value) || false === $value || 0 === $value;
         });
     }

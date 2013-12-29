@@ -27,9 +27,21 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
 
     public function testHandle()
     {
-        $exchange = $this->getExchange();
+        $messages = array();
 
-        $handler = new AmqpHandler($exchange, 'log');
+        $exchange = $this->getMock('AMQPExchange', array('publish', 'setName'), array(), '', false);
+        $exchange->expects($this->once())
+            ->method('setName')
+            ->with('log')
+        ;
+        $exchange->expects($this->any())
+            ->method('publish')
+            ->will($this->returnCallback(function ($message, $routing_key, $flags = 0, $attributes = array()) use (&$messages) {
+                $messages[] = array($message, $routing_key, $flags, $attributes);
+            }))
+        ;
+
+        $handler = new ehough_epilog_handler_AmqpHandler($exchange, 'log');
 
         $record = $this->getRecord(ehough_epilog_Logger::WARNING, 'test', array('data' => new stdClass, 'foo' => 34));
 
@@ -55,15 +67,9 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
 
         $handler->handle($record);
 
-        $messages = $exchange->getMessages();
         $this->assertCount(1, $messages);
         $messages[0][0] = json_decode($messages[0][0], true);
         unset($messages[0][0]['datetime']);
         $this->assertEquals($expected, $messages[0]);
-    }
-
-    protected function getExchange()
-    {
-        return new AmqpExchangeMock();
     }
 }

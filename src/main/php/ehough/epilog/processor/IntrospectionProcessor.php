@@ -24,9 +24,12 @@ class ehough_epilog_processor_IntrospectionProcessor
 {
     private $level;
 
-    public function __construct($level = ehough_epilog_Logger::DEBUG)
+    private $skipClassesPartials;
+
+    public function __construct($level = ehough_epilog_Logger::DEBUG, array $skipClassesPartials = array('ehough_epilog'))
     {
         $this->level = $level;
+        $this->skipClassesPartials = $skipClassesPartials;
     }
 
     /**
@@ -48,8 +51,15 @@ class ehough_epilog_processor_IntrospectionProcessor
         array_shift($trace);
 
         $i = 0;
-        while (isset($trace[$i]['class']) && false !== strpos($trace[$i]['class'], 'ehough_epilog')) {
-            $i++;
+
+        while (isset($trace[$i]['class'])) {
+            foreach ($this->skipClassesPartials as $part) {
+                if (strpos($trace[$i]['class'], $part) !== false) {
+                    $i++;
+                    continue 2;
+                }
+            }
+            break;
         }
 
         // we should have the call source now

@@ -28,8 +28,8 @@ class ehough_epilog_handler_CubeHandler extends ehough_epilog_handler_AbstractPr
      * Create a Cube handler
      *
      * @throws UnexpectedValueException when given url is not a valid url.
-     * A valid url must consists of three parts : protocol://host:port
-     * Only valid protocol used by Cube are http and udp
+     *                                  A valid url must consists of three parts : protocol://host:port
+     *                                  Only valid protocol used by Cube are http and udp
      */
     public function __construct($url, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {

@@ -8,6 +8,13 @@ before_script:
   - "mkdir -p ~/.composer"
   - cp src/test/resources/travis-composer-config.json ~/.composer/config.json
   - wget https://raw.github.com/ehough/throwback/develop/src/main/bash/travis-setup.sh
+  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - chmod a+x travis-setup.sh
   - ./travis-setup.sh
+
+matrix:
+  allow_failures:
+    - php: hhvm
+
 script: "phpunit -c src/test/resources/phpunit.xml.dist"
