@@ -23,6 +23,11 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
         if (!class_exists('AMQPChannel')) {
             $this->markTestSkipped("Please update AMQP to version >= 1.0");
         }
+
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP < 5.3');
+        }
     }
 
     public function testHandle()
