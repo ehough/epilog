@@ -34,7 +34,7 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
 
     public function testHandle()
     {
-        $messages = array();
+        $this->_messages = array();
 
         $exchange = $this->getMock('AMQPExchange', array('publish', 'setName'), array(), '', false);
         $exchange->expects($this->once())
@@ -72,10 +72,10 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
 
         $handler->handle($record);
 
-        $this->assertCount(1, $messages);
-        $messages[0][0] = json_decode($messages[0][0], true);
-        unset($messages[0][0]['datetime']);
-        $this->assertEquals($expected, $messages[0]);
+        $this->assertCount(1, $this->_messages);
+        $this->_messages[0][0] = json_decode($this->_messages[0][0], true);
+        unset($this->_messages[0][0]['datetime']);
+        $this->assertEquals($expected, $this->_messages[0]);
     }
 
     public function __callback($message, $routing_key, $flags = 0, $attributes = array()) {
