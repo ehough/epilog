@@ -14,6 +14,8 @@
  */
 class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
 {
+    private $_messages;
+
     public function setUp()
     {
         if (!class_exists('AMQPConnection') || !class_exists('AMQPExchange')) {
@@ -41,9 +43,7 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
         ;
         $exchange->expects($this->any())
             ->method('publish')
-            ->will($this->returnCallback(function ($message, $routing_key, $flags = 0, $attributes = array()) use (&$messages) {
-                $messages[] = array($message, $routing_key, $flags, $attributes);
-            }))
+            ->will($this->returnCallback(array($this, '__callback')))
         ;
 
         $handler = new ehough_epilog_handler_AmqpHandler($exchange, 'log');
@@ -76,5 +76,10 @@ class ehough_epilog_handler_AmqpHandlerTest extends ehough_epilog_TestCase
         $messages[0][0] = json_decode($messages[0][0], true);
         unset($messages[0][0]['datetime']);
         $this->assertEquals($expected, $messages[0]);
+    }
+
+    public function __callback($message, $routing_key, $flags = 0, $attributes = array()) {
+
+        $this->_messages[] = array($message, $routing_key, $flags, $attributes);
     }
 }
