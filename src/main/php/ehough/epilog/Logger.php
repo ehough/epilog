@@ -347,7 +347,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
      */
     public function addEmergency($message, array $context = array())
     {
-      return $this->addRecord(self::EMERGENCY, $message, $context);
+        return $this->addRecord(self::EMERGENCY, $message, $context);
     }
 
     /**

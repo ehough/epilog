@@ -18,7 +18,9 @@ class DynamoDbHandlerTest extends ehough_epilog_TestCase
             $this->markTestSkipped('aws/aws-sdk-php not installed');
         }
 
-        $this->client = $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')->disableOriginalConstructor()->getMock();
+        $this->client = $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
+            ->setMethods(array('formatAttributes', '__call'))
+            ->disableOriginalConstructor()->getMock();
     }
 
     public function testConstruct()
