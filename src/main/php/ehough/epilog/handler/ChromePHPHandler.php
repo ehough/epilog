@@ -125,7 +125,9 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
             $data = base64_encode(utf8_encode($json));
         }
 
-        $this->sendHeader(self::HEADER_NAME, $data);
+        if (trim($data) !== '') {
+            $this->sendHeader(self::HEADER_NAME, $data);
+        }
     }
 
     /**

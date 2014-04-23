@@ -9,9 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//use Aws\Common\Aws;
-//use Aws\DynamoDb\DynamoDbClient;
-
 /**
  * Amazon DynamoDB handler (http://aws.amazon.com/dynamodb/)
  *

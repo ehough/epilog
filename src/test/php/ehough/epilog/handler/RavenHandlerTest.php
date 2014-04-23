@@ -64,6 +64,18 @@ class ehough_epilog_handler_RavenHandlerTest extends ehough_epilog_TestCase
         $this->assertEquals(MockRavenClient::WARNING, $ravenClient->lastData['level']);
         $this->assertContains($record['message'], $ravenClient->lastData['message']);
     }
+    
+    public function testTag()
+    {
+        $ravenClient = $this->getRavenClient();
+        $handler = $this->getHandler($ravenClient);
+
+        $tags = array(1, 2, 'foo');
+        $record = $this->getRecord(ehough_epilog_Logger::INFO, "test", array('tags' => $tags));
+        $handler->handle($record);
+
+        $this->assertEquals($tags, $ravenClient->lastData['tags']);
+    }
 
     public function testException()
     {

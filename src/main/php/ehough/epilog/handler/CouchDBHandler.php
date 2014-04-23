@@ -62,6 +62,6 @@ class ehough_epilog_handler_CouchDBHandler extends ehough_epilog_handler_Abstrac
      */
     protected function getDefaultFormatter()
     {
-        return new ehough_epilog_formatter_JsonFormatter();
+        return new ehough_epilog_formatter_JsonFormatter(ehough_epilog_formatter_JsonFormatter::BATCH_MODE_JSON, false);
     }
 }

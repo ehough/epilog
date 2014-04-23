@@ -13,10 +13,13 @@
  * Sends errors to Loggly.
  *
  * @author Przemek Sobstel <przemek@sobstel.org>
+ * @author Adam Pancutt <adam@pancutt.com>
  */
 class ehough_epilog_handler_LogglyHandler extends ehough_epilog_handler_AbstractProcessingHandler
 {
     const HOST = 'logs-01.loggly.com';
+    const ENDPOINT_SINGLE = 'inputs';
+    const ENDPOINT_BATCH = 'bulk';
 
     protected $token;
 
@@ -40,17 +43,39 @@ class ehough_epilog_handler_LogglyHandler extends ehough_epilog_handler_Abstract
 
     protected function write(array $record)
     {
-        $url = sprintf("http://%s/inputs/%s/", self::HOST, $this->token);
+        $this->send($record["formatted"], self::ENDPOINT_SINGLE);
+    }
+
+    public function handleBatch(array $records)
+    {
+        $records = array_filter($records, array($this, '__callback_handleBatch'));
+
+        if ($records) {
+            $this->send($this->getFormatter()->formatBatch($records), self::ENDPOINT_BATCH);
+        }
+    }
+
+    public function __callback_handleBatch($record)
+    {
+        return ($record['level'] >= $this->level);
+    }
+
+    protected function send($data, $endpoint)
+    {
+        $url = sprintf("https://%s/%s/%s/", self::HOST, $endpoint, $this->token);
+
+        $headers = array('Content-Type: application/json');
+
         if ($this->tag) {
-            $url .= sprintf("tag/%s/", $this->tag);
+            $headers[] = "X-LOGGLY-TAG: {$this->tag}";
         }
 
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $record["formatted"]);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         curl_exec($ch);
@@ -59,6 +84,6 @@ class ehough_epilog_handler_LogglyHandler extends ehough_epilog_handler_Abstract
 
     protected function getDefaultFormatter()
     {
-        return new ehough_epilog_formatter_JsonFormatter();
+        return new ehough_epilog_formatter_LogglyFormatter();
     }
 }

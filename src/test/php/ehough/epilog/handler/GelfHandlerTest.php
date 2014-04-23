@@ -14,10 +14,8 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
     public function setUp()
     {
         if (version_compare(PHP_VERSION, '5.3') < 0 || !class_exists("Gelf\MessagePublisher") || !class_exists("Gelf\Message")) {
-            $this->markTestSkipped("mlehner/gelf-php not installed");
+            $this->markTestSkipped("graylog2/gelf-php not installed");
         }
-
-        require_once dirname(__FILE__) . '/GelfMocks.php';
     }
 
     /**
@@ -38,51 +36,77 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
 
     protected function getMessagePublisher()
     {
-        return new ehough_epilog_handler_MockMessagePublisher('localhost');
+        return $this->getMock('Gelf\Publisher', array('publish'), array(), '', false);
     }
 
     public function testDebug()
     {
+        $record = $this->getRecord(ehough_epilog_Logger::DEBUG, "A test debug message");
+        $expectedMessage = new Gelf\Message();
+        $expectedMessage
+            ->setLevel(7)
+            ->setFacility("test")
+            ->setShortMessage($record['message'])
+            ->setTimestamp($record['datetime'])
+        ;
+
         $messagePublisher = $this->getMessagePublisher();
+        $messagePublisher->expects($this->once())
+            ->method('publish')
+            ->with($expectedMessage);
+
         $handler = $this->getHandler($messagePublisher);
 
-        $record = $this->getRecord(ehough_epilog_Logger::DEBUG, "A test debug message");
         $handler->handle($record);
 
-        $this->assertEquals(7, $messagePublisher->lastMessage->getLevel());
-        $this->assertEquals('test', $messagePublisher->lastMessage->getFacility());
-        $this->assertEquals($record['message'], $messagePublisher->lastMessage->getShortMessage());
-        $this->assertEquals(null, $messagePublisher->lastMessage->getFullMessage());
     }
 
     public function testWarning()
     {
+        $record = $this->getRecord(ehough_epilog_Logger::WARNING, "A test warning message");
+        $expectedMessage = new Gelf\Message();
+        $expectedMessage
+            ->setLevel(4)
+            ->setFacility("test")
+            ->setShortMessage($record['message'])
+            ->setTimestamp($record['datetime'])
+        ;
+
         $messagePublisher = $this->getMessagePublisher();
+        $messagePublisher->expects($this->once())
+            ->method('publish')
+            ->with($expectedMessage);
+
         $handler = $this->getHandler($messagePublisher);
 
-        $record = $this->getRecord(ehough_epilog_Logger::WARNING, "A test warning message");
         $handler->handle($record);
-
-        $this->assertEquals(4, $messagePublisher->lastMessage->getLevel());
-        $this->assertEquals('test', $messagePublisher->lastMessage->getFacility());
-        $this->assertEquals($record['message'], $messagePublisher->lastMessage->getShortMessage());
-        $this->assertEquals(null, $messagePublisher->lastMessage->getFullMessage());
     }
 
     public function testInjectedGelfMessageFormatter()
     {
-        $messagePublisher = $this->getMessagePublisher();
-        $handler = $this->getHandler($messagePublisher);
-
-        $handler->setFormatter(new ehough_epilog_formatter_GelfMessageFormatter('mysystem', 'EXT', 'CTX'));
-
         $record = $this->getRecord(ehough_epilog_Logger::WARNING, "A test warning message");
         $record['extra']['blarg'] = 'yep';
         $record['context']['from'] = 'logger';
+
+        $expectedMessage = new Gelf\Message();
+        $expectedMessage
+            ->setLevel(4)
+            ->setFacility("test")
+            ->setHost("mysystem")
+            ->setShortMessage($record['message'])
+            ->setTimestamp($record['datetime'])
+            ->setAdditional("EXTblarg", 'yep')
+            ->setAdditional("CTXfrom", 'logger')
+        ;
+
+        $messagePublisher = $this->getMessagePublisher();
+        $messagePublisher->expects($this->once())
+            ->method('publish')
+            ->with($expectedMessage);
+
+        $handler = $this->getHandler($messagePublisher);
+        $handler->setFormatter(new ehough_epilog_formatter_GelfMessageFormatter('mysystem', 'EXT', 'CTX'));
         $handler->handle($record);
 
-        $this->assertEquals('mysystem', $messagePublisher->lastMessage->getHost());
-        $this->assertArrayHasKey('_EXTblarg', $messagePublisher->lastMessage->toArray());
-        $this->assertArrayHasKey('_CTXfrom', $messagePublisher->lastMessage->toArray());
     }
 }

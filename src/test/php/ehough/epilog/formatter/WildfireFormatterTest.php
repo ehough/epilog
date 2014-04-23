@@ -104,4 +104,35 @@ class WildfireFormatterTest extends PHPUnit_Framework_TestCase
 
         $wildfire->formatBatch(array($record));
     }
+
+    /**
+     * @covers ehough_epilog_formatter_WildfireFormatter::format
+     */
+    public function testTableFormat()
+    {
+        $wildfire = new ehough_epilog_formatter_WildfireFormatter();
+        $record = array(
+            'level' => ehough_epilog_Logger::ERROR,
+            'level_name' => 'ERROR',
+            'channel' => 'table-channel',
+            'context' => array(
+                ehough_epilog_formatter_WildfireFormatter::TABLE => array(
+                    array('col1', 'col2', 'col3'),
+                    array('val1', 'val2', 'val3'),
+                    array('foo1', 'foo2', 'foo3'),
+                    array('bar1', 'bar2', 'bar3'),
+                ),
+            ),
+            'datetime' => new DateTime("@0"),
+            'extra' => array(),
+            'message' => 'table-message',
+        );
+
+        $message = $wildfire->format($record);
+
+        $this->assertEquals(
+            '171|[{"Type":"TABLE","File":"","Line":"","Label":"table-channel: table-message"},[["col1","col2","col3"],["val1","val2","val3"],["foo1","foo2","foo3"],["bar1","bar2","bar3"]]]|',
+            $message
+        );
+    }
 }

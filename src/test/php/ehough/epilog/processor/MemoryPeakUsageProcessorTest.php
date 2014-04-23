@@ -22,4 +22,17 @@ class ehough_epilog_processor_MemoryPeakUsageProcessorTest extends ehough_epilog
         $this->assertArrayHasKey('memory_peak_usage', $record['extra']);
         $this->assertRegExp('#[0-9.]+ (M|K)?B$#', $record['extra']['memory_peak_usage']);
     }
+
+    /**
+     * @covers ehough_epilog_processor_MemoryPeakUsageProcessor::__invoke
+     * @covers ehough_epilog_processor_MemoryProcessor::formatBytes
+     */
+    public function testProcessorWithoutFormatting()
+    {
+        $processor = new ehough_epilog_processor_MemoryPeakUsageProcessor(true, false);
+        $record = $processor($this->getRecord());
+        $this->assertArrayHasKey('memory_peak_usage', $record['extra']);
+        $this->assertInternalType('int', $record['extra']['memory_peak_usage']);
+        $this->assertGreaterThan(0, $record['extra']['memory_peak_usage']);
+    }
 }

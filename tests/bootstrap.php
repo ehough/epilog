@@ -9,12 +9,7 @@
  * file that was distributed with this source code.
  */
 
-class ehough_epilog_handler_MockMessagePublisher extends Gelf\MessagePublisher
-{
-    public function publish(Gelf\Message $message)
-    {
-        $this->lastMessage = $message;
-    }
+$loader = require __DIR__ . "/../vendor/autoload.php";
+$loader->addPsr4('Monolog\\', __DIR__.'/Monolog');
 
-    public $lastMessage = null;
-}
+date_default_timezone_set('UTC');

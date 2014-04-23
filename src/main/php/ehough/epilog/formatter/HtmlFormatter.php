@@ -27,9 +27,9 @@ class ehough_epilog_formatter_HtmlFormatter extends ehough_epilog_formatter_Norm
         ehough_epilog_Logger::NOTICE    => '#3a87ad',
         ehough_epilog_Logger::WARNING   => '#c09853',
         ehough_epilog_Logger::ERROR     => '#f0ad4e',
-        ehough_epilog_Logger::CRITICAL  => '#b94a48',
-        ehough_epilog_Logger::ALERT     => '#d9534f',
-        ehough_epilog_Logger::EMERGENCY => '#ffffff',
+        ehough_epilog_Logger::CRITICAL  => '#FF7708',
+        ehough_epilog_Logger::ALERT     => '#C12A19',
+        ehough_epilog_Logger::EMERGENCY => '#000000',
     );
 
     /**

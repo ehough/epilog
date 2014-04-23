@@ -29,6 +29,11 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
     const MAXIMUM_NAME_LENGTH = 15;
 
     /**
+     * The maximum allowed length for the message.
+     */
+    const MAXIMUM_MESSAGE_LENGTH = 9500;
+
+    /**
      * @var string
      */
     private $token;
@@ -49,6 +54,11 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
     private $notify;
 
     /**
+     * @var string
+     */
+    private $format;
+
+    /**
      * @param string  $token  HipChat API Token
      * @param string  $room   The room that should be alerted of the message (Id or Name)
      * @param string  $name   Name used in the "from" field
@@ -56,10 +66,11 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
      * @param int     $level  The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      * @param Boolean $useSSL Whether to connect via SSL.
+     * @param string  $format The format of the messages (default to text, can be set to html if you have html in the messages)
      */
-    public function __construct($token, $room, $name = 'Monolog', $notify = false, $level = ehough_epilog_Logger::CRITICAL, $bubble = true, $useSSL = true)
+    public function __construct($token, $room, $name = 'Monolog', $notify = false, $level = ehough_epilog_Logger::CRITICAL, $bubble = true, $useSSL = true, $format = 'text')
     {
-        if (!$this->validateName($name)) {
+        if (!$this->validateStringLength($name, self::MAXIMUM_NAME_LENGTH)) {
             throw new InvalidArgumentException('The supplied name is too long. HipChat\'s v1 API supports names up to 15 UTF-8 characters.');
         }
 
@@ -70,6 +81,7 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
         $this->name = $name;
         $this->notify = $notify;
         $this->room = $room;
+        $this->format = $format;
     }
 
     /**
@@ -98,7 +110,7 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
             'room_id' => $this->room,
             'notify' => $this->notify,
             'message' => $record['formatted'],
-            'message_format' => 'text',
+            'message_format' => $this->format,
             'color' => $this->getAlertColor($record['level']),
         );
 
@@ -164,13 +176,19 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
             return true;
         }
 
-        $batchRecord = $this->combineRecords($records);
+        $batchRecords = $this->combineRecords($records);
 
-        if (!$this->isHandling($batchRecord)) {
-            return false;
+        $handled = false;
+        foreach ($batchRecords as $batchRecord) {
+            if ($this->isHandling($batchRecord)) {
+                $this->write($batchRecord);
+                $handled = true;
+            }
         }
 
-        $this->write($batchRecord);
+        if (!$handled) {
+            return false;
+        }
 
         return false === $this->bubble;
     }
@@ -185,6 +203,9 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
      */
     private function combineRecords($records)
     {
+        $batchRecord = null;
+        $batchRecords = array();
+        $batchedMessages = array();
         $messages = array();
         $formattedMessages = array();
         $level = 0;
@@ -192,12 +213,7 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
         $datetime = null;
 
         foreach ($records as $record) {
-
             $record = $this->processRecord($record);
-            $record['formatted'] = $this->getFormatter()->format($record);
-
-            $messages[] = $record['message'];
-            $formattedMessages[] = $record['formatted'];
 
             if ($record['level'] > $level) {
                 $level = $record['level'];
@@ -207,23 +223,55 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
             if (null === $datetime) {
                 $datetime = $record['datetime'];
             }
+
+            $messages[] = $record['message'];
+            $messgeStr = implode(PHP_EOL, $messages);
+            $formattedMessages[] = $this->getFormatter()->format($record);
+            $formattedMessageStr = implode('', $formattedMessages);
+
+            $batchRecord = array(
+                'message'   => $messgeStr,
+                'formatted' => $formattedMessageStr,
+                'context'   => array(),
+                'extra'     => array(),
+            );
+
+            if (!$this->validateStringLength($batchRecord['formatted'], self::MAXIMUM_MESSAGE_LENGTH)) {
+                // Pop the last message and implode the remainging messages
+                $lastMessage = array_pop($messages);
+                $lastFormattedMessage = array_pop($formattedMessages);
+                $batchRecord['message'] = implode(PHP_EOL, $messages);
+                $batchRecord['formatted'] = implode('', $formattedMessages);
+
+                $batchRecords[] = $batchRecord;
+                $messages = array($lastMessage);
+                $formattedMessages = array($lastFormattedMessage);
+
+                $batchRecord = null;
+            }
         }
 
-        $batchRecord = array(
-            'message' => implode(PHP_EOL, $messages),
-            'formatted' => implode('', $formattedMessages),
-            'level' => $level,
-            'level_name' => $levelName,
-            'datetime' => $datetime,
-            'context' => array(),
-            'extra' => array(),
-        );
+        if (null !== $batchRecord) {
+            $batchRecords[] = $batchRecord;
+        }
 
-        return $batchRecord;
+        // Set the max level and datetime for all records
+        foreach ($batchRecords as &$batchRecord) {
+            $batchRecord = array_merge(
+                $batchRecord,
+                array(
+                    'level'      => $level,
+                    'level_name' => $levelName,
+                    'datetime'   => $datetime
+                )
+            );
+        }
+
+        return $batchRecords;
     }
 
     /**
-     * Validates the supplied name for the "from" field.
+     * Validates the length of a string.
      *
      * If the `mb_strlen()` function is available, it will use that, as HipChat
      * allows UTF-8 characters. Otherwise, it will fall back to `strlen()`.
@@ -232,15 +280,17 @@ class ehough_epilog_handler_HipChatHandler extends ehough_epilog_handler_SocketH
      * a valid name with less than 16 characters, but 16 or more bytes, on a
      * system where `mb_strlen()` is unavailable.
      *
-     * @param  string  $name Name to validate
-     * @return Boolean
+     * @param string $str
+     * @param int    $length
+     *
+     * @return bool
      */
-    private function validateName($name)
+    private function validateStringLength($str, $length)
     {
         if (function_exists('mb_strlen')) {
-            return (mb_strlen($name) <= self::MAXIMUM_NAME_LENGTH);
+            return (mb_strlen($str) <= $length);
         }
 
-        return (strlen($name) <= self::MAXIMUM_NAME_LENGTH);
+        return (strlen($str) <= $length);
     }
 }

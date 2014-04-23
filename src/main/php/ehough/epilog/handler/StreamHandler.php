@@ -21,13 +21,15 @@ class ehough_epilog_handler_StreamHandler extends ehough_epilog_handler_Abstract
     protected $stream;
     protected $url;
     private $errorMessage;
+    protected $filePermission;
 
     /**
      * @param string  $stream
-     * @param integer $level  The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param integer $level           The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble          Whether the messages that are handled can bubble up the stack or not
+     * @param int     $filePermissions Optional file permissions (default (0644) are only for owner read/write)
      */
-    public function __construct($stream, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
+    public function __construct($stream, $level = ehough_epilog_Logger::DEBUG, $bubble = true, $filePermission = null)
     {
         parent::__construct($level, $bubble);
         if (is_resource($stream)) {
@@ -35,6 +37,8 @@ class ehough_epilog_handler_StreamHandler extends ehough_epilog_handler_Abstract
         } else {
             $this->url = $stream;
         }
+
+        $this->filePermission = $filePermission;
     }
 
     /**
@@ -53,13 +57,16 @@ class ehough_epilog_handler_StreamHandler extends ehough_epilog_handler_Abstract
      */
     protected function write(array $record)
     {
-        if (null === $this->stream) {
+        if (!is_resource($this->stream)) {
             if (!$this->url) {
                 throw new LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
             }
             $this->errorMessage = null;
             set_error_handler(array($this, 'customErrorHandler'));
             $this->stream = fopen($this->url, 'a');
+            if ($this->filePermission !== null) {
+                @chmod($this->url, $this->filePermission);
+            }
             restore_error_handler();
             if (!is_resource($this->stream)) {
                 $this->stream = null;

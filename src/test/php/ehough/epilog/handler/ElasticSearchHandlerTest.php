@@ -205,7 +205,7 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
 
     /**
      * Return last created document id from ES response
-     * @param Response $response Elastica Response object
+     * @param  Response    $response Elastica Response object
      * @return string|null
      */
     protected function getCreatedDocId(Response $response)
@@ -218,10 +218,10 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
 
     /**
      * Retrieve document by id from Elasticsearch
-     * @param Client $client Elastica client
-     * @param string $index
-     * @param string $type
-     * @param string $documentId
+     * @param  Client $client     Elastica client
+     * @param  string $index
+     * @param  string $type
+     * @param  string $documentId
      * @return array
      */
     protected function getDocSourceFromElastic($client, $index, $type, $documentId)
@@ -231,6 +231,7 @@ class ElasticSearchHandlerTest extends ehough_epilog_TestCase
         if (!empty($data['_source'])) {
             return $data['_source'];
         }
+
         return array();
     }
 }
