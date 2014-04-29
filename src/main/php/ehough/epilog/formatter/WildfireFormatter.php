@@ -65,7 +65,7 @@ class ehough_epilog_formatter_WildfireFormatter extends ehough_epilog_formatter_
             $message = reset($message);
         }
 
-        if(isset($record['context'][self::TABLE])){
+        if (isset($record['context'][self::TABLE])) {
             $type  = 'TABLE';
             $label = $record['channel'] .': '. $record['message'];
             $message = $record['context'][self::TABLE];

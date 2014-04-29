@@ -17,6 +17,7 @@ class ehough_epilog_handler_ChromePHPHandlerTest extends ehough_epilog_TestCase
     protected function setUp()
     {
         ehough_epilog_handler_TestChromePHPHandler::reset();
+        $_SERVER['HTTP_USER_AGENT'] = 'Monolog Test; Chrome/1.0';
     }
 
     public function testHeaders()
@@ -119,6 +120,7 @@ class ehough_epilog_handler_TestChromePHPHandler extends ehough_epilog_handler_C
     {
         self::$initialized = false;
         self::$overflowed = false;
+        self::$sendHeaders = true;
         self::$json['rows'] = array();
     }
 

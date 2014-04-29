@@ -95,15 +95,19 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
      */
     protected function send()
     {
-        if (self::$overflowed) {
+        if (self::$overflowed || !self::$sendHeaders) {
             return;
         }
 
         if (!self::$initialized) {
-            self::$sendHeaders = $this->headersAccepted();
-            self::$json['request_uri'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-
             self::$initialized = true;
+
+            self::$sendHeaders = $this->headersAccepted();
+            if (!self::$sendHeaders) {
+                return;
+            }
+
+            self::$json['request_uri'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
         }
 
         $json = @json_encode(self::$json);
@@ -150,8 +154,11 @@ class ehough_epilog_handler_ChromePHPHandler extends ehough_epilog_handler_Abstr
      */
     protected function headersAccepted()
     {
-        return !isset($_SERVER['HTTP_USER_AGENT'])
-               || preg_match('{\bChrome/\d+[\.\d+]*\b}', $_SERVER['HTTP_USER_AGENT']);
+        if (empty($_SERVER['HTTP_USER_AGENT'])) {
+            return false;
+        }
+
+        return preg_match('{\bChrome/\d+[\.\d+]*\b}', $_SERVER['HTTP_USER_AGENT']);
     }
 
     /**

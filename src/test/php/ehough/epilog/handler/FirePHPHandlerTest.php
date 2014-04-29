@@ -17,6 +17,7 @@ class ehough_epilog_handler_FirePHPHandlerTest extends ehough_epilog_TestCase
     public function setUp()
     {
         ehough_epilog_handler_TestFirePHPHandler::reset();
+        $_SERVER['HTTP_USER_AGENT'] = 'Monolog Test; FirePHP/1.0';
     }
 
     public function testHeaders()
@@ -74,6 +75,7 @@ class ehough_epilog_handler_TestFirePHPHandler extends ehough_epilog_handler_Fir
     public static function reset()
     {
         self::$initialized = false;
+        self::$sendHeaders = true;
         self::$messageIndex = 1;
     }
 

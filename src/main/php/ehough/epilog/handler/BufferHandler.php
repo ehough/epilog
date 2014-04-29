@@ -24,6 +24,7 @@ class ehough_epilog_handler_BufferHandler extends ehough_epilog_handler_Abstract
     protected $bufferLimit;
     protected $flushOnOverflow;
     protected $buffer = array();
+    protected $initialized = false;
 
     /**
      * @param ehough_epilog_handler_HandlerInterface $handler         Handler.
@@ -38,9 +39,6 @@ class ehough_epilog_handler_BufferHandler extends ehough_epilog_handler_Abstract
         $this->handler = $handler;
         $this->bufferLimit = (int) $bufferLimit;
         $this->flushOnOverflow = $flushOnOverflow;
-
-        // __destructor() doesn't get called on Fatal errors
-        register_shutdown_function(array($this, 'close'));
     }
 
     /**
@@ -50,6 +48,12 @@ class ehough_epilog_handler_BufferHandler extends ehough_epilog_handler_Abstract
     {
         if ($record['level'] < $this->level) {
             return false;
+        }
+
+        if (!$this->initialized) {
+            // __destructor() doesn't get called on Fatal errors
+            register_shutdown_function(array($this, 'close'));
+            $this->initialized = true;
         }
 
         if ($this->bufferLimit > 0 && $this->bufferSize === $this->bufferLimit) {

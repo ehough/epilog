@@ -26,16 +26,16 @@ class ehough_epilog_handler_PushoverHandler extends ehough_epilog_handler_Socket
 
     private $highPriorityLevel;
     private $emergencyLevel;
-    
+
     /**
      * Sounds the api supports by default
      * @see https://pushover.net/api#sounds
      * @var array
      */
     private $sounds = array(
-    	'pushover', 'bike', 'bugle', 'cashregister', 'classical', 'cosmic', 'falling', 'gamelan', 'incoming',
-    	'intermission', 'magic', 'mechanical', 'pianobar', 'siren', 'spacealarm', 'tugboat', 'alien', 'climb',
-    	'persistent', 'echo', 'updown', 'none',
+        'pushover', 'bike', 'bugle', 'cashregister', 'classical', 'cosmic', 'falling', 'gamelan', 'incoming',
+        'intermission', 'magic', 'mechanical', 'pianobar', 'siren', 'spacealarm', 'tugboat', 'alien', 'climb',
+        'persistent', 'echo', 'updown', 'none',
     );
 
     /**
@@ -96,7 +96,7 @@ class ehough_epilog_handler_PushoverHandler extends ehough_epilog_handler_Socket
         } elseif ($record['level'] >= $this->highPriorityLevel) {
             $dataArray['priority'] = 1;
         }
-        
+
         if (isset($record['context']['sound']) && in_array($record['context']['sound'], $this->sounds)) {
             $dataArray['sound'] = $record['context']['sound'];
         } elseif (isset($record['extra']['sound']) && in_array($record['extra']['sound'], $this->sounds)) {

@@ -96,7 +96,7 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     );
 
     /**
-     * @var DateTimeZone
+     * @var \DateTimeZone
      */
     protected static $timezone;
 

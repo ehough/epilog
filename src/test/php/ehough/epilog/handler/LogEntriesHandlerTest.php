@@ -46,10 +46,10 @@ class LogEntriesHandlerTest extends ehough_epilog_TestCase
 
     public function testWriteBatchContent()
     {
-        $records = array( 
-            $this->getRecord(), 
-            $this->getRecord(), 
-            $this->getRecord() 
+        $records = array(
+            $this->getRecord(),
+            $this->getRecord(),
+            $this->getRecord()
         );
         $this->createHandler();
         $this->handler->handleBatch($records);
