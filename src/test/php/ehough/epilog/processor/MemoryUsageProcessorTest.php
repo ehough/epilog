@@ -30,7 +30,7 @@ class ehough_epilog_processor_MemoryUsageProcessorTest extends ehough_epilog_Tes
     public function testProcessorWithoutFormatting()
     {
         $processor = new ehough_epilog_processor_MemoryUsageProcessor(true, false);
-        $record = $processor($this->getRecord());
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
         $this->assertArrayHasKey('memory_usage', $record['extra']);
         $this->assertInternalType('int', $record['extra']['memory_usage']);
         $this->assertGreaterThan(0, $record['extra']['memory_usage']);
