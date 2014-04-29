@@ -10,13 +10,9 @@ php:
 
 before_script:
   - wget https://raw.github.com/ehough/throwback/develop/src/main/bash/travis-setup.sh
-  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - chmod a+x travis-setup.sh
-  - ./travis-setup.sh
-
-before_script:
   - if [ "`phpenv version-name`" != "hhvm" ]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
   - if [ "`phpenv version-name`" != "hhvm" ]; then echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+  - chmod a+x travis-setup.sh
+  - ./travis-setup.sh
 
 script: "phpunit -c src/test/resources/phpunit.xml.dist"
