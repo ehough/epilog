@@ -125,6 +125,7 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
         if (version_compare(PHP_VERSION, '5.3') < 0) {
 
             $this->markTestSkipped('PHP < 5.3');
+            return;
         }
 
         // set up the recursion
@@ -161,6 +162,7 @@ class NormalizerFormatterTest extends PHPUnit_Framework_TestCase
         if (version_compare(PHP_VERSION, '5.3') < 0) {
 
             $this->markTestSkipped('PHP < 5.3');
+            return;
         }
 
         // set up the recursion
