@@ -16,6 +16,12 @@ class BrowserConsoleHandlerTest extends ehough_epilog_TestCase
 {
     protected function setUp()
     {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP < 5.3');
+            return;
+        }
+
         ehough_epilog_handler_BrowserConsoleHandler::reset();
     }
 
@@ -29,12 +35,6 @@ class BrowserConsoleHandlerTest extends ehough_epilog_TestCase
 
     public function testStyling()
     {
-        if (version_compare(PHP_VERSION, '5.3') < 0) {
-
-            $this->markTestSkipped('PHP < 5.3');
-            return;
-        }
-
         $handler = new ehough_epilog_handler_BrowserConsoleHandler();
         $handler->setFormatter($this->getIdentityFormatter());
 
