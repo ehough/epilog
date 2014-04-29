@@ -13,7 +13,7 @@
 class GitProcessorTest extends ehough_epilog_TestCase
 {
     /**
-     * @covers Monolog\Processor\GitProcessor::__invoke
+     * @covers ehough_epilog_processor_GitProcessor::__invoke
      */
     public function testProcessor()
     {

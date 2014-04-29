@@ -2,6 +2,8 @@
 
 class FilterHandlerTest extends ehough_epilog_TestCase
 {
+    private $_closure_testHandleWithCallback_test;
+
     /**
      * @covers ehough_epilog_handler_FilterHandler::isHandling
      */
@@ -85,16 +87,19 @@ class FilterHandlerTest extends ehough_epilog_TestCase
         $test    = new ehough_epilog_handler_TestHandler();
         $handler = new ehough_epilog_handler_FilterHandler($test, ehough_epilog_Logger::DEBUG, ehough_epilog_Logger::EMERGENCY);
         $handler->pushProcessor(
-            function ($record) {
-                $record['extra']['foo'] = true;
-
-                return $record;
-            }
+            array($this, '__callback_testHandleUsesProcessors')
         );
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
         $this->assertTrue($test->hasWarningRecords());
         $records = $test->getRecords();
         $this->assertTrue($records[0]['extra']['foo']);
+    }
+
+    public function __callback_testHandleUsesProcessors($record)
+    {
+        $record['extra']['foo'] = true;
+
+        return $record;
     }
 
     /**
@@ -118,29 +123,35 @@ class FilterHandlerTest extends ehough_epilog_TestCase
      */
     public function testHandleWithCallback()
     {
-        $test    = new ehough_epilog_handler_TestHandler();
+        $this->_closure_testHandleWithCallback_test    = new ehough_epilog_handler_TestHandler();
         $handler = new ehough_epilog_handler_FilterHandler(
-            function ($record, $handler) use ($test) {
-                return $test;
-            }, ehough_epilog_Logger::INFO, ehough_epilog_Logger::NOTICE, false
+            array($this, '__callback_testHandleWithCallback'), ehough_epilog_Logger::INFO, ehough_epilog_Logger::NOTICE, false
         );
         $handler->handle($this->getRecord(ehough_epilog_Logger::DEBUG));
         $handler->handle($this->getRecord(ehough_epilog_Logger::INFO));
-        $this->assertFalse($test->hasDebugRecords());
-        $this->assertTrue($test->hasInfoRecords());
+        $this->assertFalse($this->_closure_testHandleWithCallback_test->hasDebugRecords());
+        $this->assertTrue($this->_closure_testHandleWithCallback_test->hasInfoRecords());
+    }
+
+    public function __callback_testHandleWithCallback($record, $handler)
+    {
+        return $this->_closure_testHandleWithCallback_test;
     }
 
     /**
      * @covers ehough_epilog_handler_FilterHandler::handle
-     * @expectedException \RuntimeException
+     * @expectedException RuntimeException
      */
     public function testHandleWithBadCallbackThrowsException()
     {
         $handler = new ehough_epilog_handler_FilterHandler(
-            function ($record, $handler) {
-                return 'foo';
-            }
+            array($this, '__callback_testHandleWithBadCallbackThrowsException')
         );
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
+    }
+
+    public function __callback_testHandleWithBadCallbackThrowsException($record, $handler)
+    {
+        return 'foo';
     }
 }

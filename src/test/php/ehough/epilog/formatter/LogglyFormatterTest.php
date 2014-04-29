@@ -23,7 +23,7 @@ class LogglyFormatterTest extends ehough_epilog_TestCase
     }
 
     /**
-     * @covers Monolog\Formatter\LogglyFormatter::format
+     * @covers ehough_epilog_formatter_LogglyFormatter::format
      */
     public function testFormat()
     {
