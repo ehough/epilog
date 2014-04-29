@@ -15,4 +15,8 @@ before_script:
   - chmod a+x travis-setup.sh
   - ./travis-setup.sh
 
-script: "phpunit -c src/test/resources/phpunit.xml.dist"
+script: "phpunit -c src/test/resources/phpunit.xml.dist --coverage-clover=coverage.clover"
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
