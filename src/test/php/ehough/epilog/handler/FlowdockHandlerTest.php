@@ -34,6 +34,10 @@ class FlowdockHandlerTest extends ehough_epilog_TestCase
 
     public function testWriteHeader()
     {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+            $this->markTestSkipped('PHP 5.2');
+            return;
+        }
         $this->createHandler();
         $this->handler->handle($this->getRecord(ehough_epilog_Logger::CRITICAL, 'test1'));
         fseek($this->res, 0);
@@ -63,7 +67,7 @@ class FlowdockHandlerTest extends ehough_epilog_TestCase
             $constructorArgs
         );
 
-        $reflectionProperty = new \ReflectionProperty('ehough_epilog_handler_SocketHandler', 'connectionString');
+        $reflectionProperty = new ReflectionProperty('ehough_epilog_handler_SocketHandler', 'connectionString');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($this->handler, 'localhost:1234');
 

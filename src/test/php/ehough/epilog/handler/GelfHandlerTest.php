@@ -42,7 +42,7 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
     public function testDebug()
     {
         $record = $this->getRecord(ehough_epilog_Logger::DEBUG, "A test debug message");
-        $expectedMessage = new Gelf\Message();
+        $expectedMessage = $this->_buildGelfMessage();
         $expectedMessage
             ->setLevel(7)
             ->setFacility("test")
@@ -64,7 +64,7 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
     public function testWarning()
     {
         $record = $this->getRecord(ehough_epilog_Logger::WARNING, "A test warning message");
-        $expectedMessage = new Gelf\Message();
+        $expectedMessage = $this->_buildGelfMessage();
         $expectedMessage
             ->setLevel(4)
             ->setFacility("test")
@@ -88,7 +88,7 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
         $record['extra']['blarg'] = 'yep';
         $record['context']['from'] = 'logger';
 
-        $expectedMessage = new Gelf\Message();
+        $expectedMessage = $this->_buildGelfMessage();
         $expectedMessage
             ->setLevel(4)
             ->setFacility("test")
@@ -108,5 +108,12 @@ class ehough_epilog_handler_GelfHandlerTest extends ehough_epilog_TestCase
         $handler->setFormatter(new ehough_epilog_formatter_GelfMessageFormatter('mysystem', 'EXT', 'CTX'));
         $handler->handle($record);
 
+    }
+    
+    private function _buildGelfMessage()
+    {
+        $ref = new ReflectionClass('Gelf\Message');
+        
+        return $ref->newInstance();
     }
 }
