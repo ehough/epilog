@@ -18,8 +18,8 @@ class TagProcessorTest extends ehough_epilog_TestCase
     {
         $tags = array(1, 2, 3);
         $processor = new ehough_epilog_processor_TagProcessor($tags);
-        $record = $processor($this->getRecord());
-        
+        $record = call_user_func(array($processor, '__invoke'), $this->getRecord());
+
         $this->assertEquals($tags, $record['extra']['tags']);
     }
 }
