@@ -41,10 +41,10 @@ class ehough_epilog_handler_ElasticSearchHandler extends ehough_epilog_handler_A
     protected $options = array();
 
     /**
-     * @param Elastica\Client  $client   Elastica Client object
-     * @param array   $options  Handler configuration
-     * @param integer $level    The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble   Whether the messages that are handled can bubble up the stack or not
+     * @param Elastica\Client  $client  Elastica Client object
+     * @param array            $options Handler configuration
+     * @param integer          $level   The minimum logging level at which this handler will be triggered
+     * @param Boolean          $bubble  Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct(Elastica\Client $client, array $options = array(), $level = ehough_epilog_Logger::DEBUG, $bubble = true)
     {
@@ -107,7 +107,7 @@ class ehough_epilog_handler_ElasticSearchHandler extends ehough_epilog_handler_A
 
     /**
      * Use Elasticsearch bulk API to send list of documents
-     * @param array $documents
+     * @param  array             $documents
      * @throws \RuntimeException
      */
     protected function bulkSend(array $documents)

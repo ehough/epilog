@@ -24,7 +24,7 @@ class ehough_epilog_processor_MemoryPeakUsageProcessor extends ehough_epilog_pro
     public function __invoke(array $record)
     {
         $bytes = memory_get_peak_usage($this->realUsage);
-        $formatted = self::formatBytes($bytes);
+        $formatted = $this->formatBytes($bytes);
 
         $record['extra'] = array_merge(
             $record['extra'],

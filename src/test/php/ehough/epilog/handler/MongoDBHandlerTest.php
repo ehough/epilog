@@ -21,7 +21,7 @@ class ehough_epilog_handler_MongoDBHandlerTest extends ehough_epilog_TestCase
 
     public function testHandle()
     {
-        $mongo = $this->getMock('Mongo', array('selectCollection'));
+        $mongo = $this->getMock('Mongo', array('selectCollection'), array(), '', false);
         $collection = $this->getMock('stdClass', array('save'));
 
         $mongo->expects($this->once())

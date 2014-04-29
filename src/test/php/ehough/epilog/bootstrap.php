@@ -17,3 +17,5 @@ $loader = new ehough_pulsar_UniversalClassLoader(dirname(__FILE__) . '/../../../
 $loader->registerPrefixFallback(dirname(__FILE__) . '/../../');
 $loader->registerPrefixFallback(dirname(__FILE__) . '/../../../../../src/main/php');
 $loader->register();
+
+date_default_timezone_set('UTC');

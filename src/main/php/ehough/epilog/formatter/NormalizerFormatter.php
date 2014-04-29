@@ -97,7 +97,6 @@ class ehough_epilog_formatter_NormalizerFormatter implements ehough_epilog_forma
         );
 
         $trace = $e->getTrace();
-        array_shift($trace);
         foreach ($trace as $frame) {
             if (isset($frame['file'])) {
                 $data['trace'][] = $frame['file'].':'.$frame['line'];

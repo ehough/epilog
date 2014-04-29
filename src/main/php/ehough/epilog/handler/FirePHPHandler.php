@@ -127,19 +127,28 @@ class ehough_epilog_handler_FirePHPHandler extends ehough_epilog_handler_Abstrac
      */
     protected function write(array $record)
     {
+        if (!self::$sendHeaders) {
+            return;
+        }
+
         // WildFire-specific headers must be sent prior to any messages
         if (!self::$initialized) {
+            self::$initialized = true;
+
             self::$sendHeaders = $this->headersAccepted();
+            if (!self::$sendHeaders) {
+                return;
+            }
 
             foreach ($this->getInitHeaders() as $header => $content) {
                 $this->sendHeader($header, $content);
             }
-
-            self::$initialized = true;
         }
 
         $header = $this->createRecordHeader($record);
-        $this->sendHeader(key($header), current($header));
+        if (trim(current($header)) !== '') {
+            $this->sendHeader(key($header), current($header));
+        }
     }
 
     /**
@@ -149,9 +158,11 @@ class ehough_epilog_handler_FirePHPHandler extends ehough_epilog_handler_Abstrac
      */
     protected function headersAccepted()
     {
-        return !isset($_SERVER['HTTP_USER_AGENT'])
-               || preg_match('{\bFirePHP/\d+\.\d+\b}', $_SERVER['HTTP_USER_AGENT'])
-               || isset($_SERVER['HTTP_X_FIREPHP_VERSION']);
+        if (!empty($_SERVER['HTTP_USER_AGENT']) && preg_match('{\bFirePHP/\d+\.\d+\b}', $_SERVER['HTTP_USER_AGENT'])) {
+            return true;
+        }
+
+        return isset($_SERVER['HTTP_X_FIREPHP_VERSION']);
     }
 
     /**

@@ -44,6 +44,7 @@ class ehough_epilog_formatter_ElasticaFormatter extends ehough_epilog_formatter_
     public function format(array $record)
     {
         $record = parent::format($record);
+
         return $this->getDocument($record);
     }
 
@@ -68,7 +69,7 @@ class ehough_epilog_formatter_ElasticaFormatter extends ehough_epilog_formatter_
     /**
      * Convert a log message into an Elastica Document
      *
-     * @param array  $record Log message
+     * @param  array    $record Log message
      * @return \Elastica\Document
      */
     protected function getDocument($record)
@@ -77,6 +78,7 @@ class ehough_epilog_formatter_ElasticaFormatter extends ehough_epilog_formatter_
         $document->setData($record);
         $document->setType($this->type);
         $document->setIndex($this->index);
+
         return $document;
     }
 }

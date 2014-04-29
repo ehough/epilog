@@ -52,6 +52,14 @@ class ehough_epilog_handler_ErrorLogHandler extends ehough_epilog_handler_Abstra
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected function getDefaultFormatter()
+    {
+        return new ehough_epilog_formatter_LineFormatter('[%datetime%] %channel%.%level_name%: %message% %context% %extra%');
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function write(array $record)

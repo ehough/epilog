@@ -2,6 +2,15 @@
 
 class UdpSocketTest extends ehough_epilog_TestCase
 {
+    public function setUp()
+    {
+        if (!function_exists('socket_create')) {
+
+            $this->markTestSkipped('socket_create() not available');
+            return;
+        }
+    }
+
     public function testWeDoNotSplitShortMessages()
     {
         $socket = $this->getMock('ehough_epilog_handler_syslogudp_UdpSocket', array('send'), array('lol', 'lol'));

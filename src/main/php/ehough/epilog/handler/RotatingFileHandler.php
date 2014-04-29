@@ -29,11 +29,12 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
 
     /**
      * @param string  $filename
-     * @param integer $maxFiles The maximal amount of files to keep (0 means unlimited)
-     * @param integer $level    The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble   Whether the messages that are handled can bubble up the stack or not
+     * @param integer $maxFiles        The maximal amount of files to keep (0 means unlimited)
+     * @param integer $level           The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble          Whether the messages that are handled can bubble up the stack or not
+     * @param int     $filePermissions Optional file permissions (default (0644) are only for owner read/write)
      */
-    public function __construct($filename, $maxFiles = 0, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
+    public function __construct($filename, $maxFiles = 0, $level = ehough_epilog_Logger::DEBUG, $bubble = true, $filePermission = null)
     {
         $this->filename = $filename;
         $this->maxFiles = (int) $maxFiles;
@@ -41,7 +42,7 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
         $this->filenameFormat = '{filename}-{date}';
         $this->dateFormat = 'Y-m-d';
 
-        parent::__construct($this->getTimedFilename(), $level, $bubble);
+        parent::__construct($this->getTimedFilename(), $level, $bubble, $filePermission);
     }
 
     /**
@@ -60,6 +61,8 @@ class ehough_epilog_handler_RotatingFileHandler extends ehough_epilog_handler_St
     {
         $this->filenameFormat = $filenameFormat;
         $this->dateFormat = $dateFormat;
+        $this->url = $this->getTimedFilename();
+        $this->close();
     }
 
     /**

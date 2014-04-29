@@ -1,6 +1,6 @@
 <?php
 
-class SyslogUdpHandlerTest extends PHPUnit_Framework_TestCase
+class ehough_epilog_handler_SyslogUdpHandlerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException UnexpectedValueException
@@ -12,16 +12,22 @@ class SyslogUdpHandlerTest extends PHPUnit_Framework_TestCase
 
     public function testWeSplitIntoLines()
     {
-        $handler = new ehough_epilog_handler_SyslogUdpHandler("127.0.0.1", 514, "local5");
+        if (!function_exists('socket_create')) {
+
+            $this->markTestSkipped('socket_create() not available');
+            return;
+        }
+
+        $handler = new ehough_epilog_handler_SyslogUdpHandler("127.0.0.1", 514, "authpriv");
         $handler->setFormatter(new ehough_epilog_formatter_ChromePHPFormatter());
 
         $socket = $this->getMock('ehough_epilog_handler_syslogudp_UdpSocket', array('write'), array('lol', 'lol'));
         $socket->expects($this->at(0))
             ->method('write')
-            ->with("lol", "<172>: ");
+            ->with("lol", "<".(LOG_AUTHPRIV + LOG_WARNING).">: ");
         $socket->expects($this->at(1))
             ->method('write')
-            ->with("hej", "<172>: ");
+            ->with("hej", "<".(LOG_AUTHPRIV + LOG_WARNING).">: ");
 
         $handler->setSocket($socket);
 
