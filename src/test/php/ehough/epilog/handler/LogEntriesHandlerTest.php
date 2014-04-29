@@ -24,6 +24,15 @@ class LogEntriesHandlerTest extends ehough_epilog_TestCase
      */
     private $handler;
 
+    public function setup()
+    {
+        if (version_compare(PHP_VERSION, '5.3') < 0) {
+
+            $this->markTestSkipped('PHP 5.2');
+            return;
+        }
+    }
+
     public function testWriteContent()
     {
         $this->createHandler();
@@ -62,7 +71,7 @@ class LogEntriesHandlerTest extends ehough_epilog_TestCase
             $args
         );
 
-        $reflectionProperty = new \ReflectionProperty('ehough_epilog_handler_SocketHandler', 'connectionString');
+        $reflectionProperty = new ReflectionProperty('ehough_epilog_handler_SocketHandler', 'connectionString');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($this->handler, 'localhost:1234');
 

@@ -71,10 +71,10 @@ class ehough_epilog_formatter_JsonFormatter implements ehough_epilog_formatter_F
     public function formatBatch(array $records)
     {
         switch ($this->batchMode) {
-            case static::BATCH_MODE_NEWLINES:
+            case self::BATCH_MODE_NEWLINES:
                 return $this->formatBatchNewlines($records);
 
-            case static::BATCH_MODE_JSON:
+            case self::BATCH_MODE_JSON:
             default:
                 return $this->formatBatchJson($records);
         }
