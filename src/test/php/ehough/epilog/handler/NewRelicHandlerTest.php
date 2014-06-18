@@ -12,10 +12,12 @@
 class ehough_epilog_handler_NewRelicHandlerTest extends ehough_epilog_TestCase
 {
     public static $appname;
+    public static $customParameters;
 
     public function setUp()
     {
         self::$appname = null;
+        self::$customParameters = array();
     }
 
     /**
@@ -33,10 +35,38 @@ class ehough_epilog_handler_NewRelicHandlerTest extends ehough_epilog_TestCase
         $handler->handle($this->getRecord(ehough_epilog_Logger::ERROR));
     }
 
-    public function testThehandlerCanAddParamsToTheNewRelicTrace()
+    public function testThehandlerCanAddContextParamsToTheNewRelicTrace()
     {
         $handler = new StubNewRelicHandler();
         $handler->handle($this->getRecord(ehough_epilog_Logger::ERROR, 'log message', array('a' => 'b')));
+        $this->assertEquals(array('a' => 'b'), self::$customParameters);
+    }
+
+    public function testThehandlerCanAddExtraParamsToTheNewRelicTrace()
+    {
+        $record = $this->getRecord(ehough_epilog_Logger::ERROR, 'log message');
+        $record['extra'] = array('c' => 'd');
+
+        $handler = new StubNewRelicHandler();
+        $handler->handle($record);
+
+        $this->assertEquals(array('c' => 'd'), self::$customParameters);
+    }
+
+    public function testThehandlerCanAddExtraContextAndParamsToTheNewRelicTrace()
+    {
+        $record = $this->getRecord(ehough_epilog_Logger::ERROR, 'log message', array('a' => 'b'));
+        $record['extra'] = array('c' => 'd');
+
+        $handler = new StubNewRelicHandler();
+        $handler->handle($record);
+
+        $expected = array(
+            'a' => 'b',
+            'c' => 'd',
+        );
+
+        $this->assertEquals($expected, self::$customParameters);
     }
 
     public function testTheAppNameIsNullByDefault()
@@ -90,7 +120,9 @@ function newrelic_set_appname($appname)
     return ehough_epilog_handler_NewRelicHandlerTest::$appname = $appname;
 }
 
-function newrelic_add_custom_parameter()
+function newrelic_add_custom_parameter($key, $value)
 {
+    ehough_epilog_handler_NewRelicHandlerTest::$customParameters[$key] = $value;
+
     return true;
 }
