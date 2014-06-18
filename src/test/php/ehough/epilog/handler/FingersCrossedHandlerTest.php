@@ -24,6 +24,7 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
         $this->assertFalse($test->hasDebugRecords());
         $this->assertFalse($test->hasInfoRecords());
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
+        $handler->close();
         $this->assertTrue($test->hasInfoRecords());
         $this->assertTrue(count($test->getRecords()) === 3);
     }
@@ -37,6 +38,7 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
         $handler = new ehough_epilog_handler_FingersCrossedHandler($test);
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
         $handler->handle($this->getRecord(ehough_epilog_Logger::DEBUG));
+        $handler->close();
         $this->assertTrue($test->hasWarningRecords());
         $this->assertTrue($test->hasDebugRecords());
     }
@@ -53,6 +55,7 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
         $handler->handle($this->getRecord(ehough_epilog_Logger::DEBUG));
         $handler->reset();
         $handler->handle($this->getRecord(ehough_epilog_Logger::INFO));
+        $handler->close();
         $this->assertTrue($test->hasWarningRecords());
         $this->assertTrue($test->hasDebugRecords());
         $this->assertFalse($test->hasInfoRecords());
@@ -68,6 +71,7 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
         $handler->handle($this->getRecord(ehough_epilog_Logger::DEBUG));
         $handler->handle($this->getRecord(ehough_epilog_Logger::WARNING));
         $handler->handle($this->getRecord(ehough_epilog_Logger::INFO));
+        $handler->close();
         $this->assertTrue($test->hasWarningRecords());
         $this->assertTrue($test->hasDebugRecords());
         $this->assertFalse($test->hasInfoRecords());
@@ -181,6 +185,20 @@ class ehough_epilog_handler_FingersCrossedHandlerTest extends ehough_epilog_Test
         $this->assertTrue($test->hasWarningRecords());
         $records = $test->getRecords();
         $this->assertTrue($records[0]['extra']['foo']);
+    }
+
+    /**
+     * @covers ehough_epilog_handler_FingersCrossedHandler::close
+     */
+    public function testPassthruOnClose()
+    {
+        $test = new ehough_epilog_handler_TestHandler();
+        $handler = new ehough_epilog_handler_FingersCrossedHandler($test, new ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy(ehough_epilog_Logger::WARNING), 0, true, true, ehough_epilog_Logger::INFO);
+        $handler->handle($this->getRecord(ehough_epilog_Logger::DEBUG));
+        $handler->handle($this->getRecord(ehough_epilog_Logger::INFO));
+        $handler->close();
+        $this->assertFalse($test->hasDebugRecords());
+        $this->assertTrue($test->hasInfoRecords());
     }
 
     public function _callbackTestHandleUsesProcessors($record)

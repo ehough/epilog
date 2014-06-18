@@ -29,6 +29,7 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
     protected $bufferSize;
     protected $buffer = array();
     protected $stopBuffering;
+    protected $passthruLevel;
 
     /**
      * @param callable|ehough_epilog_handler_HandlerInterface       $handler            Handler or factory callable($record, $fingersCrossedHandler).
@@ -36,8 +37,9 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
      * @param int                             $bufferSize         How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
      * @param Boolean                         $bubble             Whether the messages that are handled can bubble up the stack or not
      * @param Boolean                         $stopBuffering      Whether the handler should stop buffering after being triggered (default true)
+     * @param int                             $passthruLevel      Minimum level to always flush to handler on close, even if strategy not triggered
      */
-    public function __construct($handler, $activationStrategy = null, $bufferSize = 0, $bubble = true, $stopBuffering = true)
+    public function __construct($handler, $activationStrategy = null, $bufferSize = 0, $bubble = true, $stopBuffering = true, $passthruLevel = NULL)
     {
         if (null === $activationStrategy) {
             $activationStrategy = new ehough_epilog_handler_fingerscrossed_ErrorLevelActivationStrategy(ehough_epilog_Logger::WARNING);
@@ -53,6 +55,7 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
         $this->bufferSize = $bufferSize;
         $this->bubble = $bubble;
         $this->stopBuffering = $stopBuffering;
+        $this->passthruLevel = $passthruLevel;
     }
 
     /**
@@ -100,6 +103,25 @@ class ehough_epilog_handler_FingersCrossedHandler extends ehough_epilog_handler_
         }
 
         return false === $this->bubble;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function close()
+    {
+        if (NULL !== $this->passthruLevel) {
+            $this->buffer = array_filter($this->buffer, array($this, '__callbackClose'));
+            if (count($this->buffer) > 0) {
+                $this->handler->handleBatch($this->buffer);
+                $this->buffer = array();
+            }
+        }
+    }
+
+    public function __callbackClose($record)
+    {
+        return $record['level'] >= $this->passthruLevel;
     }
 
     /**

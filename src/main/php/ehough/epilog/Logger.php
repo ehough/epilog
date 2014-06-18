@@ -166,6 +166,14 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
     }
 
     /**
+     * @return ehough_epilog_handler_HandlerInterface[]
+     */
+    public function getHandlers()
+    {
+        return $this->handlers;
+    }
+
+    /**
      * Adds a processor on to the stack.
      *
      * @param callable $callback
@@ -190,6 +198,14 @@ class ehough_epilog_Logger implements ehough_epilog_psr_LoggerInterface
         }
 
         return array_shift($this->processors);
+    }
+
+    /**
+     * @return callable[]
+     */
+    public function getProcessors()
+    {
+        return $this->processors;
     }
 
     /**

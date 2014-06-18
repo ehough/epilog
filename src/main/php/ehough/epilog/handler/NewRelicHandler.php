@@ -58,6 +58,10 @@ class ehough_epilog_handler_NewRelicHandler extends ehough_epilog_handler_Abstra
         foreach ($record['context'] as $key => $parameter) {
             newrelic_add_custom_parameter($key, $parameter);
         }
+
+        foreach ($record['extra'] as $key => $parameter) {
+            newrelic_add_custom_parameter($key, $parameter);
+        }
     }
 
     /**
