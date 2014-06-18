@@ -20,15 +20,17 @@ class ehough_epilog_handler_ErrorLogHandler extends ehough_epilog_handler_Abstra
     const SAPI = 4;
 
     protected $messageType;
+    protected $expandNewlines;
 
     private $_writer;
 
     /**
-     * @param integer $messageType Says where the error should go.
-     * @param integer $level       The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble      Whether the messages that are handled can bubble up the stack or not
+     * @param integer $messageType    Says where the error should go.
+     * @param integer $level          The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble         Whether the messages that are handled can bubble up the stack or not
+     * @param Boolean $expandNewlines If set to true, newlines in the message will be expanded to be take multiple log entries
      */
-    public function __construct($messageType = self::OPERATING_SYSTEM, $level = ehough_epilog_Logger::DEBUG, $bubble = true)
+    public function __construct($messageType = self::OPERATING_SYSTEM, $level = ehough_epilog_Logger::DEBUG, $bubble = true, $expandNewlines = false)
     {
         parent::__construct($level, $bubble);
 
@@ -38,6 +40,7 @@ class ehough_epilog_handler_ErrorLogHandler extends ehough_epilog_handler_Abstra
         }
 
         $this->messageType = $messageType;
+        $this->expandNewlines = $expandNewlines;
     }
 
     /**
@@ -64,13 +67,30 @@ class ehough_epilog_handler_ErrorLogHandler extends ehough_epilog_handler_Abstra
      */
     protected function write(array $record)
     {
-        if (isset($this->_writer)) {
+        if ($this->expandNewlines) {
 
-            call_user_func($this->_writer, (string) $record['formatted'], $this->messageType);
+            $lines = preg_split('{[\r\n]+}', (string) $record['formatted']);
+
+            foreach ($lines as $line) {
+
+                $this->_doWrite($line);
+            }
 
         } else {
 
-            error_log((string) $record['formatted'], $this->messageType);
+            $this->_doWrite((string) $record['formatted']);
+        }
+    }
+
+    private function _doWrite($message)
+    {
+        if (isset($this->_writer)) {
+
+            call_user_func($this->_writer, $message, $this->messageType);
+
+        } else {
+
+            error_log($message, $this->messageType);
         }
     }
 
