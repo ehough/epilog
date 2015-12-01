@@ -1,6 +1,11 @@
-# epilog [![Build Status](https://secure.travis-ci.org/ehough/epilog.png)](http://travis-ci.org/ehough/epilog)
+## epilog
 
-Fork of [monolog](https://github.com/Seldaek/monolog) compatible with PHP 5.2+.
+[![Build Status](https://secure.travis-ci.org/ehough/epilog.png)](http://travis-ci.org/ehough/epilog)
+[![Project Status: Unsupported - The project has reached a stable, usable state but the author(s) have ceased all work on it. A new maintainer may be desired.](http://www.repostatus.org/badges/latest/unsupported.svg)](http://www.repostatus.org/#unsupported)
+[![Latest Stable Version](https://poser.pugx.org/ehough/epilog/v/stable)](https://packagist.org/packages/ehough/epilog)
+[![License](https://poser.pugx.org/ehough/epilog/license)](https://packagist.org/packages/ehough/epilog)
+
+**This library is no longer maintained.** Fork of [monolog](https://github.com/Seldaek/monolog) compatible with PHP 5.2+.
 
 ### Motivation
 
